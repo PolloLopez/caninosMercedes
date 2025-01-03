@@ -1,5 +1,6 @@
 import React, { useEffect, useState } from "react";
-import { useCart } from "../../context/CartContext"; // Importar el hook useCart
+import { useCart } from "../../context/cartContext"
+
 import "./store.css";
 
 const Store = () => {
