@@ -94,7 +94,7 @@ li {
 
 /* Medias queries */
 
-@media (max-width: 550px) {
+@media (max-width: 420px) {
   .navbar ul {
     flex-direction: column;
     gap: .5rem;
