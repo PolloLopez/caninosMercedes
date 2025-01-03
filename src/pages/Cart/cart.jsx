@@ -1,5 +1,6 @@
 import React from "react";
-import { useCart } from "../../context/CartContext"; // Importar el hook useCart
+import { CartProvider, useCart } from "../../context/cartContext";
+
 
 const Cart = () => {
   const { cart, clearCart } = useCart(); // Obtener el carrito y la función para vaciarlo
