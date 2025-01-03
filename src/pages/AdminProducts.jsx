@@ -1,5 +1,5 @@
 import React, { useState} from "react";
-import ".adminProducts.css";
+import "./adminproducts.css";
 
 
 const AdminProducts = () => {
