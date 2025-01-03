@@ -83,13 +83,12 @@ a:hover {
 }
 
 
-
 /*Elementos Lista*/
 ul {
   list-style: none;
 }
 li {
-  font-size: 1.2rem;
+  font-size: 1rem;
 }
 
 /* Medias queries */
@@ -97,19 +96,24 @@ li {
 @media (max-width: 420px) {
   .navbar ul {
     flex-direction: column;
-    gap: .5rem;
-    line-height: 1rem;
+    gap: 1rem;
   }
 }
 
 @media (max-width: 768px) {
   .main-container {
-    padding: 1rem;
+    padding: 2.5rem;
+  }
+
+  .navbar ul {
+    list-style: none;
+    display: flex;
+    flex-direction: row;
+    gap: .5em;
+}
+  
+  .navbar li {
+    font-size: 1rem;
   }
 }
 
-@media (max-width: 1280px) {
-  .navbar ul {
-    gap: 1.5em;
-  }
-}
