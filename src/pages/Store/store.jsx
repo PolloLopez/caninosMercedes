@@ -17,24 +17,24 @@ const Store = () => {
   const loadSampleProducts = () => {
     const sampleProducts = [
       {
-        id: 1,
+        id: 12345,
         name: "Alimento Balanceado Canino",
         price: 1500,
         image: "https://via.placeholder.com/150",
         description: "Alimento premium para perros de todas las razas."
       },
       {
-        id: 2,
+        id: 2324,
         name: "Collar Antipulgas",
         price: 800,
-        image: "https://via.placeholder.com/150",
+        image: "https://via.placeholder.com/125",
         description: "Collar antipulgas de larga duración."
       },
       {
-        id: 3,
+        id: 303456,
         name: "Juguete para Mascotas",
         price: 500,
-        image: "https://via.placeholder.com/150",
+        image: "https://via.placeholder.com/250",
         description: "Juguete resistente para morder y jugar."
       }
     ];
