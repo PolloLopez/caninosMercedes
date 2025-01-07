@@ -4,10 +4,10 @@ import MainLayout from "./components/MainLayout";
 import Home from "./pages/Home/Home";
 import Store from "./pages/Store/store";
 import Cart from "./pages/Cart/cart";
-import Checkout from "./pages/Checkout/checkout";
 import Tutorials from "./pages/Tutorials/tutorials";
 import { CartProvider } from "./context/cartContext";
 import './App.css';
+import Nosotros from "./pages/Nosotros/Nosotros";
 
 
 function App () {
@@ -18,7 +18,7 @@ function App () {
           <Route path="/" element={<MainLayout><Home /></MainLayout>} />
           <Route path="/store" element={<MainLayout><Store /></MainLayout>} />
           <Route path="/cart" element={<MainLayout><Cart /></MainLayout>} />
-          <Route path="/checkout" element={<MainLayout><Checkout /></MainLayout>} />
+          <Route path="/nosotros" element={<MainLayout><Nosotros /></MainLayout>} />
           <Route path="/tutorials" element={<MainLayout><Tutorials /></MainLayout>} />
         </Routes>
       </Router>

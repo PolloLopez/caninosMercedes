@@ -11,7 +11,7 @@ const Navbar = () => {
                 <li><Link to="/">Inicio</Link></li>
                 <li><Link to="/store">Tienda</Link></li>
                 <li><Link to="/cart">Carrito</Link></li>
-                <li><Link to="/checkout">Checkout</Link></li>
+                <li><Link to="/nosotros">Nosotros</Link></li>
                 <li><Link to="/tutorials">Tutoriales</Link></li>
                 {cart.length > 0 && ( // Mostramos el carrito solo si hay productos
                 <li><Link to="/cart" className="cart-icon">
