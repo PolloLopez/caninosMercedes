@@ -1,0 +1,71 @@
+[33mcommit 462bb95fe690d2b79d5cdc95d772d8f93f712e54[m[33m ([m[1;36mHEAD[m[33m -> [m[1;32mmain[m[33m, [m[1;31morigin/main[m[33m)[m
+Author: PolloLopez <pollolopeza@gmail.com>
+Date:   Mon Jan 6 18:40:26 2025 -0300
+
+    carrito OK
+
+[33mcommit 42f027266c2c31fbbf49b3ca2f2e6b94c9a6131f[m
+Author: PolloLopez <pollolopeza@gmail.com>
+Date:   Sat Jan 4 20:11:19 2025 -0300
+
+    sumando al carrito todo al mismo producto
+
+[33mcommit 77edd41e4ef38cea47988b66a3431b6bf0ea9a16[m
+Author: PolloLopez <pollolopeza@gmail.com>
+Date:   Fri Jan 3 21:40:57 2025 -0300
+
+    logo en pestaña
+
+[33mcommit f979437749cb9c8644e3ba29ae4ce9ed0fd5ec6a[m
+Author: PolloLopez <pollolopeza@gmail.com>
+Date:   Fri Jan 3 18:49:27 2025 -0300
+
+    titulo e imagen
+
+[33mcommit a01e1e093b6ea52e8e9c3d2f156b32b3a70b5a37[m
+Author: PolloLopez <pollolopeza@gmail.com>
+Date:   Fri Jan 3 18:43:29 2025 -0300
+
+    responsive header
+
+[33mcommit 471bb169fb1a1115be6cadca02a104fe9116c121[m
+Author: PolloLopez <pollolopeza@gmail.com>
+Date:   Fri Jan 3 18:21:23 2025 -0300
+
+    responsive header
+
+[33mcommit 42834e695738641d67ffecb186d8fd37ab2747ba[m
+Author: PolloLopez <pollolopeza@gmail.com>
+Date:   Fri Jan 3 18:15:09 2025 -0300
+
+    Corregir rutas de importación de CartContext en varios archivos
+
+[33mcommit 0f00d43006783a118db23ccf097e68db7f3e6cbf[m
+Author: PolloLopez <pollolopeza@gmail.com>
+Date:   Fri Jan 3 18:10:01 2025 -0300
+
+    Corregir rutas de importación de CartContext en varios archivos
+
+[33mcommit bbf7bd8eeec9605b4f6949dddcadb1ebd307257b[m
+Author: PolloLopez <pollolopeza@gmail.com>
+Date:   Fri Jan 3 18:02:16 2025 -0300
+
+    Corregir ruta de importación de CartContext en store.jsx
+
+[33mcommit 223eb8d3811df11b2bbd58b18fb2b1903adcda1d[m
+Author: PolloLopez <pollolopeza@gmail.com>
+Date:   Fri Jan 3 17:57:13 2025 -0300
+
+    Corregir ruta de importación de cartContext en Cart.jsx
+
+[33mcommit f0d072ce1bc477d08adce7b6e8c7b8512c586361[m
+Author: PolloLopez <pollolopeza@gmail.com>
+Date:   Fri Jan 3 17:31:05 2025 -0300
+
+    Subiendo todos los archivos del proyecto
+
+[33mcommit 70ebc15215eff8653ecad6079632ac69a98c7b70[m
+Author: PolloLopez <pollolopeza@gmail.com>
+Date:   Fri Jan 3 17:26:50 2025 -0300
+
+    primer commit

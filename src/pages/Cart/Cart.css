@@ -94,3 +94,8 @@
 .cart-modal button:hover {
   background-color: darkred;
 }
+
+.btn-carrito{
+  margin-inline: 5px;
+  padding-inline: 2px;
+}

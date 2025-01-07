@@ -1,5 +1,6 @@
 import React from "react";
 import { useCart } from "../../context/cartContext";
+import "./Cart.css"
 
 const Cart = () => {
     const { cart, clearCart, increaseQuantity, decreaseQuantity, removeFromCart } = useCart();
@@ -16,10 +17,12 @@ const Cart = () => {
                         {cart.map((product) => (
                             <li key={product.id}>
                                 <img src={product.image} alt={product.name} width={50} />
-                                <span>{product.name}</span> - ${product.price} - Cantidad: {product.quantity}
-                                <button onClick={() => increaseQuantity(product.id)}>+</button>
-                                <button onClick={() => decreaseQuantity(product.id)}>-</button>
-                                <button onClick={() => removeFromCart(product.id)}>Eliminar</button>
+                                <span>{product.name}</span> / ${product.price} - Cantidad: 
+                                <button className="btn-carrito" onClick={() => decreaseQuantity(product.id)} >-</button>
+                                {product.quantity}
+                                <button className="btn-carrito" onClick={() => increaseQuantity(product.id)}>+</button>
+                                <span>$ {product.price * product.quantity}</span>
+                                <button className="btn-carrito" onClick={() => removeFromCart(product.id)}> ❌ Eliminar</button>
                             </li>
                         ))}
                     </ul>
