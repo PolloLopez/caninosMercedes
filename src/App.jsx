@@ -6,7 +6,8 @@ import ItemListContainer from "./components/ItemListContainer";
 import Carrito from "./pages/Carrito/Carrito";
 import Nosotros from "./pages/Nosotros/Nosotros";
 import Tutorials from "./pages/Tutoriales/Tutorials";
-import { CartProvider } from "./context/CartContext";
+import { CartProvider } from "./context/cartContext";
+
 import './App.css';
 
 
