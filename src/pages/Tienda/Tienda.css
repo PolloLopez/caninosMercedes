@@ -1,24 +1,33 @@
-.store-container {
+.tienda {
     padding: 1rem;
     text-align: center;
-}
-.product-list {
+  }
+  
+  .product-list {
     display: flex;
     flex-wrap: wrap;
-    justify-content: center;
-    gap: 2rem;
-}
-
-.product-card {
+    justify-content: space-around; /* O cualquier otro valor de distribución que prefieras */
+    gap: 1rem; /* Espacio entre las tarjetas */
+  }
+  
+  .product-card {
     border: 2px solid var(--highlight-color);
     padding: 1.25rem;
     border-radius: 1rem;
     width: 250px;
     box-shadow: 0 2px 8px var(--highlight-color);
     background-color: #fff;
-}
-
-.add-to-cart-btn {
+    overflow: hidden; /* Para evitar que las imágenes sobresalgan de las tarjetas */
+  }
+  
+  .product-image {
+    width: 100%;
+    height: auto;
+    object-fit: cover; /* Para asegurar que las imágenes se adapten al tamaño sin distorsionarse */
+    border-radius: 1rem;
+  }
+  
+  .add-to-cart-btn {
     padding: 0.75rem 1rem;
     border: none;
     background-color: var(--primary-color);
@@ -26,9 +35,10 @@
     cursor: pointer;
     border-radius: 5px;
     transition: background-color 0.25s ease;
-}
-
-.add-to-cart-btn:hover {
+  }
+  
+  .add-to-cart-btn:hover {
     background-color: var(--highlight-color);
     color: var(--primary-color);
-}
+  }
+  

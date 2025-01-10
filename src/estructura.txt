@@ -1,0 +1,116 @@
+recorda que es sobre la app de CaninosMercedes.
+la estructura es:
+
+public                  
+│   └── productos.json
+src/
+├── assets/     
+|   ├── images/           
+│   ├── logo.png
+│   └── banner.jpg
+├── components/            
+│   ├── CartModal/
+│   │   ├── CartModal.jsx
+│   │   └── CartModal.css
+│   ├── Footer/
+│   │   ├── Footer.jsx
+│   │   └── Footer.css
+│   ├── NavBar/
+│   │   ├── NavBar.jsx
+│   │   └── NavBar.css
+│   ├── ProductCard/
+│   │   ├── ProductCard.jsx
+│   │   └── ProductCard.css
+│   ├── ProductList/ (los archivos estan vacios)
+│   │   ├── ProductList.jsx 
+│   │   └── ProductList.css 
+│   └── Toast/
+│       ├── Toast.jsx
+│       └── Toast.css
+│   ├── ItemListContainer.jsx
+│
+├── context/               
+│   ├── CartContext.jsx    
+│   ├── CartProvider.jsx    
+│
+│
+├── hooks/                 
+│   └── useFetchProducts.js
+│
+├── layout/          
+│   └── MainLayout/
+│       ├── MainLayout.jsx
+│       └── MainLayout.css
+│
+├── pages/                 // Páginas principales del proyecto
+│   ├── Inicio/
+│   │   ├── Inicio.jsx
+│   │   └── Inicio.css
+│   ├── Tienda/
+│   │   ├── Tienda.jsx
+│   │   └── Tienda.css
+│   ├── Carrito/
+│   │   ├── Carrito.jsx
+│   │   └── Carrito.css
+│   └── Nosotros/
+│       ├── Nosotros.jsx
+ 
+│   └── Tutoriales/ 
+│       ├── Tutoriales.jsx (archivo vacio)
+├── services/  
+│    (carpeta vacia) 
+│
+├── App.css
+ 
+├── App.jsx
+├── main.jsx        
+├── .gitignore
+├── eslint.config.js
+├── et --hard 42f027266c2c31fbbf49b3ca2f2e6b94c9a6131f
+├── index.html
+├── package-lock.json
+├── package.json
+├── README.md
+├── vite.config.js
+
+
+
+
+
+
+
+import React, { useEffect } from "react";
+import { useCart } from "../../context/ItemListContainer";
+import ProductCard from "../../components/ProductCard/ProductCard";
+import "./Tienda.css"; 
+
+const Tienda = () => {
+  const { products, addToCart } = useCart(); // Obtenemos productos y la función para agregar al carrito
+
+  console.log("Productos disponibles:", products);  // Verifica que los productos estén siendo cargados correctamente
+
+  if (products.length === 0) {
+    return <p>No hay productos disponiblees.</p>; // O algo similar
+  }
+
+  return (
+    <div className="tienda">
+      <h1>Productos disponibles</h1>
+      {products.length === 0 ? (
+        <p>Cargando productos...</p>
+      ) : (
+        <div className="product-list">
+          {products.map((product) => (
+            <ProductCard
+              key={product.id}
+              product={product}
+              addToCart={addToCart}
+            />
+          ))}
+        </div>
+      )}
+    </div>
+  );
+};
+
+export default Tienda;

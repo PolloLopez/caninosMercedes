@@ -1,14 +1,13 @@
 import React from "react";
-import MainLayout from "../../components/MainLayout";
-import "./home.css"
+import "./Inicio.css"
 
-const Home = () => {
+const Inicio = () => {
     return (
-        <div className="home-content">
+        <div className="inicio">
             <h1>Bienvenidos a Caninos Mercedes</h1>
             <p>Explora nuestros productos y servicios para una vida en armonía.</p>
         </div>
     );
 };
 
-export default Home;
+export default Inicio;

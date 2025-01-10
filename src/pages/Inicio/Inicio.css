@@ -1,8 +1,8 @@
-.home-content {
+.inicio {
     text-align: center;
     font-size: 1.5rem;
 }
 
-.home-content h1 {
+.inicio h1 {
     color: var (--primary-color);
 }

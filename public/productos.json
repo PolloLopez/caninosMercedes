@@ -1,0 +1,83 @@
+[
+    {
+      "id": 1,
+      "name": "Curso Básico de Obediencia",
+      "description": "Un curso de 4 semanas para enseñar comandos básicos a tu perro.",
+      "price": 199.99,
+      "image": "https://via.placeholder.com/150/56a8c2",
+      "category": "Cursos"
+    },
+    {
+      "id": 2,
+      "name": "Curso de Agilidad Canina",
+      "description": "Desarrolla la agilidad y destreza de tu perro con este curso avanzado.",
+      "price": 299.99,
+      "image": "https://via.placeholder.com/150/24f355",
+      "category": "Cursos"
+    },
+    {
+      "id": 3,
+      "name": "Snacks Saludables para Perros",
+      "description": "Snacks naturales y saludables para premiar a tu perro durante su entrenamiento.",
+      "price": 25.50,
+      "image": "https://via.placeholder.com/150/92c952",
+      "category": "Snacks"
+    },
+    {
+      "id": 4,
+      "name": "Correa de Entrenamiento",
+      "description": "Correa ajustable para facilitar el entrenamiento y paseo de tu perro.",
+      "price": 35.75,
+      "image": "https://via.placeholder.com/150/d32776",
+      "category": "Accesorios"
+    },
+    {
+      "id": 5,
+      "name": "Pelota de Juguete para Perros",
+      "description": "Pelota resistente para juegos y entrenamiento.",
+      "price": 10.99,
+      "image": "https://via.placeholder.com/150/f66b97",
+      "category": "Juguetes"
+    },
+    {
+      "id": 6,
+      "name": "Collar Antitirones",
+      "description": "Collar diseñado para evitar tirones durante los paseos.",
+      "price": 45.00,
+      "image": "https://via.placeholder.com/150/771796",
+      "category": "Accesorios"
+    },
+    {
+      "id": 7,
+      "name": "Clases de Adiestramiento Canino Personalizadas",
+      "description": "Clases particulares para resolver problemas específicos de comportamiento.",
+      "price": 399.99,
+      "image": "https://via.placeholder.com/150/56a8c2",
+      "category": "Cursos"
+    },
+    {
+      "id": 8,
+      "name": "Cama Orthopedic para Perros",
+      "description": "Cama ergonómica para mejorar el descanso y la salud de tu perro.",
+      "price": 120.00,
+      "image": "https://via.placeholder.com/150/24f355",
+      "category": "Accesorios"
+    },
+    {
+      "id": 9,
+      "name": "Guía de Educación Canina",
+      "description": "Guía completa con técnicas efectivas para educar a tu perro.",
+      "price": 40.00,
+      "image": "https://via.placeholder.com/150/92c952",
+      "category": "Libros"
+    },
+    {
+      "id": 10,
+      "name": "Arnés de Entrenamiento para Perros",
+      "description": "Arnés diseñado para mejorar el control durante el entrenamiento.",
+      "price": 60.00,
+      "image": "https://via.placeholder.com/150/d32776",
+      "category": "Accesorios"
+    }
+  ]
+  
