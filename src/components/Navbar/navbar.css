@@ -20,7 +20,7 @@
   font-size: 1.2em;
 }
 
-.navbar a {
+.navbar a { 
   text-decoration: none;
   color: var(--secondary-color);
   font-weight: bold;
