@@ -5,7 +5,7 @@ import Inicio from "./pages/Inicio/Inicio";
 import ItemListContainer from "./components/ItemListContainer"; 
 import Carrito from "./pages/Carrito/Carrito";
 import Nosotros from "./pages/Nosotros/Nosotros";
-import Tutoriales from "./pages/Tutoriales/Tutoriales";
+import Tutorials from "./pages/Tutoriales/Tutorials";
 import { CartProvider } from "./context/CartContext";
 import './App.css';
 
@@ -20,7 +20,7 @@ function App() {
             <Route path="/tienda" element={<ItemListContainer />} /> {/* Usamos ItemListContainer aquí */}
             <Route path="/carrito" element={<Carrito />} />
             <Route path="/nosotros" element={<Nosotros />} />
-            <Route path="/tutoriales" element={<Tutoriales />} />
+            <Route path="/tutoriales" element={<Tutorials />} />
           </Routes>
         </MainLayout>
       </Router>

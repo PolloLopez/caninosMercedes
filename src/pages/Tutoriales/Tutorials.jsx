@@ -1,6 +1,6 @@
 import React from "react";
 
-const Tutoriales = () => {
+const Tutorials = () => {
     return (
         <div>
             <h1>Videos Tutoriales</h1>
@@ -9,5 +9,5 @@ const Tutoriales = () => {
     );
 };
 
-export default Tutoriales;
+export default Tutorials;
 
