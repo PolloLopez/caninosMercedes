@@ -4,7 +4,7 @@ const Nosotros = () => {
     return (
         <div>
             <h1>Soy Leandro ...</h1>
-            <p>Aca va informacion del educador, su experiencia y cositas...</p>
+            <p>Aca va informacion del educador, su experiencia y cositas lindas...</p>
         </div>
     );
 };
