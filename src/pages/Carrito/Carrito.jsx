@@ -20,7 +20,7 @@ const Carrito = () => {
             {cart.map((product) => (
               <li key={product.id} className="cart-item">
                 <img src={product.image} alt={product.name} width={50} />
-                <span>{product.name}</span> / ${product.price} - Cantidad: 
+                <span>{product.name}</span> / ${product.price} - Cant.: 
                 <button
                   className="btn-carrito"
                   onClick={() => decreaseQuantity(product.id)}
@@ -34,7 +34,7 @@ const Carrito = () => {
                 >
                   +
                 </button>
-                <span>$ {product.price * product.quantity}</span>
+                <span>$ { (product.price * product.quantity).toFixed(2) }</span>
                 <button
                   className="btn-carrito"
                   onClick={() => removeFromCart(product.id)}
@@ -45,7 +45,7 @@ const Carrito = () => {
             ))}
           </ul>
           <div className="total-compra">
-            <span>Total de la compra: ${totalCompra}</span>
+            <span>Total de la compra: ${totalCompra .toFixed(2)}</span>
           </div>
           <button onClick={clearCart} className="vaciar-carrito">
             Vaciar carrito

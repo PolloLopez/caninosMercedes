@@ -1,0 +1,59 @@
+/* Aseguramos que las tarjetas sean más pequeñas */
+.product-card {
+    width: 45%; /* Ajustamos para que haya 2 tarjetas por fila en pantallas medianas */
+    margin: 1em 0.5em; /* Espacio entre tarjetas */
+    border-radius: 1em;
+    padding: 1em;
+    box-shadow: 0 2px 8px rgba(0, 0, 0, 0.1);
+    background-color: #fff;
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+    justify-content: space-between;
+    transition: transform 0.3s ease;
+  }
+  
+  .product-card img {
+    max-width: 100%;
+    border-radius: 1em;
+    height: auto;
+  }
+  
+  /* Cuando la tarjeta esté en hover */
+  .product-card:hover {
+    transform: scale(1.05);
+  }
+  
+  .product-card h3 {
+    font-size: 1.2em;
+    text-align: center;
+    margin: 0.5em 0;
+  }
+  
+  .product-card p {
+    font-size: 1em;
+    text-align: center;
+  }
+  
+  .add-to-cart-btn {
+    background-color: #500550f6;
+    color: white;
+    border: none;
+    padding: 0.75em 1em;
+    border-radius: 0.5em;
+    cursor: pointer;
+    text-transform: uppercase;
+  }
+  
+  .add-to-cart-btn:hover {
+    background-color: #720172af;
+  }
+  
+  /* Responsive: adaptamos el tamaño de las tarjetas en pantallas pequeñas */
+  @media (max-width: 768px) {
+    .product-card {
+      width: 100%; /* Ocupa todo el ancho en pantallas pequeñas */
+      margin: 1em 0; /* Espacio entre las tarjetas */
+    }
+  }
+  

@@ -1,3 +1,5 @@
+/* global.css */
+
 /* Reset de márgenes y padding */
 * {
   margin: 0;
@@ -7,24 +9,15 @@
 
 /* Tipografía base */
 body {
-  font-family: 'Arial', sans-serif; 
+  font-family: 'Arial', sans-serif;
   font-size: 16px;
   line-height: 1.5;
-  color: var(--primary-color); /* Color texto*/
-  background-color: var(--secondary-color); /*Color de fondo*/
+  color: var(--primary-color);
+  background-color: var(--secondary-color);
   min-height: 100vh;
-  margin: 0;
   display: flex;
   flex-direction: column;
   justify-content: flex-start;
-}
-
-/* Configuración general de los contenedores */
-.container {
-  width: 100%;
-  margin: 0 auto;
-  padding: 0 1rem; /* Asegura que no quede pegado al borde */
-  max-width: 1280px; /* ancho máximo del contenido */
 }
 
 /* Colores globales */
@@ -32,88 +25,33 @@ body {
   --primary-color: #457b9d; /* Azul */
   --secondary-color: #fafafa; /* Gris claro */
   --highlight-color: #a8dadc; /* Azul claro */
+  --dark-color: #5f065ff6; /* Color para botones, enlaces y header */
 }
 
-/* Estilos para los enlaces globales */
+/* Estilos generales de enlaces */
 a {
   text-decoration: none;
   color: inherit;
   transition: color 0.3s ease;
-  font-weight: 500;
 }
 
 a:hover {
   color: var(--highlight-color);
 }
 
-/*Estructura header footer y navegacion de pagina*/
-.header, .footer {
+/* Estilos para el contenedor principal */
+.container {
   width: 100%;
-  background-color: var(--primary-color);
-  padding: 1rem 0;
-  color: var(--secondary-color);
+  margin: 0 auto;
+  padding: 0 1rem;
+  max-width: 1280px;
 }
 
-.navbar ul {
-  list-style: none;
-  display: flex;
-  gap: 1.5em;
-  padding: 0;
-  margin: 0;
-}
-
-.navbar li {
-  font-size: 1.2em;
-}
-
-.navbar a {
-  text-decoration: none;
-  color: var(--secondary-color);
-  font-weight: bold;
-  transition: color 0.3s;
-}
-
-
-/* Contenedor Principal */
-.main-container {
-  display: flex;
-  flex-direction: column;
-  align-items: center;
-  padding: 2rem;
-}
-
-
-/*Elementos Lista*/
 ul {
   list-style: none;
 }
+
 li {
   font-size: 1rem;
-}
-
-/* Medias queries */
-
-@media (max-width: 420px) {
-  .navbar ul {
-    flex-direction: column;
-    gap: 1rem;
-  }
-}
-
-@media (max-width: 768px) {
-  .main-container {
-    padding: 2.5rem;
-  }
-
-  .navbar ul {
-    list-style: none;
-    display: flex;
-    flex-direction: row;
-    gap: .5em;
-}
-  
-  .navbar li {
-    font-size: 1rem;
-  }
 }
 

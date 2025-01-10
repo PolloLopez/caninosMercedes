@@ -1,10 +1,89 @@
+/* MainLayout.css */
+
 .main-layout {
     display: flex;
     flex-direction: column;
-    min-height: 100vh;
+    min-height: 100vh; /* Asegura que el layout ocupe toda la altura de la pantalla */
 }
 
 .main-content {
-    flex: 1;
-    padding: 2rem;
+    flex: 1; /* Hace que el contenido ocupe todo el espacio disponible */
+    width: 100%; /* Asegura que ocupe todo el ancho */
+    padding: 1rem; /* Añade algo de padding al contenido */
+    box-sizing: border-box; /* Incluye padding en el tamaño total del contenedor */
+}
+
+/* NavBar */
+.navbar {
+    background-color: var(--primary-color);
+    padding: 0.75rem 1rem; /* Ajusta el padding para que no sea tan grande */
+    color: var(--secondary-color);
+    min-height: 50px; /* Asegura que el navbar no sea demasiado grande */
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
+}
+
+.navbar ul {
+    list-style: none;
+    display: flex;
+    gap: 1.5em;
+    margin: 0;
+}
+
+.navbar li {
+    font-size: 1.2em;
+}
+
+.navbar a {
+    text-decoration: none;
+    color: var(--secondary-color);
+    font-weight: bold;
+    transition: color 0.3s;
+}
+
+.navbar a:hover {
+    color: var(--highlight-color);
+}
+
+/* Footer */
+.footer {
+    background-color: var(--primary-color);
+    padding: 1rem; /* Reducido el padding para que no ocupe mucho espacio */
+    color: var(--secondary-color);
+    text-align: center;
+    min-height: 15px; /* Asegura que el footer no sea demasiado grande */
+}
+
+/* Medias queries */
+@media (max-width: 420px) {
+    .navbar ul {
+        flex-direction: column;
+        gap: 1rem;
+    }
+
+    .main-container {
+        padding: 2rem;
+    }
+
+    .product-card {
+        max-width: 100%;
+    }
+}
+
+@media (max-width: 768px) {
+    .main-container {
+        padding: 2.5rem;
+    }
+
+    .navbar ul {
+        list-style: none;
+        display: flex;
+        flex-direction: row;
+        gap: 1em;
+    }
+
+    .navbar li {
+        font-size: 1rem;
+    }
 }

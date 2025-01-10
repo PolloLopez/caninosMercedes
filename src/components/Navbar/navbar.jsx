@@ -1,14 +1,19 @@
 import React from "react";
 import { Link } from "react-router-dom";
 import { useCart } from "../../context/CartContext";
+import logo from "../../assets/images/logo.png";
 import "./navbar.css";
 
 const Navbar = () => {
     const { cart } = useCart(); // Obtener el carrito
     return (
         <nav className="navbar">
+            <div className="logo">
+                <Link to="/">
+                    <img src={logo} alt="Logo" />
+                </Link>
+            </div>
             <ul>
-                <li><Link to="/">Inicio</Link></li>
                 <li><Link to="/tienda">Tienda</Link></li>
                 <li><Link to="/carrito">Carrito</Link></li>
                 <li><Link to="/nosotros">Nosotros</Link></li>

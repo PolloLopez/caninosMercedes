@@ -1,75 +1,65 @@
-/* Estilos del carrito */
-.cart-container {
-  padding: 20px;
-}
+/* Carrito/Carrito.css */
 
 .cart-item {
   display: flex;
-  align-items: center;
-  gap: 1rem;
-  padding: 10px;
+  justify-content: space-between;
+  padding: 1em;
   border-bottom: 1px solid #ddd;
+  align-items: center; /* Asegura que todos los elementos estén alineados */
 }
 
 .cart-item img {
-  width: 50px;
+  width: 80px; /* Aumento el tamaño de la imagen */
+  height: auto;
+  margin-right: 1rem; /* Un pequeño espacio entre la imagen y los textos */
+}
+
+.cart-item .info-item {
+  display: flex;
+  flex-direction: column;
+  justify-content: center;
 }
 
 .cart-item span {
   font-size: 1rem;
-  margin-right: 1rem;
 }
 
-.cart-item button {
-  padding: 0.5rem;
-  background-color: #500550f6;
-  color: white;
-  border: none;
-  border-radius: 5px;
+.btn-carrito, .vaciar-carrito {
+  font-size: 1rem; /* Tamaño de fuente ajustado */
+  padding: 0.25em .5em; /* Mantener el tamaño del botón constante */
+  border-radius: 0.5em;
   cursor: pointer;
   transition: background-color 0.3s ease;
-}
-
-.cart-item button:hover {
-  background-color: #720172af;
+  display: flex;
+  justify-content: center;
+  align-items: center;
+  margin-inline: .25rem;
 }
 
 .vaciar-carrito {
-  padding: 1em;
-  background-color: #500550f6;
+  background-color: #ff4136;
   color: white;
   border: none;
-  border-radius: 5px;
-  cursor: pointer;
-  transition: background-color 0.3s ease;
-  margin-top: 1em;
-  display: block;
+  margin-top: 1rem;
 }
 
 .vaciar-carrito:hover {
-  background-color: #720172af;
+  background-color: #d12a2a;
 }
-
-/* Estilos adicionales */
-.btn-carrito {
-  margin-inline: 5px;
-  padding: 0.5rem 1rem;
-  background-color: #500550f6;
-  color: white;
-  border: none;
-  border-radius: 5px;
-  cursor: pointer;
-  transition: background-color 0.3s ease;
-}
-
-.btn-carrito:hover {
-  background-color: #720172af;
-}
-
 
 .total-compra {
   margin-top: 1em;
   font-size: 1.2em;
   font-weight: bold;
-  color: #500550f6;
+  color: var(--dark-color);
+}
+
+/* Ajustes para asegurar la alineación correcta */
+.total-compra, .vaciar-carrito {
+  display: flex;
+  justify-content: center;
+  align-items: center;
+  width: 50%;
+  margin: auto;
+  margin-bottom: .5rem;
 }

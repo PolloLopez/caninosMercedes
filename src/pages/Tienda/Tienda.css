@@ -6,7 +6,7 @@
   .product-list {
     display: flex;
     flex-wrap: wrap;
-    justify-content: space-around; /* O cualquier otro valor de distribución que prefieras */
+    justify-content: space-evenly;
     gap: 1rem; /* Espacio entre las tarjetas */
   }
   

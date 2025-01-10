@@ -11,6 +11,9 @@ const ProductCard = ({ product, addToCart }) => {
       />
       <h3>{product.name}</h3>
       <p>{product.description}</p>
+      <div className="price">
+  ${((product.price)).toFixed(2)}
+</div>
       <button className="add-to-cart-btn" onClick={() => addToCart(product)}>
         Agregar al carrito
       </button>
