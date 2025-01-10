@@ -13,7 +13,7 @@ import './App.css';
 function App() {
   return (
     <CartProvider>
-      <Router>
+      <Router> 
         <MainLayout>
           <Routes>
             <Route path="/" element={<Inicio />} />
