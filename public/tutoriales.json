@@ -1,0 +1,17 @@
+[
+    {
+      "id": 1,
+      "title": "Entrenamiento básico para cachorros",
+      "description": "Aprende a entrenar a tu cachorro desde los primeros días en casa.",
+      "content": "Contenido del tutorial básico...",
+      "image": "https://picsum.photos/id/237/200/300"
+    },
+    {
+      "id": 2,
+      "title": "Comandos básicos de obediencia",
+      "description": "Enseña a tu perro los comandos básicos para una buena convivencia.",
+      "content": "Contenido del tutorial de obediencia...",
+      "image": "https://images.pexels.com/photos/4587990/pexels-photo-4587990.jpeg"
+    }
+  ]
+  

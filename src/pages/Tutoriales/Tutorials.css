@@ -1,16 +1,18 @@
+/* src/pages/Tutorials/Tutorials.css */
+
 .tienda {
     padding: 1rem;
     text-align: center;
   }
   
-  .product-list {
+  .tutorial-list {
     display: flex;
     flex-wrap: wrap;
     justify-content: space-evenly;
     gap: 1rem; /* Espacio entre las tarjetas */
   }
   
-  .product-card {
+  .tutorial-card {
     border: 2px solid var(--highlight-color);
     padding: 1.25rem;
     border-radius: 1rem;
@@ -20,14 +22,14 @@
     overflow: hidden; /* Para evitar que las imágenes sobresalgan de las tarjetas */
   }
   
-  .product-image {
+  .tutorial-image {
     width: 100%;
     height: auto;
     object-fit: cover; /* Para asegurar que las imágenes se adapten al tamaño sin distorsionarse */
     border-radius: 1rem;
   }
   
-  .add-to-cart-btn {
+  .view-more-btn {
     padding: 0.75rem 1rem;
     border: none;
     background-color: var(--primary-color);
@@ -37,7 +39,7 @@
     transition: background-color 0.25s ease;
   }
   
-  .add-to-cart-btn:hover {
+  .view-more-btn:hover {
     background-color: var(--highlight-color);
     color: var(--primary-color);
   }

@@ -1,8 +1,29 @@
 .inicio {
     text-align: center;
     font-size: 1.5rem;
+    padding: .2rem;
+    background-color: #f4f4f4; /* Fondo suave */
+    border-radius: 8px;
+    box-shadow: 0 4px 6px rgba(0, 0, 0, 0.1); /* Sombra suave para un toque moderno */
+    max-width: 900px;
+    margin: 3rem auto; /* Centramos el bloque */
 }
 
 .inicio h1 {
-    color: var (--primary-color);
+    color: var(--primary-color);
+    font-size: 2.5rem;
+    font-weight: bold;
+    margin-bottom: 1rem;
+}
+
+.descrip-inicio {
+    color: #333;
+    font-size: 1.2rem;
+    line-height: 1.6;
+    padding: 1rem;
+    border-radius: 6px;
+    background-color: #fff; /* Fondo blanco para la descripción */
+    box-shadow: 0 2px 5px rgba(0, 0, 0, 0.1); /* Sombra suave */
+    max-width: 75%; /* Limitar el ancho para mejorar la legibilidad */
+    margin: 0 auto;
 }

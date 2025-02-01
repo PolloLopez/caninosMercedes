@@ -14,10 +14,10 @@ const Navbar = () => {
                 </Link>
             </div>
             <ul>
-                <li><Link to="/tienda">Tienda</Link></li>
-                <li><Link to="/carrito">Carrito</Link></li>
                 <li><Link to="/nosotros">Nosotros</Link></li>
                 <li><Link to="/tutoriales">Tutoriales</Link></li>
+                <li><Link to="/tienda">Productos</Link></li>
+                <li><Link to="/carrito">Carrito</Link></li>
                 {/* Verifica que cart esté definido y sea un array antes de acceder a su longitud */}
                 {Array.isArray(cart) && cart.length > 0 && (
                     <li><Link to="/carrito" className="cart-icon">

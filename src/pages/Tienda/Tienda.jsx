@@ -1,6 +1,4 @@
 import React from "react";
-//import { useCart } from "../../context/CartContext"; // Importamos el hook useCart
-//import ProductList from "../../components/ProductList/ProductList"; // Importamos ProductList
 import ProductCard from "../../components/ProductCard/ProductCard"; // Asegúrate de que este import esté correcto
 
 import "./tienda.css";
