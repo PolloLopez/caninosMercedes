@@ -1,24 +1,28 @@
 // src/pages/Admin/EditProduct.jsx
 import React, { useState, useEffect } from "react";
 import { useNavigate, useParams } from "react-router-dom";
-import productosData from "../../../public/productos.json";
 
 const EditProduct = () => {
     const { id } = useParams(); // Obtener el ID del producto desde la URL
     const [product, setProduct] = useState(null);
+    const [productosData, setProductosData] = useState([]);
     const navigate = useNavigate();
 
     useEffect(() => {
-        // Buscar el producto por su ID
-        const foundProduct = productosData.find((prod) => prod.id === parseInt(id)); // Convertir el id de la URL a número
-        if (foundProduct) {
-            setProduct(foundProduct);
-        }
+        // Cargar productos desde el JSON
+        fetch("/productos.json")
+            .then((response) => response.json())
+            .then((data) => {
+                setProductosData(data);
+                const foundProduct = data.find((prod) => prod.id === parseInt(id));
+                if (foundProduct) setProduct(foundProduct);
+            })
+            .catch((error) => console.error("Error cargando productos:", error));
     }, [id]);
 
     const handleSubmit = (e) => {
         e.preventDefault();
-        // Aquí puedes implementar la lógica para actualizar el producto
+        // Aquí puedes implementar la lógica para actualizar el producto en la base de datos
         alert("Producto actualizado!");
         navigate("/admin/productos");
     };
@@ -37,6 +41,8 @@ const EditProduct = () => {
                         type="text" 
                         value={product.name} 
                         onChange={(e) => setProduct({ ...product, name: e.target.value })} 
+                        id="product-name"
+                        name="product-name"
                     />
                 </div>
                 <div>
