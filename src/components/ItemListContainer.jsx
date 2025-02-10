@@ -1,6 +1,6 @@
 // (Componente principal que muestra los productos)
 import React from "react";
-import useFetchProducts from "../hooks/useFetchProducts"; // Importamos el hook 
+import useFetchProducts from "../hooks/useFetchProducts.js"; // Importamos el hook 
 import ProductCard from "../components/ProductCard/ProductCard"; // Importamos ProductCard
 import { useCart } from "../context/cartContext"; // Importamos el hook useCart
 import "./ItemListContainer.css";

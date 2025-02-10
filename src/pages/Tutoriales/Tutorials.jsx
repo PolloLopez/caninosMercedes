@@ -1,31 +1,24 @@
 // src/pages/Tutorials/Tutorials.jsx
-import React, { useState, useEffect } from "react";
+import React from "react";
 import TutorialCard from "../../components/TutorialCard/TutorialCard";
-import "./Tutorials.css"; // Importa los estilos específicos para los tutoriales
+import useFetchTutorials from "../../hooks/useFetchTutorials";
+import ProductCard from "../../components/ProductCard/ProductCard";
+
 
 const Tutorials = () => {
-  const [tutorials, setTutorials] = useState([]);
+  const {tutorials, loading, error } = useFetchTutorials();
 
-  useEffect(() => {
-    // Cargar el archivo tutoriales.json desde la carpeta public
-    fetch("/tutoriales.json")
-      .then((response) => response.json())
-      .then((data) => {
-        setTutorials(data); // Establece los datos de los tutoriales en el estado
-        console.log(data);  // Log para verificar si los datos se cargan correctamente
-      })
-      .catch((error) => {
-        console.error("Error al cargar los tutoriales:", error);
-      });
-  }, []);  // El array vacío asegura que solo se ejecute una vez al montar el componente
+  if (loading) return <p>Cargando tutoriales...</p>
+  if (error) return <p>Error al cargar los tutoriales: {error}</p>
 
   return (
     <div className="tienda">
       <h1>Tutoriales</h1>
       <div className="tutorial-list">
-        {tutorials.map((tutorial) => (
-          <TutorialCard key={tutorial.id} tutorial={tutorial} />
-        ))}
+        {tutorials.map((tutorial) => {
+          console.log("Renderizando tutorial:", tutorial);
+          return <TutorialCard key ={tutorial.id} tutorial={tutorial} />
+})}
       </div>
     </div>
   );

@@ -1,8 +1,11 @@
 //Este archivo contiene el custom hook que utilizamos para obtener los productos desde el archivo JSON
-
+// src>hooks>useFetchProducts.js
+import { db } from "../firebase";
 import { useState, useEffect } from "react";
+import { collection, getDocs } from "firebase/firestore";
 
-const useFetchProducts = (url) => {
+
+const useFetchProducts = () => {
   const [products, setProducts] = useState([]);
   const [loading, setLoading] = useState(true);
   const [error, setError] = useState(null);
@@ -10,21 +13,24 @@ const useFetchProducts = (url) => {
   useEffect(() => {
     const fetchProducts = async () => {
       try {
-        const response = await fetch(url);
-        if (!response.ok) throw new Error("Error al cargar los productos");
-        const data = await response.json();
-        setProducts(data);
+        const querySnapshot = await getDocs(collection(db, "productos"));
+        const productsList = querySnapshot.docs.map((doc) => ({
+          id: doc.id,
+          ...doc.data(),
+        }));
+        setProducts(productsList);
       } catch (err) {
-        setError(err.message);
+        setError(err);
       } finally {
         setLoading(false);
       }
     };
 
     fetchProducts();
-  }, [url]);
+  }, []);
 
   return { products, loading, error };
 };
 
 export default useFetchProducts;
+

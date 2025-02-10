@@ -9,7 +9,9 @@
     display: flex;
     flex-wrap: wrap;
     justify-content: space-evenly;
-    gap: 1rem; /* Espacio entre las tarjetas */
+    gap: .25rem; /* Espacio entre las tarjetas */
+    width: 100%;
+    margin: auto;
   }
   
   .tutorial-card {

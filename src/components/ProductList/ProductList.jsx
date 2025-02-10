@@ -1,7 +1,7 @@
 // components/ProductList/ProductList.jsx
 import React from "react";
 import ProductCard from "../ProductCard/ProductCard";
-import "./ProductList.css";
+
 
 const ProductList = ({ products, addToCart }) => {
   if (products.length === 0) {
