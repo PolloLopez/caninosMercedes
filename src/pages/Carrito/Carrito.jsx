@@ -6,7 +6,7 @@ const Carrito = () => {
   const { cart, clearCart, increaseQuantity, decreaseQuantity, removeFromCart } = useCart();
 
   // Calcular el total de la compra
-  const totalCompra = cart.reduce((acc, product) => acc + product.price * product.quantity, 0);
+  const totalCompra = cart.reduce((acc, product) => acc + product.precio * product.quantity, 0);
 
   return (
     <div>
@@ -19,8 +19,8 @@ const Carrito = () => {
           <ul>
             {cart.map((product) => (
               <li key={product.id} className="cart-item">
-                <img src={product.image} alt={product.name} width={50} />
-                <span>{product.name}</span> / ${product.price} - Cant.: 
+                <img src={product.imagen} alt={product.nombre} width={50} />
+                <span>{product.nombre}</span>  ${product.precio} - Cant.: 
                 <button
                   className="btn-carrito"
                   onClick={() => decreaseQuantity(product.id)}
@@ -34,7 +34,7 @@ const Carrito = () => {
                 >
                   +
                 </button>
-                <span>$ { (product.price * product.quantity).toFixed(2) }</span>
+                <span>$ { (product.precio * product.quantity).toFixed(2) }</span>
                 <button
                   className="btn-carrito"
                   onClick={() => removeFromCart(product.id)}

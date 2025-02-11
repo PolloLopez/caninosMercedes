@@ -6,7 +6,7 @@ const ProductCard = ({ product, addToCart }) => {
   return (
     <div className="product-card">
       <img
-        src={product.imagen} // Asegúrate de que los productos tengan la propiedad 'image'
+        src={product.imagen} 
         alt={product.nombre} 
         className="product-image"
       />

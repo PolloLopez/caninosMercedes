@@ -1,5 +1,8 @@
+//src>pages>Admin>AdminPanel.jsx
 import React, { useState, useEffect } from "react";
 import { useNavigate } from "react-router-dom";
+import { db } from "../../firebase";
+import { collection, getDocs } from "firebase/firestore";
 
 const AdminPanel = () => {
   const navigate = useNavigate();
@@ -11,15 +14,28 @@ const AdminPanel = () => {
     if (!isAdmin) {
       navigate("/admin/login");
     } else {
-      // Cargar los productos desde productos.json
-      fetch("/productos.json")
-        .then((res) => res.json())
-        .then((data) => setProductos(data));
+      // Cargar productos desde Firestore
+      const fetchProductos = async () => {
+        const productosSnapshot = await getDocs(collection(db, "productos"));
+        const productosData = productosSnapshot.docs.map((doc) => ({
+          id: doc.id,
+          ...doc.data(),
+        }));
+        setProductos(productosData);
+      };
 
-      // Cargar los tutoriales desde tutoriales.json
-      fetch("/tutoriales.json")
-        .then((res) => res.json())
-        .then((data) => setTutoriales(data));
+       // Cargar tutoriales desde Firestore
+        const fetchTutoriales = async () => {
+        const tutorialesSnapshot = await getDocs(collection(db, "tutoriales"));
+        const tutorialesData = tutorialesSnapshot.docs.map((doc) => ({
+          id: doc.id,
+          ...doc.data(),
+        }));
+        setTutoriales(tutorialesData);
+      };
+
+      fetchProductos();
+      fetchTutoriales();
     }
   }, [navigate]);
 
@@ -31,15 +47,15 @@ const AdminPanel = () => {
       <ul>
         {productos.map((producto) => (
           <li key={producto.id}>
-            <img src={producto.image} alt={producto.name} width="100" />
-            <div>{producto.name}</div>
-            <div>{producto.description}</div>
-            <div>${producto.price}</div>
-            <div>{producto.category}</div>
-            <button onClick={() => navigate(`/admin/producto/${producto.id}`)}>
-              Editar
-            </button>
-          </li>
+          <img src={producto.imagen} alt={producto.nombre} width="100" />
+          <div>{producto.nombre}</div>
+          <div>{producto.descripcion}</div>
+          <div>${producto.precio}</div>
+          <div>{producto.categoria}</div>
+          <button onClick={() => navigate(`/admin/producto/${producto.id}`)}>
+            Editar
+          </button>
+        </li>
         ))}
       </ul>
 

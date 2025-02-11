@@ -1,3 +1,5 @@
+bien, en CreateProduct.jsx quedo asi:
+
 //src>pages>Admin>CreateProduct.jsx
 import React, { useState } from "react";
 import { useNavigate } from "react-router-dom";
@@ -91,3 +93,10 @@ const CreateProduct = () => {
 };
 
 export default CreateProduct;
+
+para que el ID se cree automaticamente de forma unica
+
+no se rompio nada, pero no encuentro el boton o la forma de agregar un producto nuevo, solo editar los productos existentes
+
+
+
