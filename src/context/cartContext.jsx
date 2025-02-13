@@ -1,3 +1,4 @@
+//src>context>cartContext.jsx
 import React, { createContext, useContext, useState } from "react";
 
 // Creación del contexto
@@ -50,6 +51,12 @@ const decreaseQuantity = (id) => {
     setCart(updatedCart);
   };
 
+    // Calcular el precio total del carrito
+    const totalPrice = () => {
+      return cart.reduce((acc, product) => acc + product.precio * product.quantity, 0);
+    };
+  
+
   // Vaciar el carrito
   const clearCart = () => {
     setCart([]);
@@ -64,6 +71,7 @@ const decreaseQuantity = (id) => {
         decreaseQuantity,
         removeFromCart,
         clearCart,
+        totalPrice,
       }}
     >
       {children}

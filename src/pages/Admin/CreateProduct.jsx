@@ -45,7 +45,7 @@ const CreateProduct = () => {
                     <input 
                         type="text" 
                         value={nombre} 
-                        onChange={(e) => setName(e.target.value)} 
+                        onChange={(e) => setNombre(e.target.value)} 
                         required 
                     />
                 </div>

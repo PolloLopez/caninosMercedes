@@ -42,7 +42,7 @@ const AdminPanel = () => {
   return (
     <div>
       <h1>Panel de Administración</h1>
-
+      <button onClick={() => navigate("/admin/create-product")}>Agregar Producto</button>
       <h2>Productos</h2>
       <ul>
         {productos.map((producto) => (

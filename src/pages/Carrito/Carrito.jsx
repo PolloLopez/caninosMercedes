@@ -1,9 +1,12 @@
+// src>pages>Carrito>Carrito.jsx
 import React from "react";
 import { useCart } from "../../context/cartContext";
+import { useNavigate } from "react-router-dom";
 import "./Carrito.css";
 
 const Carrito = () => {
   const { cart, clearCart, increaseQuantity, decreaseQuantity, removeFromCart } = useCart();
+  const navigate = useNavigate(); // Definir navigate
 
   // Calcular el total de la compra
   const totalCompra = cart.reduce((acc, product) => acc + product.precio * product.quantity, 0);
@@ -34,7 +37,7 @@ const Carrito = () => {
                 >
                   +
                 </button>
-                <span>$ { (product.precio * product.quantity).toFixed(2) }</span>
+                <span>$ { (product.precio * product.quantity).toFixed(0) }</span>
                 <button
                   className="btn-carrito"
                   onClick={() => removeFromCart(product.id)}
@@ -45,8 +48,11 @@ const Carrito = () => {
             ))}
           </ul>
           <div className="total-compra">
-            <span>Total de la compra: ${totalCompra .toFixed(2)}</span>
+            <span>Total de la compra: ${totalCompra.toFixed(0)}</span>
           </div>
+          <button onClick={() => navigate("/checkout")} disabled={cart.length === 0}>
+            Finalizar Compra
+          </button>
           <button onClick={clearCart} className="vaciar-carrito">
             Vaciar carrito
           </button>

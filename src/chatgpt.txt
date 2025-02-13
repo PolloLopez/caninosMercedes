@@ -1,102 +1,62 @@
-bien, en CreateProduct.jsx quedo asi:
+EN EL PASO 1 que debo modificar
+        : doc(db, 'orders', email); // Cambia según cómo almacenes las órdenes (por ID o email)?
 
-//src>pages>Admin>CreateProduct.jsx
-import React, { useState } from "react";
-import { useNavigate } from "react-router-dom";
-import { db } from "../../firebase";
-import { collection, addDoc } from "firebase/firestore";
-import { v4 as uuidv4 } from 'uuid';
+donde debo poner:
 
+import React from 'react';
 
-const CreateProduct = () => {
-    const [nombre, setNombre] = useState("");
-    const [descripcion, setDescripcion] = useState("");
-    const [precio, setPrecio] = useState("");
-    const [imagen, setImagen] = useState("");
-    const [categoria, setCategoria] = useState("");
-    const navigate = useNavigate();
+export const MercadoPagoButton = ({ orderId, total }) => {
+  const handlePayment = () => {
+    // Aquí iría la lógica para generar el pago con Mercado Pago y redirigir al cliente.
+    console.log(`Redirigiendo al cliente para pagar la orden ${orderId} por un total de ${total}`);
+  };
 
-    const handleSubmit = async (e) => {
-        e.preventDefault();
-
-        // Generar el ID único para el producto
-        const newProduct = {
-            id: uuidv4(), // Usamos uuidv4 para generar un ID único
-            nombre,
-            descripcion,
-            precio: parseFloat(precio),
-            imagen,
-            categoria,
-        };
-
-        try {
-            await addDoc(collection(db, "productos"), newProduct);
-            console.log("Producto agregado:", newProduct);
-            navigate("/admin");
-        } catch (error) {
-            console.error("Error al agregar producto:", error);
-        }
-    };
-
-    return (
-        <div>
-            <h1>Crear nuevo producto</h1>
-            <form onSubmit={handleSubmit}>
-                <div>
-                    <label>Nombre:</label>
-                    <input 
-                        type="text" 
-                        value={nombre} 
-                        onChange={(e) => setName(e.target.value)} 
-                        required 
-                    />
-                </div>
-                <div>
-                    <label>Descripción:</label>
-                    <textarea 
-                        value={descripcion} 
-                        onChange={(e) => setDescripcion(e.target.value)} 
-                        required 
-                    />
-                </div>
-                <div>
-                    <label>Precio:</label>
-                    <input 
-                        type="number" 
-                        value={precio} 
-                        onChange={(e) => setPrecio(e.target.value)} 
-                        required 
-                    />
-                </div>
-                <div>
-                    <label>Imagen:</label>
-                    <input 
-                        type="text" 
-                        value={imagen} 
-                        onChange={(e) => setImagen(e.target.value)} 
-                        required 
-                    />
-                </div>
-                <div>
-                    <label>Categoría:</label>
-                    <input 
-                        type="text" 
-                        value={categoria} 
-                        onChange={(e) => setCategoria(e.target.value)} 
-                        required 
-                    />
-                </div>
-                <button type="submit">Crear Producto</button>
-            </form>
-        </div>
-    );
-};
-
-export default CreateProduct;
-
-para que el ID se cree automaticamente de forma unica
-
-no se rompio nada, pero no encuentro el boton o la forma de agregar un producto nuevo, solo editar los productos existentes
+  return <button onClick={handlePayment}>Pagar con Mercado Pago</button>;
 
 
+
+
+
+  
+
+
+🔹 1. Finalizar la compra correctamente (💾 Guardar en Firestore)
+Ya se está guardando en Firestore, pero podríamos:
+✔ Mostrar un mensaje de confirmación con los datos de la compra.
+✔ Redirigir a una pantalla con el ID de la orden (/orden-confirmada/:id).
+
+🔹 2. Manejo de alertas y notificaciones (📩 Para el dueño y el cliente)
+Podemos:
+✔ Enviar un correo al dueño con los datos del pedido.
+✔ Enviar un correo o alerta al cliente con el estado del pedido.
+✔ Mostrar en /admin un panel para ver los pedidos recibidos.
+
+🔹 3. (paso uno y dos siguiente) Implementar formas de pago (💳 Mercado Pago)
+✔ Generar un checkout con Mercado Pago para procesar el pago.
+✔ Asociar el estado del pago a la orden en Firestore.
+
+
+1️⃣ Finalizar compra: Crear un proceso donde los usuarios confirmen su compra antes de pagar.
+2️⃣ Integrar Mercado Pago: Configurar pagos online para que los clientes puedan pagar sus compras.
+3️⃣ Seguimiento de compra: Permitir que los clientes revisen el estado de sus pedidos.
+4️⃣ Control de stock: Ajustar la cantidad de productos disponibles al realizar una compra.
+5️⃣ Redireccion en caso de fallar.
+6️⃣ Ver Tutorial, reproducir video de youtube
+
+Haciendo paso 1
+    Revisar el carrito: Mostrar los productos seleccionados y el total.
+    Formulario de compra: Recoger datos del cliente (nombre, email, dirección).
+    Confirmación y almacenamiento: Guardar la orden en Firestore.
+    Redirección: Mostrar un mensaje de éxito o error y redirigir.
+
+
+VER ERROR:
+
+
+12/02 16:05 
+
+
+        <button type="submit" disabled={loading}>
+            {loading ? "Procesando..." : "Confirmar Compra"}
+        </button>
 

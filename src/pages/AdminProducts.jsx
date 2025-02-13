@@ -1,52 +1,62 @@
-import React, { useState} from "react";
+import React, { useState, useEffect} from "react";
+import { db } from "../firebase";
+import { collection, getDocs, deleteDoc, doc } from "firebase/firestore";
 import "./adminproducts.css";
-
+import { useNavigate } from "react-router-dom";
 
 const AdminProducts = () => {
-    const [product, setProduct] = useState({ name: "", price: "", image: "", description: "" });
-    const [products, setProducts] = useState(JSON.parse(localStorage.getItem("products")) || []);
+    const [products, setProducts] = useState([]);
+    const navigate = useNavigate();
 
-
-    const handleChange = (e) => {
-        const { name, value } = e.target;
-        setProduct({ ...product, [name]: value });
+  // 🔥 Obtener productos desde Firestore
+    useEffect(() => {
+    const fetchProducts = async () => {
+        try {
+        const querySnapshot = await getDocs(collection(db, "productos"));
+        const productosArray = querySnapshot.docs.map((doc) => ({
+            id: doc.id,
+            ...doc.data(),
+        }));
+        setProducts(productosArray);
+        } catch (error) {
+        console.error("Error al obtener productos:", error);
+        }
     };
-    const handleSubmit = (e) => {
-    e.preventDefault();
-    const newProducts = [...products, product];
-    setProduct(newProducts);
-    localStorage.setItem("products", JSON.stringify(newProducts));
-    setProduct({name: "", price: "", image: "", description: ""});
-};
+
+    fetchProducts();
+    }, []);
+
+      // 🚀 Función para eliminar un producto de Firestore
+    const handleDelete = async (id) => {
+    try {
+        await deleteDoc(doc(db, "productos", id));
+        setProducts(products.filter((p) => p.id !== id)); 
+    } catch (error) {
+        console.error("Error al eliminar producto:", error);
+    }
+    };
 
 return (
     <div className="admin-container">
-        <h1>Cargar nuevo producto</h1>
-        <form onSubmit={handleSubmit} className="product-form">
-            <input 
-            type="text"
-            name="name"
-            value={producto.name}
-            onChange={handleChange}
-            placeholder="Nombre del producto"
-            required
-            />
-            <input
-            type="number"
-            name="price"
-            value={product.price}
-            onChange={handleChange}
-            placeholder="Precio"
-            required
-        />
-        <textarea
-        name="description"
-        value={product.description}
-        onChange={handleChange}
-        placeholder="URL de la imagen"
-        />
-        <button type="submit">Agregar producto</button>
-        </form>
+        <h1>Productos en la tienda</h1>
+        <button onClick={() => navigate("/admin/create-product")}>➕ Agregar Producto</button>
+        <ul>
+        {products.map((p) => (
+            <li key={p.id}>
+            <h3>{p.nombre}</h3>
+            <p>Precio: ${p.precio}</p>
+            <p>{p.descripcion}</p>
+            <img src={p.imagen} alt={p.nombre} width="100" />
+            <div>
+            <img src={p.imagen} alt={p.nombre} width="100" />
+                <button onClick={() => navigate(`/admin/edit-product/${p.id}`)}>✏️ Editar</button>
+                <button onClick={() => handleDelete(p.id)}>🗑️ Eliminar</button>
+                </div>
+            </li>
+        ))}
+        </ul>
     </div>
-);
+    );
 };
+
+export default AdminProducts;

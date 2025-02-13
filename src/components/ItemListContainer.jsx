@@ -1,16 +1,16 @@
-// (Componente principal que muestra los productos)
+// src>components>ItemListContainer.jsx
 import React from "react";
-import useFetchProducts from "../hooks/useFetchProducts.js"; // Importamos el hook 
-import ProductCard from "../components/ProductCard/ProductCard"; // Importamos ProductCard
-import { useCart } from "../context/cartContext"; // Importamos el hook useCart
+import useFetchProducts from "../hooks/useFetchProducts.js"; 
+import ProductCard from "../components/ProductCard/ProductCard"; 
+import { useCart } from "../context/cartContext";
 import "./ItemListContainer.css";
- 
+
 const ItemListContainer = () => {
-  const { products, loading, error } = useFetchProducts("/productos.json"); // Ruta correcta a productos.json
-  const { addToCart } = useCart(); // Obtenemos la función addToCart desde el contexto
+  const { products, loading, error } = useFetchProducts(); 
+  const { addToCart } = useCart(); 
 
   if (loading) return <p>Cargando productos...</p>;
-  if (error) return <p>Error: {error}</p>;
+  if (error) return <p>Error: {error.message || "Ocurrió un error desconocido"}</p>;
 
   return (
     <div>

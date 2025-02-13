@@ -6,43 +6,63 @@ la estructura es:
     assets
     │   ├── index-DhSPVlde.js
     │   ├── index-t-0RbNPc.css
-    │   ├── logo-D6oMXuj9.png
+    │   └── logo-D6oMXuj9.png
     ├── index.html
-    ├── productos.json
-    ├── vite.svg
+    └── vite.svg
+
 
 >node_modules
     bastante contenido que nunca toque
 
 >public                  
+    │   ├── product.json
     │   ├── productos.json
     │   ├── tutoriales.json
+    │   └── vite.svg
+
 
 >src/
-│   │   └── ProductCard.css
+│   ├── assets/ 
+│   │   └── logo.png
+
+├── components/ 
+│   ├── CartModal/ 
+│   │   ├── CartModal.css 
+│   │   └── CartModal.jsx 
+│   ├── Footer/ 
+│   │   ├── footer.css 
+│   │   └── footer.jsx
+│   ├── Navbar/ 
+│   │   ├── navbar.css 
+│   │   └── navbar.jsx 
+│   ├── ProductCard/ 
+│   │   ├── ProductCard.css 
+│   │   └── ProductCard.jsx 
 │   ├── ProductList/ 
-│   │   ├── ProductList.jsx 
-│   │   └── ProductList.css (archivo vacio)
+│   │   └── ProductList.jsx 
 |   ├── Toast/
-│       ├── Toast.jsx
-│       └── Toast.css
-|   └── TutorialCard/
-│       ├── TutorialCard.jsx
-│       └── TutorialCard.css
-|
-│   ├── ItemListContainer.jsx
-|   ├── ItemListContainer.css
-│
+│   |   ├── Toast.css
+│   |   └── Toast.jsx
+|   ├── TutorialCard/
+│   |   ├── TutorialCard.css
+│   |   └── TutorialCard.jsx
+│   ├── ItemListContainer.css
+|   ├── ItemListContainer.jsx
+│   |
+│   └──config/ 
+│      └── firebaseConfig.js
 ├── context/               
-│   ├── CartContext.jsx    
+│   ├── AuthContext.jsx  
+│   └── CartContext.jsx    
 │
-├── hooks/                 
-│   └── useFetchProducts.js
+├── hooks/ 
+|   ├── useFetchProducts.js                
+│   └── useFetchTutorials.js
 │
 ├── layout/          
 │   └── MainLayout/
-│       ├── MainLayout.jsx
-│       └── MainLayout.css
+│       ├── MainLayout.css
+│       └── MainLayout.jsx
 │
 ├── pages/               
 │   ├── Admin/
@@ -50,31 +70,36 @@ la estructura es:
 │   │   ├── CreateProduct.jsx
 │   │   ├── EditProduct.jsx
 │   │   ├── Login.jsx
+│   │   ├── OrderList.jsx
+│   │   ├── PanelOrdenes.jsx
 │   │   └── ProductList.jsx
 │   ├── Carrito/
-│   │   ├── Carrito.jsx
-│   │   └── Carrito.css
+│   │   ├── Carrito.css
+│   │   └── Carrito.jsx
+│   ├── Checkout/
+│   │   ├── Checkout.css
+│   │   └── Checkout.jsx
 │   ├── Inicio/
-│   │   ├── Inicio.jsx
-│   │   └── Inicio.css
+│   │   ├── Inicio.css
+│   │   └── Inicio.jsx
 │   ├── Nosotros/
 │   |   └── Nosotros.jsx
 │   ├── Tienda/
-│   │   ├── Tienda.jsx
-│   │   └── Tienda.css
+│   │   ├── Tienda.css
+│   │   └── Tienda.jsx
 │   └── Tutoriales/ 
-│   |   ├── Tutoriales.jsx
-│   │   └── Tutoriales.css
+│   |   ├── Tutoriales.css
+│   │   └── Tutoriales.jsx
 │   ├── adminProdutos.css
 │   ├── AdminProdutos.jsx
-├── services/    (carpeta vacia) 
-│
+│   ├── ConfirmacionPedido.jsx
+│   └── SeguimientoOrden.jsx
+├── services/
+│   └── emailService.js
 ├── App.css
 ├── App.jsx
 ├── firebase.js
 ├── main.jsx        
-
-
 env.
 .gitignore
 eslint.config.js
@@ -85,3 +110,11 @@ package-lock.json
 package.json
 README.md
 vite.config.js
+
+
+
+
+│   ├── / 
+│   │   ├── .jsx 
+│   │   └── .css 
+
