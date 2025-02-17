@@ -1,3 +1,56 @@
+/* src/pages/Checkout/Checkout.css */
+
+.checkout-container {
+    max-width: 600px;
+    margin: auto;
+    padding: 20px;
+    text-align: center;
+}
+
+.checkout-resumen {
+    border: 1px solid #ddd;
+    padding: 10px;
+    margin-bottom: 20px;
+    font-size: 18px;
+    font-weight: bold;
+}
+
+.checkout-form button {
+    width: 100%;
+    padding: 12px;
+    background: #28a745;
+    color: white;
+    border: none;
+    font-size: 16px;
+    font-weight: bold;
+    cursor: pointer;
+    transition: background 0.3s ease;
+}
+
+.checkout-form button:disabled {
+    background: gray;
+    cursor: not-allowed;
+}
+
+.order-confirmation {
+    color: green;
+    font-weight: bold;
+    margin-top: 10px;
+}
+
+.checkout-error {
+    color: red;
+    font-weight: bold;
+    margin-top: 10px;
+}
+
+.checkout-note {
+    margin-top: 10px;
+    font-size: 14px;
+    color: #555;
+}
+
+
 .checkout-container {
     max-width: 600px;
     margin: auto;
@@ -11,25 +64,12 @@
     margin-bottom: 20px;
 }
 
-.checkout-item {
-    display: flex;
-    align-items: center;
-    gap: 10px;
-    border-bottom: 1px solid #ddd;
-    padding: 10px 0;
-}
-
-.checkout-item img {
-    width: 50px;
-    height: 50px;
-    object-fit: cover;
-}
-
 .checkout-form input {
     width: 100%;
     padding: 10px;
     margin: 5px 0;
     border: 1px solid #ddd;
+    border-radius: 5px;
 }
 
 .checkout-form button {
@@ -39,8 +79,24 @@
     color: white;
     border: none;
     cursor: pointer;
+    border-radius: 5px;
 }
 
 .checkout-form button:disabled {
     background: gray;
+}
+
+.order-confirmation {
+    color: green;
+    font-weight: bold;
+}
+
+.checkout-error {
+    color: red;
+    font-weight: bold;
+}
+
+.checkout-note {
+    font-size: 14px;
+    color: gray;
 }

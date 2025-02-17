@@ -1,3 +1,6 @@
+Al confirmar compra me pide que inicie sesion ahi deberia poder hacerlo con google o algun mail,
+
+
 EN EL PASO 1 que debo modificar
         : doc(db, 'orders', email); // Cambia según cómo almacenes las órdenes (por ID o email)?
 

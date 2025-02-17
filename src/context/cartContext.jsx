@@ -80,4 +80,4 @@ const decreaseQuantity = (id) => {
 };
 
 // Hook para usar el contexto del carrito
-export const useCart = () => useContext(CartContext);
+export const useCart = () =>{ return useContext(CartContext)} ;

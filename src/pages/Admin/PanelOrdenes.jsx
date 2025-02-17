@@ -1,3 +1,4 @@
+//src>pages>Admin>PanelOrdenes.jsx
 import React, { useState, useEffect } from 'react';
 import { getFirestore, collection, getDocs, doc, updateDoc } from 'firebase/firestore';
 

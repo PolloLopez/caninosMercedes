@@ -1,4 +1,5 @@
 // src/App.jsx
+
 import React from "react";
 import { BrowserRouter as Router, Routes, Route, Navigate } from "react-router-dom";
 import MainLayout from "./layout/MainLayout/MainLayout";
@@ -7,7 +8,7 @@ import ItemListContainer from "./components/ItemListContainer";
 import Carrito from "./pages/Carrito/Carrito";
 import Nosotros from "./pages/Nosotros/Nosotros";
 import Tutorials from "./pages/Tutoriales/Tutorials";
-import { CartProvider } from "./context/cartContext";
+import { CartProvider } from "./context/CartContext";
 import AdminPanel from "./pages/Admin/AdminPanel";
 import CreateProduct from "./pages/Admin/CreateProduct";
 import EditProduct from "./pages/Admin/EditProduct";
@@ -15,9 +16,10 @@ import ProductList from "./pages/Admin/ProductList";
 import Login from "./pages/Admin/Login";
 import { useAuth } from "./context/AuthContext";
 import './App.css';
-import Checkout from "./pages/Checkout/Checkout";
+import Checkout from "./pages/Checkout/Checkout";  {/* Asegúrate de que no haya llamado a MercadoPagoButton */}
 import OrderConfirmation from "./pages/Checkout/OrderConfirmation";
 import OrdersList from "./pages/Admin/OrdersList";
+import SeguimientoOrden from "./pages/SeguimientoOrden";
 
 const ProtectedRoute = ({ element }) => {
   const { user } = useAuth();
@@ -48,6 +50,7 @@ function App() {
             <Route path="/tutoriales" element={<Tutorials />} />
             <Route path="/checkout" element={<Checkout />} />
             <Route path="/orden-confirmada/:id" element={<OrderConfirmation />} />
+            <Route path="/seguimiento" element={<SeguimientoOrden />} />
           </Routes>
         </MainLayout>
       </Router>

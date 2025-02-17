@@ -9,10 +9,21 @@ la estructura es:
     │   └── logo-D6oMXuj9.png
     ├── index.html
     └── vite.svg
-
-
 >node_modules
-    bastante contenido que nunca toque
+    bastantes carpetas
+
+
+
+>functions
+├── components/ 
+│   └── node_modules 
+├── .eslintrc.js
+├── .gitignore
+├── index.js
+├── package-lock.json
+└── package.json
+
+
 
 >public                  
     │   ├── product.json
@@ -48,8 +59,9 @@ la estructura es:
 │   |   └── TutorialCard.jsx
 │   ├── ItemListContainer.css
 |   ├── ItemListContainer.jsx
-│   |
-│   └──config/ 
+|   └── MercadoPagoButton.jsx
+│   
+├──config/ 
 │      └── firebaseConfig.js
 ├── context/               
 │   ├── AuthContext.jsx  
@@ -78,7 +90,8 @@ la estructura es:
 │   │   └── Carrito.jsx
 │   ├── Checkout/
 │   │   ├── Checkout.css
-│   │   └── Checkout.jsx
+│   │   ├── Checkout.jsx
+│   │   └── OrdenConfirmation.jsx
 │   ├── Inicio/
 │   │   ├── Inicio.css
 │   │   └── Inicio.jsx
@@ -87,10 +100,10 @@ la estructura es:
 │   ├── Tienda/
 │   │   ├── Tienda.css
 │   │   └── Tienda.jsx
-│   └── Tutoriales/ 
-│   |   ├── Tutoriales.css
-│   │   └── Tutoriales.jsx
-│   ├── adminProdutos.css
+│   ├── Tutoriales/ 
+│   |   ├── Tutorials.css
+│   │   └── Tutorials.jsx
+│   ├── AdminProdutos.css
 │   ├── AdminProdutos.jsx
 │   ├── ConfirmacionPedido.jsx
 │   └── SeguimientoOrden.jsx
@@ -101,9 +114,11 @@ la estructura es:
 ├── firebase.js
 ├── main.jsx        
 env.
+.firebaserc
 .gitignore
 eslint.config.js
 et --hard 42f027266c2c31fbbf49b3ca2f2e6b94c9a6131f
+firebase.json
 index.html
 netlify.toml
 package-lock.json

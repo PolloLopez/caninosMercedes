@@ -1,89 +1,108 @@
-//src>pages>Checkout>Checkout.jsx
-import React, { useState } from "react";
-import { useNavigate } from "react-router-dom";
-import { db } from "../../firebase";
-import { collection, addDoc, Timestamp  } from "firebase/firestore";
-import { useCart } from "../../context/cartContext";
-import { useAuth } from "../../context/AuthContext";
-import "./Checkout.css";
+// src/pages/Checkout/Checkout.jsx
 
+import React, { useState } from "react";
+import { useLocation, useNavigate } from "react-router-dom";
+import { getFirestore, collection, addDoc } from "firebase/firestore";
+import "./Checkout.css"; // Importamos los estilos
 
 const Checkout = () => {
-    const { cart, clearCart, totalPrice } = useCart();
-    const { user } = useAuth();// 📌 Obtenemos el usuario autenticado
+  const location = useLocation();
+  const navigate = useNavigate();
+  const total = location.state?.total || 0;
+  const [isProcessing, setIsProcessing] = useState(false);
+  const [orderId, setOrderId] = useState(null);
+  const [error, setError] = useState(null);
 
-    const [formData, setFormData] = useState({
-        nombre: "", email: "", direccion: "", ciudad: ""
-    });
-    const [loading, setLoading] = useState(false);
-    const navigate = useNavigate();
+  // Datos del usuario
+  const [cliente, setCliente] = useState({
+    nombre: "",
+    email: "",
+    telefono: "",
+  });
 
-    const handleChange = (e) => {
-    setFormData({ ...formData, [e.target.name]: e.target.value });
-    };
-    
-    const handleSubmit = async (e) => {
-    e.preventDefault();
-    setLoading(true);
+  const handleInputChange = (e) => {
+    setCliente({ ...cliente, [e.target.name]: e.target.value });
+  };
 
-    if (!user) {
-        alert("Debes iniciar sesión para completar la compra.");
-        setLoading(false);
-        return;
+  const handlePayment = async () => {
+    if (!cliente.nombre || !cliente.email || !cliente.telefono) {
+      setError("Por favor, completa todos los datos.");
+      return;
     }
 
-    const order = {
-        cliente: { ...formData, uid: user.uid },
-        productos: cart,
-        total: totalPrice(),
-        fecha: Timestamp.fromDate(new Date()),
-        estado: "pendiente"
-    };
+    setIsProcessing(true);
+    setError(null);
 
     try {
-        const docRef = await addDoc(collection(db, "ordenes"), order);
-        console.log("Orden creada:", docRef.id);
+      const db = getFirestore();
+      const orderRef = collection(db, "ordenes");
 
-        clearCart();
-        navigate(`/orden-confirmada/${docRef.id}`);
+      const newOrder = {
+        cliente, // Guardamos los datos ingresados
+        total,
+        status: "pendiente",
+        paymentMethod: "Acuerdo con el vendedor",
+        timestamp: new Date(),
+      };
+
+      const docRef = await addDoc(orderRef, newOrder);
+      setOrderId(docRef.id);
+      alert(`¡Pedido registrado con éxito! ID: ${docRef.id}`);
+
+      navigate("/confirmacion", { state: { orderId: docRef.id } });
     } catch (error) {
-        console.error("Error al crear la orden:", error);
-        navigate("/error");
+      console.error("Error al guardar el pedido:", error);
+      setError(error.message);
     } finally {
-        setLoading(false);
+      setIsProcessing(false);
     }
-    };
+  };
 
-    return (
-        <div className="checkout-container">
-            <h2>Finalizar Compra</h2>
-            <div className="checkout-resumen">
-                {cart.map((prod) => (
-                    <div key={prod.id} className="checkout-item">
-                        <img src={prod.imagen} alt={prod.nombre} />
-                        <div>
-                            <h3>{prod.nombre}</h3>
-                            <p>Cantidad: {prod.quantity}</p>
-                            <p>Precio: ${prod.precio}</p>
-                            <p>Valor total: ${prod.precio * prod.quantity}</p>
-                        </div>
-                    </div>
-                ))}
-                <h3>Total a pagar: ${totalPrice()}</h3>
-            </div>
+  return (
+    <div className="checkout-container">
+      <h2>Finalizar pedido</h2>
 
-            <form onSubmit={handleSubmit} className="checkout-form">
-                <input type="text" name="nombre" placeholder="Nombre" required onChange={handleChange} />
-                <input type="email" name="email" placeholder="Correo" required onChange={handleChange} />
-                <input type="number" name="telefono" placeholder="Teléfono" required onChange={handleChange} />
-                <input type="text" name="direccion" placeholder="Dirección" required onChange={handleChange} />
-                <input type="text" name="ciudad" placeholder="Ciudad" required onChange={handleChange} />
-                <button type="submit" disabled={loading}>
-                    {loading ? "Procesando..." : "Confirmar Compra"}
-                </button>
-            </form>
-        </div>
-    );
+      <div className="checkout-resumen">
+        <p><strong>Total a pagar:</strong> ${total}</p>
+      </div>
+
+      <div className="checkout-form">
+        <input
+          type="text"
+          name="nombre"
+          placeholder="Nombre completo"
+          value={cliente.nombre}
+          onChange={handleInputChange}
+          required
+        />
+        <input
+          type="email"
+          name="email"
+          placeholder="Correo electrónico"
+          value={cliente.email}
+          onChange={handleInputChange}
+          required
+        />
+        <input
+          type="tel"
+          name="telefono"
+          placeholder="Teléfono"
+          value={cliente.telefono}
+          onChange={handleInputChange}
+          required
+        />
+        
+        <button onClick={handlePayment} disabled={isProcessing}>
+          {isProcessing ? "Procesando..." : "Confirmar pedido"}
+        </button>
+      </div>
+
+      {orderId && <p className="order-confirmation">✔ Pedido generado: <strong>{orderId}</strong></p>}
+      {error && <p className="checkout-error">⚠ {error}</p>}
+
+      <p className="checkout-note">Acuerdo de pago con el vendedor</p>
+    </div>
+  );
 };
 
 export default Checkout;
