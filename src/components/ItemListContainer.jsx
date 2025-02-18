@@ -2,7 +2,7 @@
 import React from "react";
 import useFetchProducts from "../hooks/useFetchProducts.js"; 
 import ProductCard from "../components/ProductCard/ProductCard"; 
-import { useCart } from "../context/cartContext";
+import { useCart } from "../context/CartContext";
 import "./ItemListContainer.css";
 
 const ItemListContainer = () => {

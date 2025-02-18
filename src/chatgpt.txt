@@ -1,4 +1,9 @@
-Al confirmar compra me pide que inicie sesion ahi deberia poder hacerlo con google o algun mail,
+Al confirmar compra me da numero de pedido y me redirige a /confirmacion en vez de a /segiomiento o a inicio
+
+en consola cuando le doy al id de seguimiento o con el mail: Uncaught (in promise) SyntaxError: Unexpected token '<', "<!doctype "... is not valid JSONUnderstand this errorAI
+seguimiento:1 Uncaught (in promise) Error: QUOTA_BYTES quota exceeded
+
+
 
 
 EN EL PASO 1 que debo modificar
