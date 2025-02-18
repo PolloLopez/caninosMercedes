@@ -1,70 +1,29 @@
-Al confirmar compra me da numero de pedido y me redirige a /confirmacion en vez de a /segiomiento o a inicio
+18/02/2025
 
-en consola cuando le doy al id de seguimiento o con el mail: Uncaught (in promise) SyntaxError: Unexpected token '<', "<!doctype "... is not valid JSONUnderstand this errorAI
-seguimiento:1 Uncaught (in promise) Error: QUOTA_BYTES quota exceeded
+Fase 1: Gestión de pedidos por el vendedor
+💼 Objetivo: Que el administrador pueda ver los pedidos y actualizar su estado (pendiente → preparado → despachado → entregado).
 
+Pasos:
+📜 Crear una página /admin/ordenes donde se muestren todas las órdenes registradas en Firestore.
+🎛 Agregar botones o un selector en cada orden para que el administrador pueda cambiar su estado.
+🔄 Actualizar el estado en Firestore cuando el vendedor cambie el estado de un pedido.
+Fase 2: Confirmación del cliente
+👤 Objetivo: Que el cliente pueda ver el estado de su pedido y marcarlo como "recibido".
 
-
-
-EN EL PASO 1 que debo modificar
-        : doc(db, 'orders', email); // Cambia según cómo almacenes las órdenes (por ID o email)?
-
-donde debo poner:
-
-import React from 'react';
-
-export const MercadoPagoButton = ({ orderId, total }) => {
-  const handlePayment = () => {
-    // Aquí iría la lógica para generar el pago con Mercado Pago y redirigir al cliente.
-    console.log(`Redirigiendo al cliente para pagar la orden ${orderId} por un total de ${total}`);
-  };
-
-  return <button onClick={handlePayment}>Pagar con Mercado Pago</button>;
+Pasos:
+🔍 Crear una página /seguimiento donde el cliente ingrese su correo o ID de orden para ver el estado.
+✅ Agregar un botón de "Pedido recibido" para que el cliente confirme la entrega.
+🔄 Actualizar Firestore para que el estado pase a "finalizado" cuando el cliente lo confirme.
+💡 Mi sugerencia: Primero hacemos Fase 1, así el vendedor ya puede gestionar pedidos. Luego, pasamos a Fase 2 para el cliente. ¿Te parece? 🚀
 
 
 
 
 
-  
-
-
-🔹 1. Finalizar la compra correctamente (💾 Guardar en Firestore)
-Ya se está guardando en Firestore, pero podríamos:
-✔ Mostrar un mensaje de confirmación con los datos de la compra.
-✔ Redirigir a una pantalla con el ID de la orden (/orden-confirmada/:id).
-
-🔹 2. Manejo de alertas y notificaciones (📩 Para el dueño y el cliente)
-Podemos:
-✔ Enviar un correo al dueño con los datos del pedido.
-✔ Enviar un correo o alerta al cliente con el estado del pedido.
-✔ Mostrar en /admin un panel para ver los pedidos recibidos.
-
-🔹 3. (paso uno y dos siguiente) Implementar formas de pago (💳 Mercado Pago)
-✔ Generar un checkout con Mercado Pago para procesar el pago.
-✔ Asociar el estado del pago a la orden en Firestore.
-
-
-1️⃣ Finalizar compra: Crear un proceso donde los usuarios confirmen su compra antes de pagar.
+1️⃣ ✅ Finalizar compra: Crear un proceso donde los usuarios confirmen su compra antes de pagar.
 2️⃣ Integrar Mercado Pago: Configurar pagos online para que los clientes puedan pagar sus compras.
 3️⃣ Seguimiento de compra: Permitir que los clientes revisen el estado de sus pedidos.
 4️⃣ Control de stock: Ajustar la cantidad de productos disponibles al realizar una compra.
-5️⃣ Redireccion en caso de fallar.
+5️⃣ Redireccion en caso de fallar. 404
 6️⃣ Ver Tutorial, reproducir video de youtube
-
-Haciendo paso 1
-    Revisar el carrito: Mostrar los productos seleccionados y el total.
-    Formulario de compra: Recoger datos del cliente (nombre, email, dirección).
-    Confirmación y almacenamiento: Guardar la orden en Firestore.
-    Redirección: Mostrar un mensaje de éxito o error y redirigir.
-
-
-VER ERROR:
-
-
-12/02 16:05 
-
-
-        <button type="submit" disabled={loading}>
-            {loading ? "Procesando..." : "Confirmar Compra"}
-        </button>
 
