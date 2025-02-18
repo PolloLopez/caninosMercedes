@@ -1,4 +1,4 @@
-//src>context>CartContext.jsx
+// src/context/CartContext.jsx
 import React, { createContext, useContext, useState } from "react";
 
 // Creación del contexto
@@ -31,19 +31,19 @@ export const CartProvider = ({ children }) => {
     setCart(updatedCart);
   };
 
-// Disminuir cantidad de un producto o eliminar si la cantidad es 1
-const decreaseQuantity = (id) => {
-  const updatedCart = cart.map((item) =>
-    item.id === id
-      ? { ...item, quantity: item.quantity > 1 ? item.quantity - 1 : 0 }
-      : item
-  );
+  // Disminuir cantidad de un producto o eliminar si la cantidad es 1
+  const decreaseQuantity = (id) => {
+    const updatedCart = cart.map((item) =>
+      item.id === id
+        ? { ...item, quantity: item.quantity > 1 ? item.quantity - 1 : 0 }
+        : item
+    );
 
-  // Filtrar productos con cantidad mayor a 0
-  const filteredCart = updatedCart.filter(item => item.quantity > 0);
+    // Filtrar productos con cantidad mayor a 0
+    const filteredCart = updatedCart.filter((item) => item.quantity > 0);
 
-  setCart(filteredCart);
-};
+    setCart(filteredCart);
+  };
 
   // Eliminar producto del carrito
   const removeFromCart = (id) => {
@@ -51,11 +51,10 @@ const decreaseQuantity = (id) => {
     setCart(updatedCart);
   };
 
-    // Calcular el precio total del carrito
-    const totalPrice = () => {
-      return cart.reduce((acc, product) => acc + product.precio * product.quantity, 0);
-    };
-  
+  // Calcular el precio total del carrito
+  const totalPrice = () => {
+    return cart.reduce((acc, product) => acc + product.precio * product.quantity, 0);
+  };
 
   // Vaciar el carrito
   const clearCart = () => {
@@ -80,4 +79,6 @@ const decreaseQuantity = (id) => {
 };
 
 // Hook para usar el contexto del carrito
-export const useCart = () =>{ return useContext(CartContext)} ;
+export const useCart = () => {
+  return useContext(CartContext);
+};
