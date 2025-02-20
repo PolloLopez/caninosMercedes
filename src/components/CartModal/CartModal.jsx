@@ -11,7 +11,7 @@ const CartModal = ({ cart, isOpen, onClose, increaseQuantity, decreaseQuantity, 
             cart.map((item) => (
               <div key={item.id} className="cart-item">
                 <p>{item.name}</p>
-                <p>{item.quantity} x ${item.price}</p>
+                <p>{item.quantity} x ${item.price}</p> 
 
                 <div className="quantity-controls">
                   <button onClick={() => decreaseQuantity(item.id)}>-</button>

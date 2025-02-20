@@ -17,7 +17,7 @@ const Checkout = () => {
 
   // Datos del usuario
   const [cliente, setCliente] = useState({
-    nombre: "",
+    nombre: "", 
     email: "",
     telefono: "",
     ciudad: "",

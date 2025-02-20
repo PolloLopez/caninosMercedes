@@ -13,7 +13,7 @@ const Tienda = () => {
   return (
     <div className="tienda">
       <h1>Productos disponibles</h1>
-      <div className="product-list">
+      <div className="product-list"> 
         {products.map((product) => (
           <ProductCard
             key={product.id}

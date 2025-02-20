@@ -2,7 +2,7 @@
 import React from "react";
 import useFetchProducts from "../hooks/useFetchProducts.js"; 
 import ProductCard from "../components/ProductCard/ProductCard"; 
-import { useCart } from "../context/CartContext";
+import { useCart } from "../context/CartContext.jsx";
 import "./ItemListContainer.css";
 
 const ItemListContainer = () => {
@@ -26,6 +26,6 @@ const ItemListContainer = () => {
       </div>
     </div>
   );
-};
+}; 
 
 export default ItemListContainer;
