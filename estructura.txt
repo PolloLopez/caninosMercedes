@@ -34,7 +34,9 @@ la estructura es:
 
 >src/
 │   ├── assets/ 
-│   │   └── logo.png
+│   │   └── image/ 
+│   │   │   └── logo.png
+│   └── global.css 
 
 ├── components/ 
 │   ├── CartModal/ 
@@ -50,7 +52,7 @@ la estructura es:
 │   │   ├── ProductCard.css 
 │   │   └── ProductCard.jsx 
 │   ├── ProductList/ 
-│   │   └── ProductList.jsx 
+│   │   └── ProductList.jsx  / (falta vincular global.css)
 |   ├── Toast/
 │   |   ├── Toast.css
 │   |   └── Toast.jsx
@@ -78,25 +80,28 @@ la estructura es:
 │
 ├── pages/               
 │   ├── Admin/
-│   │   ├── AdminPanel.jsx
-│   │   ├── CreateProduct.jsx
-│   │   ├── EditProduct.jsx
-│   │   ├── Login.jsx
-│   │   ├── OrderList.jsx
-│   │   ├── PanelOrdenes.jsx
-│   │   └── ProductList.jsx
+│   │   ├── AdminOrdenes.jsx / (falta vincular global.css)
+│   │   ├── AdminPanel.jsx / (falta vincular global.css)
+│   │   ├── CreateProduct.jsx / (falta vincular global.css)
+│   │   ├── EditProduct.jsx / (falta vincular global.css)
+│   │   ├── Login.jsx / (falta vincular global.css)
+│   │   ├── Ordenes.css
+│   │   ├── Ordenes.jsx
+│   │   ├── OrderList.jsx / (falta vincular global.css)
+│   │   ├── PanelOrdenes.jsx / (falta vincular global.css)
+│   │   └── ProductList.jsx / (falta vincular global.css)
 │   ├── Carrito/
 │   │   ├── Carrito.css
 │   │   └── Carrito.jsx
 │   ├── Checkout/
 │   │   ├── Checkout.css
 │   │   ├── Checkout.jsx
-│   │   └── OrdenConfirmation.jsx
+│   │   └── OrdenConfirmation.jsx  / (falta vincular global.css)
 │   ├── Inicio/
 │   │   ├── Inicio.css
 │   │   └── Inicio.jsx
 │   ├── Nosotros/
-│   |   └── Nosotros.jsx
+│   |   └── Nosotros.jsx  / (falta vincular global.css)
 │   ├── Tienda/
 │   │   ├── Tienda.css
 │   │   └── Tienda.jsx
@@ -105,8 +110,8 @@ la estructura es:
 │   │   └── Tutorials.jsx
 │   ├── AdminProdutos.css
 │   ├── AdminProdutos.jsx
-│   ├── ConfirmacionPedido.jsx
-│   └── SeguimientoOrden.jsx
+│   ├── ConfirmacionPedido.jsx / (falta vincular global.css)
+│   └── SeguimientoOrden.jsx / (falta vincular global.css)
 ├── services/
 │   └── emailService.js
 ├── App.css

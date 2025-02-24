@@ -1,0 +1,73 @@
+/* src/assets/global.css */
+
+/* Reset general de márgenes y padding */
+* {
+    margin: 0;
+    padding: 0;
+    box-sizing: border-box;
+}
+
+body {
+    font-family: 'Arial', sans-serif;
+    font-size: 16px;
+    line-height: 1.5;
+    background-color: var(--secondary-color);
+    color: var(--primary-color);
+    min-height: 100vh;
+    display: flex;
+    flex-direction: column;
+    justify-content: flex-start;
+}
+
+  /* Colores globales */
+:root {
+    --primary-color: #457b9d; /* Azul */
+    --secondary-color: #fafafa; /* Gris claro */
+    --highlight-color: #a8dadc; /* Azul claro */
+    --dark-color: #5f065ff6; /* Para botones, enlaces y header */
+    --border-radius: 8px;
+    --padding: 1rem;
+    --max-width: 1280px;
+}
+
+  /* Clases comunes */
+.container {
+    width: 100%;
+    margin: 0 auto;
+    padding: var(--padding);
+    max-width: var(--max-width);
+}
+
+  /* Estilos generales para enlaces */
+a {
+    text-decoration: none;
+    color: inherit;
+    transition: color 0.3s ease;
+}
+
+a:hover {
+    color: var(--highlight-color);
+}
+
+  /* Estilos para botones comunes */
+button {
+    cursor: pointer;
+    background-color: var(--dark-color);
+    color: white;
+    border: none;
+    padding: var(--padding);
+    border-radius: var(--border-radius);
+}
+
+button:hover {
+    background-color: var(--highlight-color);
+}
+
+  /* Otros estilos comunes como listas */
+ul {
+    list-style: none;
+}
+
+li {
+    font-size: 1rem;
+}

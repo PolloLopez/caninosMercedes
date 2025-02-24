@@ -3,7 +3,7 @@ import React, { useState } from "react";
 import { useNavigate } from "react-router-dom";
 import { getAuth, signInWithEmailAndPassword, signInWithPopup, GoogleAuthProvider } from "firebase/auth";
 import { app } from "../../firebase"
-//import "./Login.css"
+
 
 const Login = () => {
     const [email, setEmail] = useState("");

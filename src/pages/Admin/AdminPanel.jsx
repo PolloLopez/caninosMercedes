@@ -1,13 +1,17 @@
 //src>pages>Admin>AdminPanel.jsx
 import React, { useState, useEffect } from "react";
-import { useNavigate } from "react-router-dom";
+import { useNavigate } from "react-router-dom"; 
 import { db } from "../../firebase";
 import { collection, getDocs } from "firebase/firestore";
+import { getFunctions, httpsCallable } from "firebase/functions";
+
 
 const AdminPanel = () => {
   const navigate = useNavigate();
   const [productos, setProductos] = useState([]);
   const [tutoriales, setTutoriales] = useState([]);
+  const [uid, setUid] = useState("");
+  const [mensaje, setMensaje] = useState("");
 
   useEffect(() => {
     const isAdmin = localStorage.getItem("isAdmin");
@@ -39,10 +43,34 @@ const AdminPanel = () => {
     }
   }, [navigate]);
 
+  const handleAsignarAdmin = async () => {
+    const functions = getFunctions();
+    const addAdminClaim = httpsCallable(functions, 'addAdminClaim');
+
+    try {
+      const result = await addAdminClaim({ uid });
+      setMensaje(result.data.message);
+    } catch (error) {
+      setMensaje(error.message);
+    }
+  };
+
   return (
     <div>
       <h1>Panel de Administración</h1>
+      <button onClick={() => navigate("/admin/ordenes")}>Ver Ordenes</button>
       <button onClick={() => navigate("/admin/create-product")}>Agregar Producto</button>
+
+      <h2>Asignar Administrador</h2>
+      <input
+        type="text"
+        placeholder="UID del usuario"
+        value={uid}
+        onChange={(e) => setUid(e.target.value)}
+      />
+      <button onClick={handleAsignarAdmin}>Asignar Administrador</button>
+      {mensaje && <p>{mensaje}</p>}
+      
       <h2>Productos</h2>
       <ul>
         {productos.map((producto) => (

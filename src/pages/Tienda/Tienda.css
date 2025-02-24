@@ -42,3 +42,14 @@
     color: var(--primary-color);
   }
   
+/* src/pages/Tienda/Tienda.css */
+.container {
+  background-color: var(--secondary-color);
+  padding: 2rem;
+  border-radius: var(--border-radius);
+}
+
+/* Otros estilos específicos de la tienda */
+h1 {
+  color: var(--primary-color);
+}

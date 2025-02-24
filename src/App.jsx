@@ -20,6 +20,9 @@ import Checkout from "./pages/Checkout/Checkout";  {/* Asegúrate de que no haya
 import OrderConfirmation from "./pages/Checkout/OrderConfirmation";
 import OrdersList from "./pages/Admin/OrdersList";
 import SeguimientoOrden from "./pages/SeguimientoOrden";
+import './assets/global.css';
+import Ordenes from "./pages/Admin/ordenes";
+
 
 const ProtectedRoute = ({ element }) => {
   const { user } = useAuth();
@@ -38,6 +41,7 @@ function App() {
             <Route path="/admin/create-product" element={<ProtectedRoute element={<CreateProduct />} />} />
             <Route path="/admin/producto/:id" element={<ProtectedRoute element={<EditProduct />} />} />
             <Route path="/admin/pedidos" element={<ProtectedRoute element={<OrdersList />} />} />
+            <Route path="/admin/ordenes" element={<ProtectedRoute element={<Ordenes />} />} />
 
             {/* 🔑 Login de admin */}
             <Route path="/admin/login" element={<Login />} />

@@ -1,7 +1,7 @@
 // src/pages/Checkout/OrderConfirmation.jsx
 import React from "react";
 import { useParams, Link } from "react-router-dom";
-//import "./OrderConfirmation.css";
+
 
 const OrderConfirmation = () => {
     const { id } = useParams();

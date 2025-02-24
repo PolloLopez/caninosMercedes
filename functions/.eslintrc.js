@@ -1,28 +1,20 @@
+//functions>.eslinctrc.js
 module.exports = {
   env: {
-    es6: true,
     node: true,
-  },
-  parserOptions: {
-    "ecmaVersion": 2018,
+    es2020: true,
   },
   extends: [
-    "eslint:recommended",
-    "google",
+    'eslint:recommended',
+    'plugin:node/recommended',
   ],
-  rules: {
-    "no-restricted-globals": ["error", "name", "length"],
-    "prefer-arrow-callback": "error",
-    "quotes": ["error", "double", {"allowTemplateLiterals": true}],
+  parserOptions: {
+    ecmaVersion: 2020,
+    sourceType: 'module',
   },
-  overrides: [
-    {
-      files: ["**/*.spec.*"],
-      env: {
-        mocha: true,
-      },
-      rules: {},
-    },
-  ],
-  globals: {},
+  rules: {
+    'no-undef': 'off',
+  },
 };
+
+

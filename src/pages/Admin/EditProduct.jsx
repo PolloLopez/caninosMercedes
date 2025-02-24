@@ -61,12 +61,12 @@ const EditProduct = () => {
         <div>
             <h1>Editar Producto</h1>
             <form onSubmit={handleSubmit}>
-            <input type="text" value={product.nombre} onChange={(e) => setProduct({ ...product, nombre: e.target.value })} required />
-            <textarea value={product.descripcion} onChange={(e) => setProduct({ ...product, descripcion: e.target.value })} required />
-            <input type="number" value={product.precio} onChange={(e) => setProduct({ ...product, precio: e.target.value })} required />
-            <input type="text" value={product.imagen} onChange={(e) => setProduct({ ...product, imagen: e.target.value })} required />
-            <input type="text" value={product.categoria} onChange={(e) => setProduct({ ...product, categoria: e.target.value })} required />
-            <button type="submit">Guardar Cambios</button>
+            <input type="text" placeholder="Nombre" value={product.nombre} onChange={(e) => setProduct({ ...product, nombre: e.target.value })} required />
+            <textarea placeholder="Descripcion" value={product.descripcion} onChange={(e) => setProduct({ ...product, descripcion: e.target.value })} required />
+            <input type="number" placeholder="Precio" value={product.precio} onChange={(e) => setProduct({ ...product, precio: e.target.value })} required />
+            <input type="text" placeholder="Imagen" value={product.imagen} onChange={(e) => setProduct({ ...product, imagen: e.target.value })} required />
+            <input type="text" placeholder="Categoria" value={product.categoria} onChange={(e) => setProduct({ ...product, categoria: e.target.value })} required />
+            <button type="submit">Guardar Cambios</button> 
             </form>
         </div>
     );
