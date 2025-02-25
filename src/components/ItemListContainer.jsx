@@ -7,6 +7,7 @@ import "./ItemListContainer.css";
 
 const ItemListContainer = () => {
   const { products, loading, error } = useFetchProducts(); 
+  console.log("Productos cargados:", products);
   const { addToCart } = useCart(); 
 
   if (loading) return <p>Cargando productos...</p>;

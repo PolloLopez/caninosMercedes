@@ -1,21 +1,20 @@
 // src/pages/Checkout/Checkout.jsx
 
 import React, { useState } from "react";
-import { useLocation, useNavigate } from "react-router-dom";
+import { useNavigate } from "react-router-dom";
 import { getFirestore, collection, addDoc } from "firebase/firestore";
-import {  useCart } from "../../context/CartContext";
-import "./Checkout.css"; // Importamos los estilos
+import { db } from "../../firebase";
+import { useCart } from "../../context/CartContext";
+import "./Checkout.css";
 
 const Checkout = () => {
-  const location = useLocation();
   const navigate = useNavigate();
-  const { cart, clearCart, totalPrice } = useCart(); // Obtener el carrito
-  const total = totalPrice(); // Llamar la función para obtener el total real
+  const { cart, clearCart, totalPrice } = useCart();
+  const total = totalPrice();
   const [isProcessing, setIsProcessing] = useState(false);
   const [orderId, setOrderId] = useState(null);
   const [error, setError] = useState(null);
 
-  // Datos del usuario
   const [cliente, setCliente] = useState({
     nombre: "", 
     email: "",
@@ -33,11 +32,10 @@ const Checkout = () => {
     setError(null);
 
     try {
-      const db = getFirestore();
       const orderRef = collection(db, "ordenes");
 
       const newOrder = {
-        email: cliente.email,
+        customerEmail: cliente.email,
         nombre: cliente.nombre,
         telefono: cliente.telefono,
         ciudad: cliente.ciudad,
@@ -45,15 +43,14 @@ const Checkout = () => {
         estado: "pendiente",
         fecha: new Date(),
         productos: cart.map((item) => ({
-        nombre: item.nombre,
-        cantidad: item.quantity ?? 1, // Si cantidad es undefined, asigna 1 por defecto
-        precio: item.precio,
+          nombre: item.nombre,
+          cantidad: item.quantity ?? 1,
+          precio: item.precio,
         })),
         paymentMethod: "Acuerdo con el vendedor",
         total,
       };
-      
-      // 🔍 Verificar qué datos se están enviando
+
       console.log("Orden a guardar:", newOrder);
 
       const docRef = await addDoc(orderRef, newOrder);
@@ -62,7 +59,6 @@ const Checkout = () => {
 
       clearCart();
       navigate("/checkout/OrdenConfirmation", { state: { orderId: docRef.id } });
-
     } catch (error) {
       console.error("Error al guardar el pedido:", error);
       setError(error.message);

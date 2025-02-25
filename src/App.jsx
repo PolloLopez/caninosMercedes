@@ -21,7 +21,8 @@ import OrderConfirmation from "./pages/Checkout/OrderConfirmation";
 import OrdersList from "./pages/Admin/OrdersList";
 import SeguimientoOrden from "./pages/SeguimientoOrden";
 import './assets/global.css';
-import Ordenes from "./pages/Admin/ordenes";
+import Ordenes from "./pages/Admin/Ordenes";
+
 
 
 const ProtectedRoute = ({ element }) => {

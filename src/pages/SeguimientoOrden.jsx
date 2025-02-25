@@ -1,64 +1,70 @@
 // src>pages>SeguimientoOrden.jsx
-// src/pages/SeguimientoOrden.jsx
 import { useState } from "react";
 import { db } from "../firebase";
-import { collection, getDocs } from "firebase/firestore";
+
+import { collection, query, where, getDocs } from "firebase/firestore";
 
 const SeguimientoOrden = () => {
-  const [search, setSearch] = useState("");
-  const [orders, setOrders] = useState([]);
-  const [loading, setLoading] = useState(false);
+    const [email, setEmail] = useState("");
+    const [ordenes, setOrdenes] = useState([]);
+    const [error, setError] = useState("");
 
-  const handleSearch = async () => {
-    if (!search.trim()) return;
-
-    setLoading(true);
-    try {
-      const querySnapshot = await getDocs(collection(db, "orders"));
-      const foundOrders = querySnapshot.docs
-        .map((doc) => ({ id: doc.id, ...doc.data() }))
-        .filter(
-          (order) =>
-            order.customerEmail?.toLowerCase() === search.toLowerCase() ||
-            order.id === search
-        );
-
-      setOrders(foundOrders);
-    } catch (error) {
-      console.error("Error buscando la orden:", error);
-    } finally {
-      setLoading(false);
-    }
+    const buscarOrdenes = async () => {
+      if (!email) {
+          setError("Por favor, ingresa tu correo.");
+          return;
+      }
+  
+      try {
+          setError(""); // Limpiar errores previos
+          const q = query(collection(db, "ordenes"), where("email", "==", email));  // 🔹 Cambiado a 'email'
+          const querySnapshot = await getDocs(q);
+  
+          if (querySnapshot.empty) {
+              console.log("No se encontraron órdenes con el email:", email);
+              setError("No se encontraron órdenes con este correo.");
+              return;
+          }
+  
+          const ordenesEncontradas = querySnapshot.docs.map(doc => ({
+              id: doc.id,
+              ...doc.data(),
+          }));
+  
+          console.log("Órdenes encontradas:", ordenesEncontradas);
+          setOrdenes(ordenesEncontradas);
+      } catch (error) {
+          console.error("Error buscando la orden: ", error);
+          setError("Hubo un problema buscando tu pedido.");
+      }
   };
+  
+    return (
+        <div className="seguimiento-container">
+            <h1>Seguimiento de Orden</h1>
 
-  return (
-    <div>
-      <h2>Seguimiento de Orden</h2>
-      <input
-        type="text"
-        placeholder="Ingrese su email o ID de orden"
-        value={search}
-        onChange={(e) => setSearch(e.target.value)}
-      />
-      <button onClick={handleSearch} disabled={loading}>
-        {loading ? "Buscando..." : "Buscar"}
-      </button>
+            <div className="search-container">
+                <input
+                    type="email"
+                    value={email}
+                    onChange={(e) => setEmail(e.target.value)}
+                    placeholder="Ingresa tu correo"
+                />
+                <button onClick={buscarOrdenes}>Buscar</button>
+            </div>
 
-      {orders.length > 0 ? (
-        <ul>
-          {orders.map((order) => (
-            <li key={order.id}>
-              <p><strong>ID:</strong> {order.id}</p>
-              <p><strong>Email:</strong> {order.customerEmail || "No disponible"}</p>
-              <p><strong>Estado:</strong> {order.status}</p>
-            </li>
-          ))}
-        </ul>
-      ) : (
-        <p>No se encontraron órdenes</p>
-      )}
-    </div>
-  );
+            {error && <p className="error">{error}</p>}
+
+            <ul>
+                {ordenes.map((orden) => (
+                    <li key={orden.id}>
+                        <p><strong>ID:</strong> {orden.id}</p>
+                        <p><strong>Estado:</strong> {orden.estado}</p>
+                    </li>
+                ))}
+            </ul>
+        </div>
+    );
 };
 
 export default SeguimientoOrden;

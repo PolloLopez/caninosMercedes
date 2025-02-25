@@ -1,6 +1,7 @@
 //src>pages>Admin>ProductList.jsx
 import React, { useState, useEffect } from "react";
 import { Link } from "react-router-dom";
+import { getFirestore,collection, query, where, getDocs } from "firebase/firestore";
 
 const ProductList = () => {
     const [products, setProducts] = useState([]);
@@ -53,6 +54,24 @@ const ProductList = () => {
             </table>
         </div>
     );
+
+    const searchProducts = async (searchTerm) => {
+        const db = getFirestore();
+        const productRef = collection(db, "productos");
+        const q = query(productRef, where("nombre", ">=", searchTerm));
+      
+        try {
+          const querySnapshot = await getDocs(q);
+          const products = querySnapshot.docs.map(doc => ({
+            id: doc.id,
+            ...doc.data(),
+          }));
+          console.log("Resultados de búsqueda:", products);
+          setProductList(products);
+        } catch (error) {
+          console.error("Error en la búsqueda:", error);
+        }
+      };
 };
 
 export default ProductList;
