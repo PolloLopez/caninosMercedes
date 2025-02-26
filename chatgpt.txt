@@ -1,12 +1,14 @@
-18/02/2025
+Pollo Magia@DESKTOP-DGM4T56 MINGW64 ~/Desktop/caninosmercedes-react (main)
+$ git commit -m "consulta pedidos OK cliente y admin, admin manipula el estado"
+[main 8967ee7] consulta pedidos OK cliente y admin, admin manipula el estado
+ 11 files changed, 239 insertions(+), 115 deletions(-)
+ create mode 100644 netlify/functions/getOrders.js
 
-Fase 1: Gestión de pedidos por el vendedor
-💼 Objetivo: Que el administrador pueda ver los pedidos y actualizar su estado (pendiente → preparado → despachado → entregado).
+ no me dejo pushear!
 
-Pasos:
-📜 Crear una página /admin/ordenes donde se muestren todas las órdenes registradas en Firestore.
-🎛 Agregar botones o un selector en cada orden para que el administrador pueda cambiar su estado.
-🔄 Actualizar el estado en Firestore cuando el vendedor cambie el estado de un pedido.
+
+reveer estructura
+
 Fase 2: Confirmación del cliente
 👤 Objetivo: Que el cliente pueda ver el estado de su pedido y marcarlo como "recibido".
 
