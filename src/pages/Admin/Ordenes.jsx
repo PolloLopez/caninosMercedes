@@ -76,10 +76,10 @@ const Ordenes = () => {
                                 value={orden.estado}
                                 onChange={(e) => handleEstadoChange(orden.id, e.target.value)}
                             >
-                                <option value="pendiente">Pendiente</option>
-                                <option value="preparado">Preparado</option>
-                                <option value="despachado">Despachado</option>
-                                <option value="entregado">Entregado</option>
+                                <option value="Pendiente">Pendiente</option>
+                                <option value="Preparado">Preparado</option>
+                                <option value="Despachado">Despachado</option>
+                                <option value="Entregado">Entregado</option>
                             </select>
                         </p>
                         <button onClick={() => setProductosOrden(orden.productos)}>Ver productos</button>
