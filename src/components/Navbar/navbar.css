@@ -1,4 +1,4 @@
-/* NavBar/NavBar.css */
+/* src/components/Navbar/navbar.css */
 
 .navbar {
   background-color: var(--primary-color);
@@ -20,7 +20,7 @@
   font-size: 1.2em;
 }
 
-.navbar a { 
+.navbar a {
   text-decoration: none;
   color: var(--secondary-color);
   font-weight: bold;
@@ -32,11 +32,48 @@
 }
 
 .logo img {
-  height: 3.5em; 
+  height: 3.5em;
   border-radius: 2rem;
   width: auto;
   display: block;
 }
+
 .logo img:hover {
   border: 1px solid white;
+}
+
+/* Estilo especial para admin */
+.admin-navbar {
+  background-color: #912121; /* más oscuro para diferenciar */
+
+}
+
+/* Panel admin destacado */
+.admin-link {
+  background-color: rgba(255, 215, 0, 0.1);
+  color: gold;
+  padding: 0.4em 0.8em;
+  border-radius: 12px;
+  font-weight: bold;
+  transition: all 0.3s ease;
+  display: inline-flex;
+  align-items: center;
+  gap: 0.3em;
+}
+
+.admin-link:hover {
+  background-color: rgba(255, 215, 0, 0.2);
+  color: white;
+  box-shadow: 0 0 8px gold;
+  transform: scale(1.05);
+}
+
+.crown {
+  font-size: 1.2em;
+}
+
+.admin-name {
+  font-style: italic;
+  font-weight: bold;
+  color: gold;
 }

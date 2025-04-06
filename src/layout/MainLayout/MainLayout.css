@@ -27,12 +27,14 @@
 .navbar ul {
     list-style: none;
     display: flex;
-    gap: 1.5em;
+    gap: .5em;
     margin: 0;
+
 }
 
 .navbar li {
-    font-size: 1.2em;
+    font-size: 1em;
+    padding-inline: 3px;
 }
 
 .navbar a {
@@ -40,10 +42,24 @@
     color: var(--secondary-color);
     font-weight: bold;
     transition: color 0.3s;
+
 }
 
 .navbar a:hover {
-    color: var(--highlight-color);
+    color: black;
+}
+
+.user-info{
+    color: black;
+    font-size: small;
+    max-width: 10rem;
+}
+
+.logout-btn {
+    width: fit-content;
+    background-color: var(--highlight-color);
+    padding: 5px;
+    color: black;
 }
 
 /* Footer */
@@ -73,17 +89,23 @@
 
 @media (max-width: 768px) {
     .main-container {
-        padding: 2.5rem;
+        padding: 2rem;
     }
 
     .navbar ul {
         list-style: none;
         display: flex;
         flex-direction: row;
-        gap: 1em;
+        gap: .25em;
     }
 
     .navbar li {
-        font-size: 1rem;
+        font-size: .75rem;
+    }
+    .user-info{
+        max-width: 5rem;
+    }
+    .logout-btn {
+        padding: 0;
     }
 }

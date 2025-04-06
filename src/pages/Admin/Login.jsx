@@ -1,53 +1,71 @@
-//src>pages>Admin>Login.jsx
-import React, { useState } from "react";
+// src/pages/Admin/Login.jsx
+import { useState } from "react";
 import { useNavigate } from "react-router-dom";
-import { getAuth, signInWithEmailAndPassword, signInWithPopup, GoogleAuthProvider } from "firebase/auth";
-import { app } from "../../firebase"
-
+import { signInWithEmailAndPassword } from "firebase/auth";
+import { auth, db } from "../../config/firebaseConfig";
+import { doc, getDoc } from "firebase/firestore";
 
 const Login = () => {
-    const [email, setEmail] = useState("");
-    const [password, setPassword] = useState("");
-    const [error, setError] = useState("");
-    const navigate = useNavigate();
-    const auth = getAuth(app);
-    const provider = new GoogleAuthProvider();
-  
-    const handleLogin = async (e) => {
-      e.preventDefault();
-      setError("");
-      try {
-        await signInWithEmailAndPassword(auth, email, password);
-        localStorage.setItem("isAdmin", "true");
-        navigate("/admin");
-      } catch (err) {
-        setError("Credenciales incorrectas");
+  const [email, setEmail] = useState("");
+  const [password, setPassword] = useState("");
+  const [error, setError] = useState("");
+  const navigate = useNavigate();
+
+  const handleLogin = async (e) => {
+    e.preventDefault();
+    setError("");
+
+    try {
+      const userCredential = await signInWithEmailAndPassword(auth, email, password);
+      const user = userCredential.user;
+
+      // obtener el rol del usuario desde Firestore
+      const userRef = doc(db, "user", user.uid); // Asegurate que la colección se llame "user"
+      const userSnap = await getDoc(userRef);
+
+      if (userSnap.exists()) {
+        const userData = userSnap.data();
+        const userRole = userData.role || "user";
+        console.log("Datos del usuario en Firestore:", userData);
+
+        // navegación según rol
+        if (userRole === "admin") {
+          navigate("/admin");
+        } else {
+          navigate("/");
+        }
+      } else {
+        setError("No se encontraron datos de usuario.");
       }
-    };
-  
-    const handleGoogleLogin = async () => {
-      try {
-        await signInWithPopup(auth, provider);
-        localStorage.setItem("isAdmin", "true");
-        navigate("/admin");
-      } catch (err) {
-        setError("Error al iniciar sesión con Google");
-      }
-    };
-  
-    return (
-      <div className="login-container">
-        <h2>Iniciar Sesión</h2>
-        {error && <p className="error">{error}</p>}
-        <form onSubmit={handleLogin}>
-          <input type="email" placeholder="Email" value={email} onChange={(e) => setEmail(e.target.value)} required />
-          <input type="password" placeholder="Contraseña" value={password} onChange={(e) => setPassword(e.target.value)} required />
-          <button type="submit">Iniciar Sesión</button>
-        </form>
-        <button onClick={handleGoogleLogin} className="google-btn">Iniciar con Google</button>
-      </div>
-    );
+    } catch (error) {
+      console.error("Error al iniciar sesión:", error);
+      setError("Error al iniciar sesión. Verifica tus credenciales.");
+    }
   };
-  
-  export default Login;
-  
+
+  return (
+    <div>
+      <h2>Iniciar sesión</h2>
+      {error && <p>{error}</p>}
+      <form onSubmit={handleLogin}>
+        <input
+          type="email"
+          value={email}
+          onChange={(e) => setEmail(e.target.value)}
+          placeholder="Email"
+          required
+        />
+        <input
+          type="password"
+          value={password}
+          onChange={(e) => setPassword(e.target.value)}
+          placeholder="Contraseña"
+          required
+        />
+        <button type="submit">Ingresar</button>
+      </form>
+    </div>
+  );
+};
+
+export default Login;

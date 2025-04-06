@@ -1,13 +1,21 @@
-//src>main.jsx
-import { StrictMode } from 'react'
-import { createRoot } from 'react-dom/client'
-import App from './App.jsx'
-import { AuthProvider } from './context/AuthContext.jsx'
+// src/main.jsx
+import React from 'react';
+import ReactDOM from 'react-dom/client';
+import App from './App.jsx';
+import { BrowserRouter } from 'react-router-dom';
+import { AuthProvider } from './context/AuthContext';
+import { CartProvider } from './context/CartContext';
 
-createRoot(document.getElementById('root')).render(
-  <StrictMode>
-    <AuthProvider> {/* Ahora la app tiene acceso al contexto de autenticación */}
-      <App />
-    </AuthProvider>
-  </StrictMode>,
-)
+const root = ReactDOM.createRoot(document.getElementById('root'));
+
+root.render(
+  <React.StrictMode>
+    <BrowserRouter>
+      <AuthProvider>
+        <CartProvider>
+          <App />
+        </CartProvider>
+      </AuthProvider>
+    </BrowserRouter>
+  </React.StrictMode>
+);

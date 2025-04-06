@@ -1,4 +1,4 @@
-// src>pages>Admin/>AdminOrdenes.jsx
+// src>pages>Admin>AdminOrdenes.jsx
 import { useEffect, useState } from "react";
 import { db } from "../../firebase";
 import { collection, getDocs, updateDoc, doc } from "firebase/firestore";

@@ -1,22 +1,10 @@
-Pollo Magia@DESKTOP-DGM4T56 MINGW64 ~/Desktop/caninosmercedes-react (main)
-$ git commit -m "consulta pedidos OK cliente y admin, admin manipula el estado"
-[main 8967ee7] consulta pedidos OK cliente y admin, admin manipula el estado
- 11 files changed, 239 insertions(+), 115 deletions(-)
- create mode 100644 netlify/functions/getOrders.js
-
- no me dejo pushear!
-
-
-reveer estructura
-
-Fase 2: Confirmación del cliente
-👤 Objetivo: Que el cliente pueda ver el estado de su pedido y marcarlo como "recibido".
-
-Pasos:
-🔍 Crear una página /seguimiento donde el cliente ingrese su correo o ID de orden para ver el estado.
-✅ Agregar un botón de "Pedido recibido" para que el cliente confirme la entrega.
-🔄 Actualizar Firestore para que el estado pase a "finalizado" cuando el cliente lo confirme.
-💡 Mi sugerencia: Primero hacemos Fase 1, así el vendedor ya puede gestionar pedidos. Luego, pasamos a Fase 2 para el cliente. ¿Te parece? 🚀
+por mas que este logueado o no. No me estan abriendo estas paginas:
+            <Route path="/admin" element={<ProtectedRoute element={<AdminPanel />} />} />
+            <Route path="/admin/productos" element={<ProtectedRoute element={<ProductList />} />} />
+            <Route path="/admin/create-product" element={<ProtectedRoute element={<CreateProduct />} />} />
+            <Route path="/admin/producto/:id" element={<ProtectedRoute element={<EditProduct />} />} />
+            <Route path="/admin/pedidos" element={<ProtectedRoute element={<OrdersList />} />} />
+            <Route path="/admin/ordenes" element={<ProtectedRoute element={<Ordenes />} />} />
 
 
 
@@ -24,8 +12,161 @@ Pasos:
 
 1️⃣ ✅ Finalizar compra: Crear un proceso donde los usuarios confirmen su compra antes de pagar.
 2️⃣ Integrar Mercado Pago: Configurar pagos online para que los clientes puedan pagar sus compras.
-3️⃣ Seguimiento de compra: Permitir que los clientes revisen el estado de sus pedidos.
+3️⃣ ✅ Seguimiento de compra: Permitir que los clientes revisen el estado de sus pedidos.
 4️⃣ Control de stock: Ajustar la cantidad de productos disponibles al realizar una compra.
-5️⃣ Redireccion en caso de fallar. 404
+5️⃣ ✅ Redireccion en caso de fallar. 404
 6️⃣ Ver Tutorial, reproducir video de youtube
+
+--------------------
+import { createContext, useContext, useEffect, useState } from "react";
+import { onAuthStateChanged } from "firebase/auth";
+import { auth, db } from "../firebase";
+import { doc, getDoc } from "firebase/firestore";
+✅ Importaciones necesarias:
+
+createContext, useContext, useEffect, useState: Para manejar el contexto y la autenticación en React.
+
+onAuthStateChanged: Detecta cambios en el estado de autenticación de Firebase.
+
+auth: Instancia de Firebase Authentication.
+
+db, doc, getDoc: Para acceder a Firestore y obtener el rol del usuario.
+
+
+
+const AuthContext = createContext();
+✅ Creamos el contexto:
+Esto permite que toda la aplicación acceda a user, isAdmin y loading sin necesidad de pasarlos como props.
+export const AuthProvider = ({ children }) => {
+✅ Este componente envuelve la aplicación y gestiona el estado de autenticación.
+
+  const [user, setUser] = useState(null);
+  const [isAdmin, setIsAdmin] = useState(false);
+  const [loading, setLoading] = useState(true);
+✅ Estados principales:
+
+user: Guarda la información del usuario autenticado.
+
+isAdmin: Indica si el usuario tiene el rol de administrador.
+
+loading: Indica si aún estamos cargando la autenticación.
+
+
+--
+  useEffect(() => {
+    const unsubscribe = onAuthStateChanged(auth, async (firebaseUser) => {
+✅ onAuthStateChanged detecta si hay un usuario autenticado.
+
+Se ejecuta cuando Firebase cambia el estado del usuario.
+
+Si firebaseUser es null, significa que el usuario no ha iniciado sesión o se deslogueó.
+--
+  try {
+        console.log("Firebase user:", firebaseUser);
+
+        if (!firebaseUser) {
+          setUser(null);
+          setIsAdmin(false);
+          setLoading(false);
+          return;
+        }
+✅ Si no hay usuario, lo reseteamos.
+
+setUser(null): No hay usuario autenticado.
+
+setIsAdmin(false): No puede ser admin si no está autenticado.
+
+setLoading(false): Finalizamos la carga.
+
+return;: Terminamos la ejecución para evitar consultar Firestore innecesariamente.
+
+
+--
+        const userRef = doc(db, "usuarios", firebaseUser.uid);
+        const userSnap = await getDoc(userRef);
+        const userData = userSnap.exists() ? userSnap.data() : null;
+
+        console.log("Documento Firestore del usuario:", userData);
+✅ Si el usuario está autenticado, buscamos su información en Firestore.
+
+doc(db, "usuarios", firebaseUser.uid): Ubicamos el documento del usuario en Firestore.
+
+await getDoc(userRef): Obtenemos los datos.
+
+userSnap.exists() ? userSnap.data() : null: Si el documento existe, guardamos sus datos.
+
+--
+
+        setUser(firebaseUser);
+        setIsAdmin(userData?.rol === "admin");
+✅ Guardamos los datos en el estado.
+
+setUser(firebaseUser): Guardamos el usuario en el estado.
+
+setIsAdmin(userData?.rol === "admin"): Si el rol en Firestore es "admin", isAdmin será true.
+-
+      } catch (error) {
+        console.error("Error obteniendo usuario de Firestore:", error);
+      } finally {
+        setLoading(false);
+      }
+✅ Manejo de errores y finalización de carga.
+
+Si algo falla en Firestore, mostramos el error.
+
+En finally, ponemos setLoading(false) para asegurarnos de que la aplicación no se quede en estado de carga infinita.
+--
+   return () => unsubscribe();
+  }, []);
+✅ Limpieza del efecto.
+
+onAuthStateChanged devuelve una función para cancelar la suscripción cuando el componente se desmonta.
+--
+return (
+    <AuthContext.Provider value={{ user, isAdmin, loading }}>
+      {!loading && children} {/* 🔹 Evita renderizar antes de que cargue */}
+    </AuthContext.Provider>
+  );
+✅ Retornamos el contexto con user, isAdmin y loading.
+
+Usamos !loading && children para que la app no intente renderizar nada hasta que la autenticación termine de cargarse.
+
+---
+export const useAuth = () => useContext(AuthContext);
+✅ Creamos un hook useAuth() para acceder fácilmente a user, isAdmin y loading.
+
+--
+
+
+
+Si necesitas proteger rutas para administradores, puedes modificar ProtectedRoute así:
+
+jsx
+Copiar
+Editar
+import { useAuth } from "../context/AuthContext";
+import { Navigate } from "react-router-dom";
+
+const ProtectedRoute = ({ element, adminOnly = false }) => {
+  const { user, isAdmin, loading } = useAuth();
+
+  if (loading) return <p>Cargando...</p>;
+
+  if (!user) return <Navigate to="/login" replace />;
+
+  if (adminOnly && !isAdmin) return <Navigate to="/" replace />;
+
+  return element;
+};
+
+export default ProtectedRoute;
+🔹 Así funciona:
+
+Si adminOnly es true, solo deja pasar a admins.
+
+Si el usuario no está autenticado, lo redirige a /login.
+
+Si no es admin y la ruta es solo para admins, lo manda a /.
+
+---
 

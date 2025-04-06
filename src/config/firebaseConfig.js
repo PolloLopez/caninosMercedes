@@ -1,17 +1,24 @@
 // src/config/firebaseConfig.js
 import { initializeApp } from "firebase/app";
+import { getAuth } from "firebase/auth";
+import { getFirestore } from "firebase/firestore";
+import { getAnalytics } from "firebase/analytics";
+
 
 const firebaseConfig = {
-  apiKey: process.env.VITE_FIREBASE_API_KEY,
-  authDomain: process.env.VITE_FIREBASE_AUTH_DOMAIN,
-  projectId: process.env.VITE_FIREBASE_PROJECT_ID,
-  storageBucket: process.env.VITE_FIREBASE_STORAGE_BUCKET,
-  messagingSenderId: process.env.VITE_FIREBASE_MESSAGING_SENDER_ID,
-  appId: process.env.VITE_FIREBASE_APP_ID,
-  measurementId: process.env.VITE_FIREBASE_MEASUREMENT_ID,
+  apiKey: "AIzaSyAHQPG62nN0Hu9Qzqlst7JulBbOTssfZW4",
+  authDomain: "mercedesk9.firebaseapp.com",
+  projectId: "mercedesk9",
+  storageBucket: "mercedesk9.firebasestorage.app",
+  messagingSenderId: "191488187134",
+  appId: "1:191488187134:web:94a8eae3847b538a1523af",
+  measurementId: "G-1LZ86WHPXQ"
 };
 
 // Inicializa Firebase
 const app = initializeApp(firebaseConfig);
+const auth = getAuth(app);
+const db = getFirestore(app);
+const analytics = getAnalytics (app);
 
-export default app;
+export { auth, db, getAnalytics };

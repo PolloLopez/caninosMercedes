@@ -1,9 +1,9 @@
 //src>pages>Admin>CreateProduct.jsx
+// src/pages/Admin/CreateProduct.jsx
 import React, { useState } from "react";
 import { useNavigate } from "react-router-dom";
 import { db } from "../../firebase";
 import { collection, addDoc } from "firebase/firestore";
-import { v4 as uuidv4 } from 'uuid';
 
 const CreateProduct = () => {
     const [nombre, setNombre] = useState("");
@@ -16,9 +16,8 @@ const CreateProduct = () => {
     const handleSubmit = async (e) => {
         e.preventDefault();
 
-        // Generar el ID único para el producto
+        // Crear el nuevo producto
         const newProduct = {
-            id: uuidv4(), // Usamos uuidv4 para generar un ID único
             nombre,
             descripcion,
             precio: parseFloat(precio),
@@ -27,9 +26,10 @@ const CreateProduct = () => {
         };
 
         try {
+            // Agregar el producto a Firestore (Firestore manejará el ID automáticamente)
             await addDoc(collection(db, "productos"), newProduct);
             console.log("Producto agregado:", newProduct);
-            navigate("/admin");
+            navigate("/admin"); // Redirige al panel de administración
         } catch (error) {
             console.error("Error al agregar producto:", error);
         }

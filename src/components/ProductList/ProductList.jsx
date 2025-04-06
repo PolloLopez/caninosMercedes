@@ -3,6 +3,7 @@ import React from "react";
 import ProductCard from "../ProductCard/ProductCard";
 
 
+
 const ProductList = ({ products, addToCart }) => {
   if (products.length === 0) {
     return <p>Cargando productos...</p>;

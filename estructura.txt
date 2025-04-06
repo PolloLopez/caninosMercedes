@@ -1,85 +1,95 @@
-recorda que es sobre la app de CaninosMercedes.
-la estructura es:
+recorda que la estructura actual es:
 
-
+>.netlify
+|   ├──blobs-serve
+|   ├──functions-internal
+|   ├──functions-serve
+|   |   ├── getOrders
+|   |   |   ├── ___netlify-telemetry.mjs
+|   |   |   ├──getOrders.js
+|   |   │   └──package.json
+|   ├──v1
+|   |   ├──functions 
+|   |   |   └── state.json
 >dist
-    assets
-    │   ├── index-DhSPVlde.js
-    │   ├── index-t-0RbNPc.css
-    │   └── logo-D6oMXuj9.png
-    ├── index.html
-    └── vite.svg
->node_modules
-    bastantes carpetas
-
-
+|   >assets
+|   │   ├── index-DhSPVlde.js
+|   │   ├── index-t-0RbNPc.css
+|   │   └── logo-D6oMXuj9.png
+├── index.html
+└── vite.svg
 
 >functions
-├── components/ 
-│   └── node_modules 
+|    >node_modules
+│       └── >bastantes carpetas 
 ├── .eslintrc.js
 ├── .gitignore
 ├── index.js
 ├── package-lock.json
 └── package.json
 
+├──>netlify 
+|    └──> functions
+|    |    └── getOrders.js
+
+|>node_modules
+|    >bastantes carpetas
+
+|>public                  
+|    │   ├── product.json
+|    │   ├── productos.json
+|    |   │   └── productos.txt
+|    │   ├── tutoriales.json
+|    │   └── vite.svg
 
 
->public                  
-    │   ├── product.json
-    │   ├── productos.json
-    │   ├── tutoriales.json
-    │   └── vite.svg
-
-
->src/
-│   ├── assets/ 
-│   │   └── image/ 
+>src
+│   ├── >assets
+│   │   └── >image
 │   │   │   └── logo.png
 │   └── global.css 
 
-├── components/ 
-│   ├── CartModal/ 
+├── >components
+│   ├── >CartModal/ 
 │   │   ├── CartModal.css 
 │   │   └── CartModal.jsx 
-│   ├── Footer/ 
+│   ├── >Footer/ 
 │   │   ├── footer.css 
 │   │   └── footer.jsx
-│   ├── Navbar/ 
+│   ├── >Navbar/ 
 │   │   ├── navbar.css 
 │   │   └── navbar.jsx 
-│   ├── ProductCard/ 
+│   ├── >ProductCard/ 
 │   │   ├── ProductCard.css 
 │   │   └── ProductCard.jsx 
-│   ├── ProductList/ 
+│   ├── >ProductList/ 
 │   │   └── ProductList.jsx  / (falta vincular global.css)
-|   ├── Toast/
+|   ├── >Toast/
 │   |   ├── Toast.css
 │   |   └── Toast.jsx
-|   ├── TutorialCard/
+|   ├── >TutorialCard/
 │   |   ├── TutorialCard.css
 │   |   └── TutorialCard.jsx
 │   ├── ItemListContainer.css
-|   ├── ItemListContainer.jsx
-|   └── MercadoPagoButton.jsx
+|   └── ItemListContainer.jsx
 │   
-├──config/ 
+├──>config/ 
 │      └── firebaseConfig.js
-├── context/               
+├── >context/               
 │   ├── AuthContext.jsx  
 │   └── CartContext.jsx    
 │
-├── hooks/ 
+├── >hooks/ 
 |   ├── useFetchProducts.js                
 │   └── useFetchTutorials.js
 │
-├── layout/          
-│   └── MainLayout/
+├── >layout/          
+│   └── >MainLayout/
 │       ├── MainLayout.css
 │       └── MainLayout.jsx
 │
-├── pages/               
-│   ├── Admin/
+├── >pages/               
+│   ├── >Admin/
 │   │   ├── AdminOrdenes.jsx / (falta vincular global.css)
 │   │   ├── AdminPanel.jsx / (falta vincular global.css)
 │   │   ├── CreateProduct.jsx / (falta vincular global.css)
@@ -90,29 +100,32 @@ la estructura es:
 │   │   ├── OrderList.jsx / (falta vincular global.css)
 │   │   ├── PanelOrdenes.jsx / (falta vincular global.css)
 │   │   └── ProductList.jsx / (falta vincular global.css)
-│   ├── Carrito/
+│   ├── >Carrito/
 │   │   ├── Carrito.css
 │   │   └── Carrito.jsx
-│   ├── Checkout/
+│   ├── >Checkout/
 │   │   ├── Checkout.css
 │   │   ├── Checkout.jsx
 │   │   └── OrdenConfirmation.jsx  / (falta vincular global.css)
-│   ├── Inicio/
+│   ├── >Inicio/
 │   │   ├── Inicio.css
 │   │   └── Inicio.jsx
-│   ├── Nosotros/
+│   ├── >Nosotros/
 │   |   └── Nosotros.jsx  / (falta vincular global.css)
-│   ├── Tienda/
+│   ├── >Tienda/
 │   │   ├── Tienda.css
 │   │   └── Tienda.jsx
-│   ├── Tutoriales/ 
+│   ├── >Tutoriales/ 
 │   |   ├── Tutorials.css
 │   │   └── Tutorials.jsx
-│   ├── AdminProdutos.css
-│   ├── AdminProdutos.jsx
+│   ├── AdminProduts.css
+│   ├── AdminProduts.jsx
 │   ├── ConfirmacionPedido.jsx / (falta vincular global.css)
+│   ├── NotFound.jsx / (falta vincular global.css)
 │   └── SeguimientoOrden.jsx / (falta vincular global.css)
-├── services/
+├── >routes/
+│   └── ProtectedRoute.jsx
+├── >services/
 │   └── emailService.js
 ├── App.css
 ├── App.jsx
@@ -122,6 +135,7 @@ env.
 .firebaserc
 .gitignore
 eslint.config.js
+estructura.txt
 et --hard 42f027266c2c31fbbf49b3ca2f2e6b94c9a6131f
 firebase.json
 index.html
@@ -129,6 +143,8 @@ netlify.toml
 package-lock.json
 package.json
 README.md
+serviceAccountKey.json
+setAdmin.js
 vite.config.js
 
 

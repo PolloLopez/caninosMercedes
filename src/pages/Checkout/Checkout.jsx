@@ -58,9 +58,9 @@ const Checkout = () => {
       alert(`¡Pedido registrado con éxito! ID: ${docRef.id}`);
 
       clearCart();
-      navigate("/checkout/OrdenConfirmation", { state: { orderId: docRef.id } });
+      navigate("/", { state: { orderId: docRef.id } });
     } catch (error) {
-      console.error("Error al guardar el pedido:", error);
+      console.error("Error al guardar el pedido:", error); 
       setError(error.message);
     } finally {
       setIsProcessing(false);
