@@ -20,6 +20,7 @@ import NotFound from "./pages/NotFound";
 import ProtectedRoute from "./routes/ProtectedRoute";
 
 import './App.css';
+import './assets/global.css';
 import { useAuth } from "./context/AuthContext";
 
 const App = () => {

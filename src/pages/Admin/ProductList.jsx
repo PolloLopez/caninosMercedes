@@ -1,3 +1,6 @@
+
+
+
 //src>pages>Admin>ProductList.jsx
 import React, { useState, useEffect } from "react";
 import { Link } from "react-router-dom";
@@ -24,7 +27,10 @@ const ProductList = () => {
     return (
         <div>
             <h1>Lista de Productos</h1>
-            <Link to="/admin/producto/nuevo">
+
+     //* A ESTA PAGINA NO PUEDO ACCEDER 
+
+            <Link to="./createproduct"> 
                 <button>Agregar Producto</button>
             </Link>
             <table>
@@ -43,6 +49,9 @@ const ProductList = () => {
                             <td>{product.category}</td>
                             <td>${product.price}</td>
                             <td>
+                            
+                            //* A ESTA PAGINA NO PUEDO ACCEDER 
+
                                 <Link to={`/admin/producto/${product.id}`}>
                                     <button>Editar</button>
                                 </Link>

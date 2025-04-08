@@ -1,11 +1,11 @@
 /* src/components/TutorialCard/TutorialCard.css */
 
 .tutorial-card {
-  border: 2px solid var(--highlight-color);
+  border: 2px solid var(--color-destacado);
   padding: 1.25rem;
   border-radius: 1rem;
   width: 250px;
-  box-shadow: 0 2px 8px var(--highlight-color);
+  box-shadow: 0 2px 8px var(--color-destacado);
   background-color: #fff;
   overflow: hidden; /* Para evitar que las imágenes sobresalgan de las tarjetas */
 }
@@ -20,14 +20,14 @@
 .view-more-btn {
   padding: 0.75rem 1rem;
   border: none;
-  background-color: var(--primary-color);
-  color: var(--secondary-color);
+  background-color: var(--color-primario);
+  color: var(--color-secundario);
   cursor: pointer;
   border-radius: 5px;
   transition: background-color 0.25s ease;
 }
 
 .view-more-btn:hover {
-  background-color: var(--highlight-color);
-  color: var(--primary-color);
+  background-color: var(--color-destacado);
+  color: var(--color-primario);
 }

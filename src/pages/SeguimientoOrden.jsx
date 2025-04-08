@@ -1,4 +1,5 @@
 // src/pages/SeguimientoOrden.jsx
+import "./SeguimientoOrden.css";
 import { useState } from "react";
 import { db } from "../firebase";
 import { collection, query, where, getDocs } from "firebase/firestore";

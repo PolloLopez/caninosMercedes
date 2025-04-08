@@ -1,0 +1,46 @@
+/* src/pages/Admin/ProductList.css */
+
+.product-list-admin {
+    padding: 2rem;
+  }
+  
+  .product-list-admin h2 {
+    color: var(--color-primario);
+    margin-bottom: 1rem;
+  }
+  
+  .product-list-admin table {
+    width: 100%;
+    border-collapse: collapse;
+  }
+  
+  .product-list-admin th,
+  .product-list-admin td {
+    padding: 1rem;
+    border: 1px solid #ccc;
+    text-align: left;
+  }
+  
+  .product-list-admin th {
+    background-color: var(--color-primario);
+    color: --color-blanco;
+  }
+  
+  .product-list-admin td button {
+    margin-right: 0.5rem;
+    padding: 0.5rem 0.75rem;
+    border: none;
+    border-radius: 0.5rem;
+    cursor: pointer;
+  }
+  
+  .product-list-admin td .edit-btn {
+    background-color: var(--color-destacado);
+    color: --color-negro;
+  }
+  
+  .product-list-admin td .delete-btn {
+    background-color: red;
+    color: --color-blanco;
+  }
+  

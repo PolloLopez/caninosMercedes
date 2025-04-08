@@ -1,0 +1,47 @@
+/* src/pages/SeguimientoOrden.css */
+
+.seguimiento-container {
+    max-width: 600px;
+    margin: auto;
+    padding: 2rem;
+  }
+  
+  .seguimiento-container h2 {
+    color: var(--color-primario);
+    margin-bottom: 1.5rem;
+  }
+  
+  .seguimiento-container input {
+    width: 100%;
+    padding: 0.75rem;
+    margin-bottom: 1rem;
+    border: 1px solid #ccc;
+    border-radius: 0.5rem;
+  }
+  
+  .orden-info {
+    background-color: #f1f1f1;
+    padding: 1rem;
+    border-radius: 0.75rem;
+    border: 1px solid #ddd;
+  }
+  
+  .orden-info h3 {
+    color: var(--color-primario);
+    margin-bottom: 0.5rem;
+  }
+  
+  .orden-info p {
+    margin: 0.25rem 0;
+  }
+  
+  .btn-recibido {
+    margin-top: 1rem;
+    background-color: var(--color-destacado);
+    color: --color-negro;
+    border: none;
+    padding: 0.75rem;
+    border-radius: 0.5rem;
+    cursor: pointer;
+  }
+  

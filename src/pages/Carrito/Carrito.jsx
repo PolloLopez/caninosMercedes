@@ -12,36 +12,40 @@ const Carrito = () => {
   const totalCompra = cart.reduce((acc, product) => acc + product.precio * product.quantity, 0);
 
   return (
-    <div>
-      <h1>Carrito</h1>
+    <div className="carrito-container">
+      <h1>Tu Carrito 🛒</h1>
       {cart.length === 0 ? (
-        <p>No hay productos en el carrito.</p>
+        <p className="carrito-vacio">No hay productos en el carrito.</p>
       ) : (
-        <div> 
-          <h2>Productos agregados:</h2>
-          <ul>
-            {cart.map((product) => (
-              <li key={product.id} className="cart-item">
-                <img src={product.imagen} alt={product.nombre} width={50} />
-                <span>{product.nombre}</span>  ${product.precio} - Cant.: 
-                <button className="btn-carrito" onClick={() => decreaseQuantity(product.id)}>-</button>
-                {product.quantity}
-                <button className="btn-carrito" onClick={() => increaseQuantity(product.id)}>+</button>
-                <span>$ { (product.precio * product.quantity).toFixed(0) }</span>
-                <button className="btn-carrito" onClick={() => removeFromCart(product.id)}>❌ Eliminar</button>
-              </li>
-            ))}
-          </ul>
-          <div className="total-compra">
-            <span>Total de la compra: ${totalCompra.toFixed(0)}</span>
-          </div>
+        <div className="carrito-content">
+          {cart.map((product) => (
+            <div key={product.id} className="carrito-producto">
+              <img src={product.imagen} alt={product.nombre} />
+              <div className="carrito-info">
+                <h3>{product.nombre}</h3>
+                <p>Precio: ${product.precio}</p>
+                <div className="carrito-controles">
+                  <button onClick={() => decreaseQuantity(product.id)}>-</button>
+                  <span>{product.quantity}</span>
+                  <button onClick={() => increaseQuantity(product.id)}>+</button>
+                </div>
+                <p className="subtotal">Subtotal: ${ (product.precio * product.quantity).toFixed(0) }</p>
+              </div>
+              <button className="btn-eliminar" onClick={() => removeFromCart(product.id)}>Eliminar ❌</button>
+            </div>
+          ))}
 
-          <button onClick={() => navigate(`/checkout`, { state: { total: totalCompra } })} disabled={cart.length === 0}>
-            Finalizar Compra
-          </button>
-          <button onClick={clearCart} className="vaciar-carrito">
-            Vaciar carrito
-          </button> 
+          <div className="carrito-resumen">
+            <h2>Total: ${totalCompra.toFixed(0)}</h2>
+            <div className="carrito-acciones">
+              <button className="btn-finalizar" onClick={() => navigate(`/checkout`, { state: { total: totalCompra } })}>
+                Finalizar Compra
+              </button>
+              <button className="btn-vaciar" onClick={clearCart}>
+                Vaciar carrito
+              </button>
+            </div>
+          </div>
         </div>
       )}
     </div>

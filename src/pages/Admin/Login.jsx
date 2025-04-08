@@ -1,4 +1,5 @@
 // src/pages/Admin/Login.jsx
+import "./Login.css";
 import { useState } from "react";
 import { useNavigate } from "react-router-dom";
 import { signInWithEmailAndPassword } from "firebase/auth";
@@ -20,13 +21,12 @@ const Login = () => {
       const user = userCredential.user;
 
       // obtener el rol del usuario desde Firestore
-      const userRef = doc(db, "user", user.uid); // Asegurate que la colección se llame "user"
+      const userRef = doc(db, "user", user.uid);
       const userSnap = await getDoc(userRef);
 
       if (userSnap.exists()) {
         const userData = userSnap.data();
         const userRole = userData.role || "user";
-        console.log("Datos del usuario en Firestore:", userData);
 
         // navegación según rol
         if (userRole === "admin") {
@@ -44,7 +44,7 @@ const Login = () => {
   };
 
   return (
-    <div>
+    <div className="login-container">
       <h2>Iniciar sesión</h2>
       {error && <p>{error}</p>}
       <form onSubmit={handleLogin}>

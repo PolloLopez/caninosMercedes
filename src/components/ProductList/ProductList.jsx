@@ -1,4 +1,5 @@
 // components/ProductList/ProductList.jsx
+import "./ProductList.css";
 import React from "react";
 import ProductCard from "../ProductCard/ProductCard";
 

@@ -63,7 +63,7 @@ recorda que la estructura actual es:
 │   │   ├── ProductCard.css 
 │   │   └── ProductCard.jsx 
 │   ├── >ProductList/ 
-│   │   └── ProductList.jsx  / (falta vincular global.css)
+│   │   └── ProductList.jsx  
 |   ├── >Toast/
 │   |   ├── Toast.css
 │   |   └── Toast.jsx
@@ -90,28 +90,28 @@ recorda que la estructura actual es:
 │
 ├── >pages/               
 │   ├── >Admin/
-│   │   ├── AdminOrdenes.jsx / (falta vincular global.css)
-│   │   ├── AdminPanel.jsx / (falta vincular global.css)
-│   │   ├── CreateProduct.jsx / (falta vincular global.css)
-│   │   ├── EditProduct.jsx / (falta vincular global.css)
-│   │   ├── Login.jsx / (falta vincular global.css)
+│   │   ├── AdminOrdenes.jsx 
+│   │   ├── AdminPanel.jsx 
+│   │   ├── CreateProduct.jsx 
+│   │   ├── EditProduct.jsx 
+│   │   ├── Login.jsx 
 │   │   ├── Ordenes.css
 │   │   ├── Ordenes.jsx
-│   │   ├── OrderList.jsx / (falta vincular global.css)
-│   │   ├── PanelOrdenes.jsx / (falta vincular global.css)
-│   │   └── ProductList.jsx / (falta vincular global.css)
+│   │   ├── OrderList.jsx 
+│   │   ├── PanelOrdenes.jsx 
+│   │   └── ProductList.jsx 
 │   ├── >Carrito/
 │   │   ├── Carrito.css
 │   │   └── Carrito.jsx
 │   ├── >Checkout/
 │   │   ├── Checkout.css
 │   │   ├── Checkout.jsx
-│   │   └── OrdenConfirmation.jsx  / (falta vincular global.css)
+│   │   └── OrdenConfirmation.jsx  
 │   ├── >Inicio/
 │   │   ├── Inicio.css
 │   │   └── Inicio.jsx
 │   ├── >Nosotros/
-│   |   └── Nosotros.jsx  / (falta vincular global.css)
+│   |   └── Nosotros.jsx  
 │   ├── >Tienda/
 │   │   ├── Tienda.css
 │   │   └── Tienda.jsx
@@ -120,9 +120,9 @@ recorda que la estructura actual es:
 │   │   └── Tutorials.jsx
 │   ├── AdminProduts.css
 │   ├── AdminProduts.jsx
-│   ├── ConfirmacionPedido.jsx / (falta vincular global.css)
-│   ├── NotFound.jsx / (falta vincular global.css)
-│   └── SeguimientoOrden.jsx / (falta vincular global.css)
+│   ├── ConfirmacionPedido.jsx 
+│   ├── NotFound.jsx 
+│   └── SeguimientoOrden.jsx 
 ├── >routes/
 │   └── ProtectedRoute.jsx
 ├── >services/

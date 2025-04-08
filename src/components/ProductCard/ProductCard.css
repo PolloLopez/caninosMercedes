@@ -1,96 +1,57 @@
-/* Contenedor de las tarjetas */
-.product-list {
-  display: flex;
-  flex-wrap: wrap;
-  justify-content: space-evenly; /* Distribuye las tarjetas con espacios */
-  gap: .25rem;
-  width: 100%;
-  margin: auto;
-}
+/*src>components>ProductCard>ProductCard.jsx */
 
-/* Estilo base de la tarjeta */
-.product-card {
-  width: 100%; /* 100% de ancho en pantallas pequeñas */
-  max-width: 30%; /* Máximo de 4 tarjetas por fila en pantallas grandes */
-  margin: .5rem 0; /* Espacio entre tarjetas */
-  border: 1px solid #ddd;
-  border-radius: 10px;
-  box-shadow: 0 4px 8px rgba(0, 0, 0, 0.1);
-  background-color: #fff;
+.tarjeta-producto {
+  background-color: --color-blanco;
+  border-radius: var(--border-radius);
+  box-shadow: 0 2px 4px rgba(0, 0, 0, 0.1);
+  padding: var(--padding);
   display: flex;
   flex-direction: column;
-  justify-content: space-between;
-  transition: transform 0.3s ease, box-shadow 0.3s ease;
-  box-sizing: border-box; /* Ajusta el tamaño sin afectar el borde */
+  align-items: center;
+  transition: transform 0.2s;
 }
 
-/* Hover para las tarjetas */
-.product-card:hover {
-  transform: translateY(-10px);
-  box-shadow: 0 6px 12px rgba(0, 0, 0, 0.2);
+.tarjeta-producto:hover {
+  transform: scale(1.02);
 }
 
-/* Imagen dentro de la tarjeta */
-.product-card img {
+.tarjeta-producto__imagen {
   width: 100%;
-  height: 180px; /* Mantén una altura fija para la imagen */
-  object-fit: cover; /* La imagen cubrirá todo el espacio */
-  border-radius: 10px ; /* Bordes redondeados en la parte superior */
+  height: auto;
+  object-fit: cover;
+  border-radius: var(--border-radius);
 }
 
-/* Título dentro de la tarjeta */
-.product-card h3 {
-  font-size: 1.1em;
-  font-weight: bold;
-  margin: 1em 0 0.5em;
-  color: #333;
+.tarjeta-producto__titulo {
+  font-size: 1.1rem;
+  margin: 0.5rem 0 0.2rem;
+  color: var(--color-primario);
+}
+
+.tarjeta-producto__descripcion {
+  font-size: 0.9rem;
   text-align: center;
-  padding: 0 0.5em;
+  margin-bottom: 0.5rem;
 }
 
-/* Precio dentro de la tarjeta */
-.product-card .price {
-  font-size: 1.4em;
+.tarjeta-producto__precio {
   font-weight: bold;
-  color: #500550f6; /* Color destacado */
-  text-align: center;
-  margin: 0.5em 0;
+  color: var(--dark-color);
+  margin-bottom: 0.75rem;
 }
 
-/* Botón de agregar al carrito */
-.add-to-cart-btn {
-  background-color: #500550f6;
-  color: white;
+.tarjeta-producto__boton {
+  margin-top: auto;
+  background-color: var(--color-primario);
+  color: --color-blanco;
+  padding: 0.5rem 1rem;
+  border-radius: var(--border-radius);
   border: none;
-  padding: 0.75em 1em;
-  border-radius: 20px;
   cursor: pointer;
-  text-align: center;
   transition: background-color 0.3s ease;
-  width: 100%;
 }
 
-.add-to-cart-btn:hover {
-  background-color: #720172af;
-}
-
-/* Responsive para pantallas grandes */
-@media (min-width: 1025px) {
-  .product-card {
-    width: 22%; /* 4 tarjetas por fila */
-  }
-}
-
-/* Responsive para pantallas medianas */
-@media (max-width: 1024px) {
-  .product-card {
-    width: 45%; /* 2 tarjetas por fila */
-  }
-}
-
-/* Responsive para pantallas pequeñas */
-@media (max-width: 768px) {
-  .product-card {
-    width: 100%; /* 1 tarjeta por fila */
-  }
+.tarjeta-producto__boton:hover {
+  background-color: var(--color-destacado);
+  color: --color-negro;
 }

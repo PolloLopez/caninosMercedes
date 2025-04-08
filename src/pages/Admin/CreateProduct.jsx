@@ -1,5 +1,5 @@
-//src>pages>Admin>CreateProduct.jsx
 // src/pages/Admin/CreateProduct.jsx
+import "./CreateProduct.css"
 import React, { useState } from "react";
 import { useNavigate } from "react-router-dom";
 import { db } from "../../firebase";
@@ -33,7 +33,7 @@ const CreateProduct = () => {
         } catch (error) {
             console.error("Error al agregar producto:", error);
         }
-    };
+    }; 
 
     return (
         <div>

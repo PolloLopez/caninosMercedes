@@ -1,4 +1,5 @@
 // src/pages/Admin/Ordenes.jsx
+import "./Ordenes.css";
 import { useState, useEffect } from "react";
 import { db } from "../../firebase";
 import { collection, doc, updateDoc, onSnapshot } from "firebase/firestore";

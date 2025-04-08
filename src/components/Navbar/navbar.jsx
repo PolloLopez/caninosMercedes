@@ -1,77 +1,65 @@
 // src/components/Navbar/Navbar.jsx
-import React from "react";
-import { Link, useNavigate } from "react-router-dom";
-import { useCart } from "../../context/CartContext";
-import { useAuth } from "../../context/AuthContext";
-import { getAuth, signOut } from "firebase/auth";
-import logo from "../../assets/images/logo.png";
-import "./navbar.css";
+import React, { useState, useEffect } from 'react';
+import { Link } from 'react-router-dom';
+import logo from '../../assets/images/logo.png';
+import './navbar.css';
 
 const Navbar = () => {
-  const { cart } = useCart();
-  const { currentUser, role, userName } = useAuth();
-  const auth = getAuth();
-  const navigate = useNavigate();
+  const [menuAbierto, setMenuAbierto] = useState(false);
 
-  const handleLogout = async () => {
-    await signOut(auth);
-    navigate("/");
+  const toggleMenu = () => {
+    setMenuAbierto(!menuAbierto);
   };
 
-  const isAdmin = role === "admin";
+  const cerrarMenu = () => {
+    setMenuAbierto(false);
+  };
+
+  // Cierra el menú si se hace clic fuera de él
+  useEffect(() => {
+    const handleClickOutside = (event) => {
+      if (menuAbierto && !event.target.closest('.navbar')) {
+        cerrarMenu();
+      }
+    };
+
+    document.addEventListener('mousedown', handleClickOutside);
+    return () => {
+      document.removeEventListener('mousedown', handleClickOutside);
+    };
+  }, [menuAbierto]);
 
   return (
     <nav className="navbar">
       <div className="logo">
-        <Link to="/">
+        <Link to="/" onClick={cerrarMenu}>
           <img src={logo} alt="Logo" />
         </Link>
       </div>
 
-      <ul>
-        {/* Usuario NO logueado */}
-        {!currentUser && (
-          <>
-            <li><Link to="/nosotros">Nosotros</Link></li>
-            <li><Link to="/tutoriales">Tutoriales</Link></li>
-            <li><Link to="/tienda">Tienda</Link></li>
-            <li><Link to="/carrito">Carrito</Link></li>
-            <li><Link to="/seguimiento">Seguimiento</Link></li>
-            <li><Link to="/login">Iniciar sesión</Link></li>
-          </>
-        )}
+      <button
+        className={`hamburger ${menuAbierto ? 'open' : ''}`}
+        onClick={toggleMenu}
+        aria-label="Toggle menu"
+      >
+        <div className="bar"></div>
+        <div className="bar"></div>
+        <div className="bar"></div>
+      </button>
 
-        {/* Usuario logueado ADMIN */}
-        {currentUser && isAdmin && (
-          <>
-            <li><Link to="/tienda">Tienda</Link></li>
-            <li>
-              <Link to="/admin" className="admin-link">
-                <span className="crown">👑</span> Panel de Administrador
-              </Link>
-            </li>
-            <li className="admin-name">Bienvenido, Admin {userName} 👋</li>
-            <li>
-              <button onClick={handleLogout} className="logout-btn">Cerrar sesión</button>
-            </li>
-          </>
-        )}
+      <div className={`overlay ${menuAbierto ? 'active' : ''}`}></div>
 
-        {/* Usuario logueado COMÚN */}
-        {currentUser && !isAdmin && (
-          <>
-            <li><Link to="/tienda">Tienda</Link></li>
-            <li><Link to="/seguimiento">Seguimiento</Link></li>
-            <li className="admin-name">¡Hola, {userName} 🐶!</li>
-
-            <li>
-              <button onClick={handleLogout} className="logout-btn">Cerrar sesión</button>
-            </li>
-          </>
-        )}
+      <ul className={`nav-links ${menuAbierto ? 'open' : ''}`}>
+        <li><Link to="/nosotros" onClick={cerrarMenu}>Nosotros</Link></li>
+        <li><Link to="/tutoriales" onClick={cerrarMenu}>Tutoriales</Link></li>
+        <li><Link to="/tienda" onClick={cerrarMenu}>Tienda</Link></li>
+        <li><Link to="/carrito" onClick={cerrarMenu}>Carrito</Link></li>
+        <li><Link to="/seguimiento" onClick={cerrarMenu}>Seguimiento</Link></li>
+        <li><Link to="/login" onClick={cerrarMenu}>Iniciar sesión</Link></li>
       </ul>
     </nav>
   );
 };
 
 export default Navbar;
+
