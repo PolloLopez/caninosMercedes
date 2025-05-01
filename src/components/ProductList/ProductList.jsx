@@ -1,8 +1,7 @@
 // components/ProductList/ProductList.jsx
 import "./ProductList.css";
 import React from "react";
-import ProductCard from "../ProductCard/ProductCard";
-
+import TarjetaProducto from "../../components/TarjetaProducto/TarjetaProducto";
 
 
 const ProductList = ({ products, addToCart }) => {
@@ -13,7 +12,7 @@ const ProductList = ({ products, addToCart }) => {
   return (
     <div className="product-list">
       {products.map((product) => (
-        <ProductCard
+        <TarjetaProducto
           key={product.id}
           product={product}
           addToCart={addToCart}

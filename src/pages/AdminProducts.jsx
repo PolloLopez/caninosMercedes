@@ -10,7 +10,7 @@ const AdminProducts = () => {
 
   // 🔥 Obtener productos desde Firestore
     useEffect(() => {
-    const fetchProducts = async () => {
+    const fetchProducts = async () => { 
         try {
         const querySnapshot = await getDocs(collection(db, "productos"));
         const productosArray = querySnapshot.docs.map((doc) => ({

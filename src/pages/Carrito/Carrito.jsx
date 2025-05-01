@@ -6,42 +6,63 @@ import { useNavigate } from "react-router-dom";
 import "./Carrito.css";
 
 const Carrito = () => {
-  const { cart, clearCart, increaseQuantity, decreaseQuantity, removeFromCart } = useCart();
+  const {
+    carrito,
+    vaciarCarrito,
+    aumentarCantidad,
+    disminuirCantidad,
+    eliminarDelCarrito,
+  } = useCart();
   const navigate = useNavigate();
 
-  const totalCompra = cart.reduce((acc, product) => acc + product.precio * product.quantity, 0);
+  const totalCompra = carrito.reduce(
+    (acc, producto) => acc + producto.precio * producto.cantidad,
+    0
+  );
 
   return (
     <div className="carrito-container">
       <h1>Tu Carrito 🛒</h1>
-      {cart.length === 0 ? (
+      {carrito.length === 0 ? (
         <p className="carrito-vacio">No hay productos en el carrito.</p>
       ) : (
         <div className="carrito-content">
-          {cart.map((product) => (
-            <div key={product.id} className="carrito-producto">
-              <img src={product.imagen} alt={product.nombre} />
+          {carrito.map((producto) => (
+            <div key={producto.id} className="carrito-producto">
+              <img src={producto.imagen} alt={producto.nombre} />
               <div className="carrito-info">
-                <h3>{product.nombre}</h3>
-                <p>Precio: ${product.precio}</p>
+                <h3>{producto.nombre}</h3>
+                <p>Precio: ${producto.precio}</p>
                 <div className="carrito-controles">
-                  <button onClick={() => decreaseQuantity(product.id)}>-</button>
-                  <span>{product.quantity}</span>
-                  <button onClick={() => increaseQuantity(product.id)}>+</button>
+                  <button onClick={() => disminuirCantidad(producto.id)}>-</button>
+                  <span>{producto.cantidad}</span>
+                  <button onClick={() => aumentarCantidad(producto.id)}>+</button>
                 </div>
-                <p className="subtotal">Subtotal: ${ (product.precio * product.quantity).toFixed(0) }</p>
+                <p className="subtotal">
+                  Subtotal: ${(producto.precio * producto.cantidad).toFixed(0)}
+                </p>
               </div>
-              <button className="btn-eliminar" onClick={() => removeFromCart(product.id)}>Eliminar ❌</button>
+              <button
+                className="btn-eliminar"
+                onClick={() => eliminarDelCarrito(producto.id)}
+              >
+                Eliminar ❌
+              </button>
             </div>
           ))}
 
           <div className="carrito-resumen">
             <h2>Total: ${totalCompra.toFixed(0)}</h2>
             <div className="carrito-acciones">
-              <button className="btn-finalizar" onClick={() => navigate(`/checkout`, { state: { total: totalCompra } })}>
+              <button
+                className="btn-finalizar"
+                onClick={() =>
+                  navigate(`/checkout`, { state: { total: totalCompra } })
+                }
+              >
                 Finalizar Compra
               </button>
-              <button className="btn-vaciar" onClick={clearCart}>
+              <button className="btn-vaciar" onClick={vaciarCarrito}>
                 Vaciar carrito
               </button>
             </div>
@@ -53,3 +74,4 @@ const Carrito = () => {
 };
 
 export default Carrito;
+

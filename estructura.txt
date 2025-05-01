@@ -91,9 +91,12 @@ recorda que la estructura actual es:
 ├── >pages/               
 │   ├── >Admin/
 │   │   ├── AdminOrdenes.jsx 
+│   │   ├── AdminPanel.css
 │   │   ├── AdminPanel.jsx 
 │   │   ├── CreateProduct.jsx 
-│   │   ├── EditProduct.jsx 
+│   │   ├── CreateProduct.css
+│   │   ├── EditProduct.css
+│   │   ├── Login.css
 │   │   ├── Login.jsx 
 │   │   ├── Ordenes.css
 │   │   ├── Ordenes.jsx
@@ -122,6 +125,7 @@ recorda que la estructura actual es:
 │   ├── AdminProduts.jsx
 │   ├── ConfirmacionPedido.jsx 
 │   ├── NotFound.jsx 
+│   ├── SeguimientoOrden.css 
 │   └── SeguimientoOrden.jsx 
 ├── >routes/
 │   └── ProtectedRoute.jsx

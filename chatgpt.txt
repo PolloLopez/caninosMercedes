@@ -1,4 +1,6 @@
-no edita ni elimina los productos
+Gestion de pedidos al entrar en Ver Detalles, que aparezca tambien Editar pedido.
+
+
 
 
 ✅ FASE 1 – Terminá lo esencial (MVP funcional y profesional)

@@ -1,84 +1,76 @@
 // src/context/CartContext.jsx
 import React, { createContext, useContext, useState } from "react";
 
-// Creación del contexto
 const CartContext = createContext();
 
-// Proveedor del contexto
-export const CartProvider = ({ children }) => {
-  const [cart, setCart] = useState([]);
+export const useCart = () => useContext(CartContext);
 
-  // Agregar producto al carrito o incrementar cantidad si ya existe
-  const addToCart = (product) => {
-    const productInCart = cart.find((item) => item.id === product.id);
-    if (productInCart) {
-      const updatedCart = cart.map((item) =>
-        item.id === product.id
-          ? { ...item, quantity: item.quantity + 1 }
-          : item
-      );
-      setCart(updatedCart);
+export const CartProvider = ({ children }) => {
+  const [carrito, setCarrito] = useState([]);
+
+  const agregarAlCarrito = (producto) => {
+    const productoExistente = carrito.find((item) => item.id === producto.id);
+    if (productoExistente) {
+      setCarrito(
+        carrito.map((item) =>
+          item.id === producto.id
+            ? { ...item, cantidad: item.cantidad + 1 }
+            : item
+        )
+      ); 
     } else {
-      setCart([...cart, { ...product, quantity: 1 }]);
+      setCarrito([...carrito, { ...producto, cantidad: 1 }]);
     }
   };
 
-  // Aumentar cantidad de un producto
-  const increaseQuantity = (id) => {
-    const updatedCart = cart.map((item) =>
-      item.id === id ? { ...item, quantity: item.quantity + 1 } : item
+  const eliminarDelCarrito = (id) => {
+    setCarrito(carrito.filter((item) => item.id !== id));
+  };
+
+  const vaciarCarrito = () => {
+    setCarrito([]);
+  };
+
+  const aumentarCantidad = (id) => {
+    setCarrito(
+      carrito.map((item) =>
+        item.id === id ? { ...item, cantidad: item.cantidad + 1 } : item
+      )
     );
-    setCart(updatedCart);
   };
 
-  // Disminuir cantidad de un producto o eliminar si la cantidad es 1
-  const decreaseQuantity = (id) => {
-    const updatedCart = cart.map((item) =>
-      item.id === id
-        ? { ...item, quantity: item.quantity > 1 ? item.quantity - 1 : 0 }
-        : item
+  const disminuirCantidad = (id) => {
+    setCarrito(
+      carrito.map((item) =>
+        item.id === id && item.cantidad > 1
+          ? { ...item, cantidad: item.cantidad - 1 }
+          : item
+      )
     );
-
-    // Filtrar productos con cantidad mayor a 0
-    const filteredCart = updatedCart.filter((item) => item.quantity > 0);
-
-    setCart(filteredCart);
   };
 
-  // Eliminar producto del carrito
-  const removeFromCart = (id) => {
-    const updatedCart = cart.filter((item) => item.id !== id);
-    setCart(updatedCart);
-  };
+  // Calcular el total de productos (sumando las cantidades)
+  const totalProductos = carrito.reduce((acc, item) => acc + item.cantidad, 0);
 
-  // Calcular el precio total del carrito
-  const totalPrice = () => {
-    return cart.reduce((acc, product) => acc + product.precio * product.quantity, 0);
-  };
-
-  // Vaciar el carrito
-  const clearCart = () => {
-    setCart([]);
-  };
+  // Calcular el total de la compra
+  const calcularTotal = () =>
+    carrito.reduce((acc, item) => acc + item.precio * item.cantidad, 0);
 
   return (
     <CartContext.Provider
       value={{
-        cart,
-        addToCart, 
-        increaseQuantity,
-        decreaseQuantity,
-        removeFromCart,
-        clearCart,
-        totalPrice,
+        carrito,
+        agregarAlCarrito,
+        eliminarDelCarrito,
+        vaciarCarrito,
+        aumentarCantidad,
+        disminuirCantidad,
+        totalProductos, // Añadido para contar la cantidad total de productos
+        totalPrecio: calcularTotal,
+        clearCart: vaciarCarrito, // por si usás este nombre desde algún archivo viejo
       }}
     >
       {children}
     </CartContext.Provider>
   );
-};
-
-// Hook para usar el contexto del carrito
-export const useCart = () => {
-  return useContext(CartContext);
 };

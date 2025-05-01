@@ -1,65 +1,89 @@
 // src/components/Navbar/Navbar.jsx
-import React, { useState, useEffect } from 'react';
-import { Link } from 'react-router-dom';
-import logo from '../../assets/images/logo.png';
-import './navbar.css';
+
+import React, { useState, useContext } from 'react';
+import { NavLink, useNavigate } from 'react-router-dom';
+import { AuthContext } from '@/context/AuthContext';
+import { useCart } from '@/context/CartContext';
+import './Navbar.css';
 
 const Navbar = () => {
   const [menuAbierto, setMenuAbierto] = useState(false);
+  const { user, logout, isAdmin } = useContext(AuthContext);
+  const { carrito } = useCart();
+  const navigate = useNavigate();
 
-  const toggleMenu = () => {
-    setMenuAbierto(!menuAbierto);
-  };
-
-  const cerrarMenu = () => {
+  const cerrarSesion = async () => {
+    await logout();
+    navigate('/');
     setMenuAbierto(false);
   };
 
-  // Cierra el menú si se hace clic fuera de él
-  useEffect(() => {
-    const handleClickOutside = (event) => {
-      if (menuAbierto && !event.target.closest('.navbar')) {
-        cerrarMenu();
-      }
-    };
+  const primerNombre = (nombreCompleto) => {
+    if (!nombreCompleto) return '';
+    return nombreCompleto.split(' ')[0];
+  };
 
-    document.addEventListener('mousedown', handleClickOutside);
-    return () => {
-      document.removeEventListener('mousedown', handleClickOutside);
-    };
-  }, [menuAbierto]);
+  const manejarClickLink = () => {
+    setMenuAbierto(false);
+  };
+
+  const cantidadProductos = Array.isArray(carrito) ? carrito.length : 0;
 
   return (
-    <nav className="navbar">
-      <div className="logo">
-        <Link to="/" onClick={cerrarMenu}>
-          <img src={logo} alt="Logo" />
-        </Link>
+    <nav className="barra-navegacion">
+      <div className="contenedor-navegacion">
+        <NavLink to="/" className="logo" onClick={manejarClickLink}>
+          Caninos 🐶
+        </NavLink>
+
+        <button
+          className="boton-hamburguesa"
+          onClick={() => setMenuAbierto(!menuAbierto)}
+          aria-label="Abrir o cerrar menú"
+        >
+          {menuAbierto ? '❌' : '☰'}
+        </button>
+
+        <div className={`enlaces-navegacion ${menuAbierto ? 'abierto' : ''}`}>
+
+          <NavLink to="/" onClick={manejarClickLink}>Inicio</NavLink>
+
+          {/* ADMIN */}
+          {user && user.role === 'admin' ? (
+            <>
+              <NavLink to="/tienda" onClick={manejarClickLink}>Cargar Pedido</NavLink>
+              <NavLink to="/admin/productos" onClick={manejarClickLink}>Productos</NavLink>
+              <NavLink to="/admin/ordenes" onClick={manejarClickLink}>Seguimiento Pedidos</NavLink>
+              <span className="usuario-nav">👤 {primerNombre(user.name)}</span>
+              <button className="boton-logout" onClick={cerrarSesion}>Cerrar sesión</button>
+            </>
+          ) : user ? (
+            // USUARIO COMÚN
+            <>
+            <NavLink to="/" onClick={manejarClickLink}>Inicio</NavLink>
+              <NavLink to="/tienda" onClick={manejarClickLink}>Tienda</NavLink>
+              <NavLink to="/seguimiento" onClick={manejarClickLink}>Seguimiento</NavLink>
+              <span className="usuario-nav">👤 {primerNombre(user.name)}</span>
+              <button className="boton-logout" onClick={cerrarSesion}>Cerrar sesión</button>
+            </>
+          ) : (
+            // NO LOGUEADO
+            <>
+              <NavLink to="/tienda" onClick={manejarClickLink}>Tienda</NavLink>
+              <NavLink to="/tutoriales" onClick={manejarClickLink}>Tutoriales</NavLink>
+              <NavLink to="/nosotros" onClick={manejarClickLink}>Nosotros</NavLink>
+              <NavLink to="/login" onClick={manejarClickLink}>Iniciar sesión</NavLink>
+            </>
+          )}
+        </div>
+
+        <NavLink to="/carrito" className="icono-carrito" onClick={manejarClickLink}>
+          🛒
+          {cantidadProductos > 0 && <span className="contador-carrito">{cantidadProductos}</span>}
+        </NavLink>
       </div>
-
-      <button
-        className={`hamburger ${menuAbierto ? 'open' : ''}`}
-        onClick={toggleMenu}
-        aria-label="Toggle menu"
-      >
-        <div className="bar"></div>
-        <div className="bar"></div>
-        <div className="bar"></div>
-      </button>
-
-      <div className={`overlay ${menuAbierto ? 'active' : ''}`}></div>
-
-      <ul className={`nav-links ${menuAbierto ? 'open' : ''}`}>
-        <li><Link to="/nosotros" onClick={cerrarMenu}>Nosotros</Link></li>
-        <li><Link to="/tutoriales" onClick={cerrarMenu}>Tutoriales</Link></li>
-        <li><Link to="/tienda" onClick={cerrarMenu}>Tienda</Link></li>
-        <li><Link to="/carrito" onClick={cerrarMenu}>Carrito</Link></li>
-        <li><Link to="/seguimiento" onClick={cerrarMenu}>Seguimiento</Link></li>
-        <li><Link to="/login" onClick={cerrarMenu}>Iniciar sesión</Link></li>
-      </ul>
     </nav>
   );
 };
 
 export default Navbar;
-

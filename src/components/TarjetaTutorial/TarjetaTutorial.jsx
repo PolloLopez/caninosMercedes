@@ -1,8 +1,8 @@
-// src/components/TutorialCard/TutorialCard.jsx
+// src/components/TarjetaTutorial/TarjetaTutorial.jsx
 import React from "react";
-import "./TutorialCard.css"; 
+import "./TarjetaTutorial.css"; 
 
-const TutorialCard = ({ tutorial }) => {
+const TarjetaTutorial = ({ tutorial }) => {
   return (
     <div className="tutorial-card">
       <img src={tutorial.imagen} alt={tutorial.titulo} className="tutorial-image" />
@@ -13,6 +13,6 @@ const TutorialCard = ({ tutorial }) => {
   );
 };
 
-export default TutorialCard;
+export default TarjetaTutorial;
 
 

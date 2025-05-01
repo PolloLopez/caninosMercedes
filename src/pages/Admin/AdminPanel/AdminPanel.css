@@ -25,3 +25,28 @@
 .admin-panel nav a:hover {
   color: var(--color-destacado);
 }
+
+.admin-assign-role {
+  margin-bottom: 20px;
+}
+
+.admin-assign-role input {
+  padding: 8px;
+  margin-right: 10px;
+  border-radius: 6px;
+  border: 1px solid #ccc;
+}
+
+.admin-assign-role button {
+  padding: 8px 12px;
+  background-color: #4caf50;
+  color: white;
+  border: none;
+  border-radius: 6px;
+  cursor: pointer;
+}
+
+.admin-assign-role p {
+  margin-top: 10px;
+  color: #333;
+}

@@ -1,84 +1,97 @@
-// src/pages/SeguimientoOrden.jsx
-import "./SeguimientoOrden.css";
-import { useState } from "react";
-import { db } from "../firebase";
+// src/pages/SeguimientoOrden/SeguimientoOrden.jsx 
+
+import React, { useState } from "react";
 import { collection, query, where, getDocs } from "firebase/firestore";
+import { db } from "@/firebase";
+import { useAuth } from "@/context/AuthContext";
+import { useNavigate } from "react-router-dom";
+import "./SeguimientoOrden.css";
 
 const SeguimientoOrden = () => {
-    const [email, setEmail] = useState("");
-    const [ordenes, setOrdenes] = useState([]);
-    const [error, setError] = useState("");
+  const { user } = useAuth();
+  const [orderDetails, setOrderDetails] = useState(null);
+  const [busqueda, setBusqueda] = useState("");
+  const [error, setError] = useState(null);
+  const navigate = useNavigate();
 
-    const buscarOrdenes = async () => {
-        if (!email) {
-            setError("Por favor, ingresa tu correo.");
-            return;
-        }
+  const handleInputChange = (e) => {
+    setBusqueda(e.target.value);
+  };
 
-        try {
-            setError(""); // Limpiar errores previos
-            const q = query(collection(db, "ordenes"), where("email", "==", email)); 
-            const querySnapshot = await getDocs(q);
+  const handleSearch = async () => {
+    if (!busqueda) {
+      setError("Por favor ingresa tu nombre o correo.");
+      return;
+    }
 
-            if (querySnapshot.empty) {
-                console.log("No se encontraron órdenes con el email:", email);
-                setOrdenes([]);  // 🔹 Limpia el estado si no hay órdenes
-                setError("No se encontraron órdenes con este correo.");
-                return;
-            }
+    try {
+      const q = query(
+        collection(db, "ordenes"),
+        where("userId", "==", user?.uid)
+      );
 
-            const ordenesEncontradas = querySnapshot.docs.map(doc => ({
-                id: doc.id,
-                ...doc.data(),
-            }));
+      const querySnapshot = await getDocs(q);
+      const coincidencias = querySnapshot.docs
+        .map(doc => ({ id: doc.id, ...doc.data() }))
+        .filter(pedido =>
+          pedido.email?.toLowerCase() === busqueda.toLowerCase() ||
+          pedido.nombre?.toLowerCase().includes(busqueda.toLowerCase())
+        );
 
-            console.log("Órdenes encontradas:", ordenesEncontradas);
-            setOrdenes(ordenesEncontradas);
-        } catch (error) {
-            console.error("Error buscando la orden: ", error);
-            setError("Hubo un problema buscando tu pedido.");
-        }
-    };
+      if (coincidencias.length > 0) {
+        setOrderDetails(coincidencias[0]);
+        setError(null);
+      } else {
+        setOrderDetails(null);
+        setError("No se encontró un pedido con ese nombre o correo.");
+      }
+    } catch (error) {
+      setError("Hubo un error al recuperar el pedido.");
+    }
+  };
 
-    return (
-        <div className="seguimiento-container">
-            <h1>Seguimiento de Orden</h1>
+  const handleEditarPedido = () => {
+    navigate("/tienda");
+  };
 
-            <div className="search-container">
-                <input
-                    type="email"
-                    value={email}
-                    onChange={(e) => setEmail(e.target.value)}
-                    placeholder="Ingresa tu correo"
-                />
-                <button onClick={buscarOrdenes}>Buscar</button>
-            </div>
+  return (
+    <div className="seguimiento-container">
+      <h2>Seguimiento de Pedido</h2>
 
-            {error && <p className="error">{error}</p>}
+      <div className="search-container">
+        <input
+          type="text"
+          placeholder="Ingresa tu nombre o correo"
+          value={busqueda}
+          onChange={handleInputChange}
+        />
+        <button onClick={handleSearch}>Buscar Pedido</button>
+      </div>
 
-            {ordenes.length === 0 && !error && <p>No hay órdenes para mostrar.</p>}
+      {error && <p className="error">{error}</p>}
 
-            <ul>
-                {ordenes.map((orden) => (
-                    <li key={orden.id}>
-                        <p><strong>ID:</strong> {orden.id}</p>
-                        <p><strong>Estado:</strong> {orden.estado}</p>
-                        <p><strong>Cliente:</strong> {orden.nombre} ({orden.email})</p>
-                        <p><strong>Total:</strong> ${orden.total?.toLocaleString()}</p>
-                        
-                        <h3>Productos:</h3>
-                        <ul>
-                            {orden.productos?.map((prod, index) => (
-                                <li key={index}>
-                                    {prod.cantidad}x {prod.nombre} - ${prod.precio.toLocaleString()}
-                                </li>
-                            ))}
-                        </ul>
-                    </li>
-                ))}
-            </ul>
+      {orderDetails ? (
+        <div className="order-details">
+          <p><strong>Pedido ID:</strong> {orderDetails.id}</p>
+          <p><strong>Nombre:</strong> {orderDetails.nombre}</p>
+          <p><strong>Correo:</strong> {orderDetails.email}</p>
+          <p><strong>Estado:</strong> {orderDetails.estado}</p>
+          <p><strong>Productos:</strong></p>
+          <ul>
+            {orderDetails.productos.map((item, index) => (
+              <li key={index}>{item.nombre} - {item.cantidad} x ${item.precio}</li>
+            ))}
+          </ul>
+          <p><strong>Total:</strong> ${orderDetails.total}</p>
+          <button className="editar-btn" onClick={handleEditarPedido}>
+            Editar Pedido
+          </button>
         </div>
-    );
+      ) : (
+        !error && <p>Busca un pedido ingresando nombre o correo 😊</p>
+      )}
+    </div>
+  );
 };
 
 export default SeguimientoOrden;

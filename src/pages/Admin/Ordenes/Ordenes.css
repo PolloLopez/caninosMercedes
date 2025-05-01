@@ -1,0 +1,123 @@
+/* src/pages/Admin/Ordenes.css */
+
+.ordenes-container {
+  max-width: 800px;
+  margin: 2rem auto;
+  padding: 1.5rem;
+  background-color: #fefefe;
+  border-radius: 12px;
+  box-shadow: 0 4px 12px rgba(0, 0, 0, 0.1);
+}
+
+.buscador {
+  display: flex;
+  gap: 1rem;
+  margin-bottom: 1rem;
+}
+
+.buscador input {
+  flex: 1;
+  padding: 0.5rem;
+  border-radius: 8px;
+  border: 1px solid #ccc;
+}
+
+.buscador button {
+  padding: 0.5rem 1rem;
+  background-color: #e74c3c;
+  color: white;
+  border: none;
+  border-radius: 8px;
+  cursor: pointer;
+}
+
+.orden-card {
+  border: 1px solid #ddd;
+  border-radius: 10px;
+  margin-bottom: 1rem;
+  padding: 1rem;
+  background-color: #fff;
+}
+
+.orden-header {
+  display: flex;
+  justify-content: space-between;
+  align-items: center;
+}
+
+.orden-info p {
+  margin: 0.25rem 0;
+}
+
+.estado-label {
+  padding: 0.3rem 0.8rem;
+  border-radius: 20px;
+  font-weight: bold;
+  text-transform: uppercase;
+  font-size: 0.85rem;
+  color: white;
+}
+
+/* Colores según estado */
+.estado-label.pendiente {
+  background-color: #f39c12;
+}
+
+.estado-label.preparado {
+  background-color: #3498db;
+}
+
+.estado-label.despachado {
+  background-color: #9b59b6;
+}
+
+.estado-label.entregado {
+  background-color: #2ecc71;
+}
+
+.estado-control {
+  margin: 1rem 0;
+}
+
+.estado-control select {
+  cursor: pointer;
+  padding: 0.4rem;
+  border-radius: 6px;
+}
+
+
+.ver-detalles-btn {
+  padding: 0.5rem 1rem;
+  background-color: #2980b9;
+  color: white;
+  border: none;
+  border-radius: 6px;
+  cursor: pointer;
+  margin-bottom: 1rem;
+}
+
+.ver-detalles-btn:hover,
+.buscador button:hover {
+  background-color: #1c598a;
+}
+
+.productos-lista {
+  background-color: #f9f9f9;
+  border-radius: 8px;
+  padding: 0.8rem;
+}
+
+.productos-lista ul {
+  padding-left: 1rem;
+}
+
+@media (max-width: 600px) {
+  .orden-header {
+    flex-direction: column;
+    align-items: flex-start;
+  }
+
+  .estado-label {
+    margin-top: 0.5rem;
+  }
+}

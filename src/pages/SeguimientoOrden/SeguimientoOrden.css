@@ -45,3 +45,18 @@
     cursor: pointer;
   }
   
+  .editar-btn {
+    margin-top: 1rem;
+    padding: 0.5rem 1rem;
+    background-color: #fca311;
+    border: none;
+    border-radius: 8px;
+    color: white;
+    font-weight: bold;
+    cursor: pointer;
+  }
+  
+  .editar-btn:hover {
+    background-color: #ff9900;
+  }
+  

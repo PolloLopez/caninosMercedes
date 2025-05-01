@@ -1,12 +1,11 @@
-//Este archivo contiene el custom hook que utilizamos para obtener los tutoriales desde el archivo JSON
-// src>hooks>useFetchTutorials.js
+// src>hooks>useFetchTutoriales.js
 
 import { db } from "../firebase";
 import { useState, useEffect } from "react";
 import { collection, getDocs } from "firebase/firestore";
 
 
-const useFetchTutorials = () => {
+const useFetchTutoriales = () => {
   const [tutorials, setTutorials] = useState([]);
   const [loading, setLoading] = useState(true);
   const [error, setError] = useState(null);
@@ -29,4 +28,4 @@ const useFetchTutorials = () => {
   return { tutorials, loading, error };
 };
 
-export default useFetchTutorials;
+export default useFetchTutoriales;

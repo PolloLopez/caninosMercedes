@@ -4,7 +4,6 @@ import { getAuth } from "firebase/auth";
 import { getFirestore } from "firebase/firestore";
 import { getAnalytics } from "firebase/analytics";
 
-
 const firebaseConfig = {
   apiKey: "AIzaSyAHQPG62nN0Hu9Qzqlst7JulBbOTssfZW4",
   authDomain: "mercedesk9.firebaseapp.com",
@@ -17,8 +16,11 @@ const firebaseConfig = {
 
 // Inicializa Firebase
 const app = initializeApp(firebaseConfig);
+
+// Obtener instancias de los servicios
 const auth = getAuth(app);
 const db = getFirestore(app);
-const analytics = getAnalytics (app);
+const analytics = getAnalytics(app);
 
-export { auth, db, getAnalytics };
+// Exportar las instancias necesarias
+export { auth, db, analytics };
