@@ -60,7 +60,6 @@ const Navbar = () => {
           ) : user ? (
             // USUARIO COMÚN
             <>
-            <NavLink to="/" onClick={manejarClickLink}>Inicio</NavLink>
               <NavLink to="/tienda" onClick={manejarClickLink}>Tienda</NavLink>
               <NavLink to="/seguimiento" onClick={manejarClickLink}>Seguimiento</NavLink>
               <span className="usuario-nav">👤 {primerNombre(user.name)}</span>
