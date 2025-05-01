@@ -1,5 +1,5 @@
 // src/main.jsx
-import "./assets/Global.css"
+import "@/assets/Global.css";
 import React from 'react';
 import ReactDOM from 'react-dom/client';
 import App from './App.jsx';
