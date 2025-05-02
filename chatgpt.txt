@@ -1,4 +1,3 @@
-🔲 REARMAR ESTRUCTURA
 
 🔲 Preguntar a GPT
     App.jsx y main.jsx Importan Global.css

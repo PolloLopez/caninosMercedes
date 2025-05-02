@@ -47,7 +47,7 @@ recorda que la estructura actual es:
 │   ├── >assets
 │   │   └── >image
 │   │   │   └── logo.png
-│   └── Global.css 
+│   └── global.css 
 
 ├── >components
 │   ├── >CartModal/ 
