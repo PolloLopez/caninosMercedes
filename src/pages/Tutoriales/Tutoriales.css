@@ -1,16 +1,23 @@
 /* src/pages/Tutorials/Tutoriales.css */
 
 .contenedor-tutoriales {
-  padding: 1.5rem;
+  padding: 2rem 1.5rem;
   text-align: center;
+}
+
+.contenedor-tutoriales h2 {
+  font-size: 2rem;
+  margin-bottom: 1.5rem;
+  color: var(--color-primario);
 }
 
 .lista-tutoriales {
   display: grid;
   grid-template-columns: repeat(auto-fit, minmax(280px, 1fr));
   gap: 2rem;
-  max-width: var(--max-width);
+  max-width: var(--max-width, 1200px);
   margin: 0 auto;
+  padding: 0 1rem;
 }
 
 .tarjeta-tutorial {
@@ -20,11 +27,12 @@
   box-shadow: var(--sombra-suave);
   background-color: var(--color-blanco);
   overflow: hidden;
-  transition: transform 0.3s ease;
+  transition: transform 0.3s ease, box-shadow 0.3s ease;
 }
 
 .tarjeta-tutorial:hover {
   transform: scale(1.05);
+  box-shadow: var(--sombra-elevada);
 }
 
 .imagen-tutorial {
@@ -32,6 +40,7 @@
   height: 200px;
   object-fit: cover;
   border-radius: var(--border-radius);
+  margin-bottom: 1rem;
 }
 
 .boton-ver-mas {
@@ -41,7 +50,7 @@
   color: var(--color-secundario);
   cursor: pointer;
   border-radius: var(--border-radius);
-  transition: background-color 0.3s ease;
+  transition: background-color 0.3s ease, color 0.3s ease;
 }
 
 .boton-ver-mas:hover {

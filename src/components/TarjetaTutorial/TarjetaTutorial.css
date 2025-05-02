@@ -1,0 +1,55 @@
+/* src/components/TarjetaTutorial/TarjetaTutorial.css */
+
+.tarjeta-tutorial {
+    border: 2px solid var(--color-destacado);
+    padding: 1.25rem;
+    border-radius: var(--border-radius);
+    box-shadow: var(--sombra-suave);
+    background-color: var(--color-blanco);
+    overflow: hidden;
+    transition: transform 0.3s ease, box-shadow 0.3s ease;
+    text-align: left;
+  }
+  
+  .tarjeta-tutorial:hover {
+    transform: scale(1.05);
+    box-shadow: var(--sombra-elevada);
+  }
+  
+  .tarjeta-tutorial h3 {
+    font-size: 1.2rem;
+    margin: 0.5rem 0;
+    color: var(--color-primario);
+  }
+  
+  .tarjeta-tutorial p {
+    font-size: 0.95rem;
+    color: var(--color-texto);
+    margin-bottom: 1rem;
+  }
+  
+  .imagen-tutorial {
+    width: 100%;
+    height: 200px;
+    object-fit: cover;
+    border-radius: var(--border-radius);
+    margin-bottom: 1rem;
+  }
+  
+  .boton-ver-mas {
+    padding: 0.75rem 1rem;
+    border: none;
+    background-color: var(--color-primario);
+    color: var(--color-secundario);
+    cursor: pointer;
+    border-radius: var(--border-radius);
+    text-decoration: none;
+    display: inline-block;
+    transition: background-color 0.3s ease, color 0.3s ease;
+  }
+  
+  .boton-ver-mas:hover {
+    background-color: var(--color-destacado);
+    color: var(--color-primario);
+  }
+  
