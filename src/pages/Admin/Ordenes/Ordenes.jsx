@@ -3,9 +3,9 @@
 
 import "./Ordenes.css";
 import { useState, useEffect } from "react";
-import { db } from "../../../firebase";
+import { db } from "@/firebase";
 import { collection, doc, updateDoc, onSnapshot } from "firebase/firestore";
-import { useAuth } from "../../../context/AuthContext";
+import { useAuth } from "@/context/AuthContext";
 
 const Ordenes = () => {
   // Lista de órdenes traídas desde Firestore

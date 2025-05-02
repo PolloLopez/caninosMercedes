@@ -1,7 +1,7 @@
 // src/pages/Carrito/Carrito.jsx
 
 import React from "react";
-import { useCart } from "../../context/CartContext";
+import { useCart } from "@/context/CartContext";
 import { useNavigate } from "react-router-dom";
 import "./Carrito.css";
 

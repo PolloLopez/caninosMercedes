@@ -1,8 +1,8 @@
 // src/pages/Tienda/Tienda.jsx
 import React from "react";
-import useFetchProductos from "../../hooks/useFetchProductos";
-import { useCart } from "../../context/CartContext"; // Asegúrate de importar useCart para acceder a las funciones del carrito
-import TarjetaProducto from "../../components/TarjetaProducto/TarjetaProducto";
+import useFetchProductos from "@/hooks/useFetchProductos";
+import { useCart } from "@/context/CartContext"; // Asegúrate de importar useCart para acceder a las funciones del carrito
+import TarjetaProducto from "@/components/TarjetaProducto/TarjetaProducto";
 import "./Tienda.css";
 
 const Tienda = () => {

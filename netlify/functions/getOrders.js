@@ -7,7 +7,7 @@ import admin from "firebase-admin";
 // Determinar __dirname en ESM
 const __dirname = dirname(fileURLToPath(import.meta.url));
 // Construir la ruta absoluta al archivo de credenciales
-import serviceAccount from "../serviceAccountKey.json" assert { type: "json" };
+import serviceAccount from "@/serviceAccountKey.json" assert { type: "json" };
 
 // Leer el contenido del archivo de credenciales (usando top-level await)
 const serviceAccount = JSON.parse(await readFile(serviceAccountPath, "utf8"));

@@ -1,6 +1,6 @@
 // src/hooks/useFetchProductos.js
 import { useState, useEffect } from "react";
-import { db } from "../config/firebaseConfig";
+import { db } from "@/config/firebaseConfig";
 import { collection, getDocs } from "firebase/firestore"; 
 
 const useFetchProductos = () => {

@@ -1,6 +1,6 @@
 // src/routes/ProtectedRoute.jsx
 import { Navigate, useLocation } from "react-router-dom";
-import { useAuth } from "../context/AuthContext";
+import { useAuth } from "@/context/AuthContext";
 
 const ProtectedRoute = ({ children }) => {
   const { currentUser, role, loading } = useAuth();

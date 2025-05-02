@@ -1,7 +1,7 @@
 // src/layout/MainLayout/MainLayout.jsx
 import React from "react";
 import { Outlet, NavLink, useLocation } from "react-router-dom";
-import { useCart } from "../../context/CartContext";
+import { useCart } from "@/context/CartContext";
 import Navbar from "@/components/Navbar/Navbar";
 import Footer from "@/components/Footer/Footer";
 import "@/layout/Layout.css";
