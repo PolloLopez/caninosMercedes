@@ -1,5 +1,4 @@
 // src/App.jsx
-import '@/assets/Global.css';
 
 import React from "react";
 import { Routes, Route } from "react-router-dom";
