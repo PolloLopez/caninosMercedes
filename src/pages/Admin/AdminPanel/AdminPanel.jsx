@@ -2,7 +2,7 @@
 import React, { useState } from "react";
 import { Link } from "react-router-dom";
 import { getFunctions, httpsCallable } from "firebase/functions";
-import "./Adminpanel.css";
+import "./AdminPanel.css";
 
 const AdminPanel = () => {
   const [uid, setUid] = useState("");
