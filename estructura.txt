@@ -47,7 +47,7 @@ recorda que la estructura actual es:
 │   ├── >assets
 │   │   └── >image
 │   │   │   └── logo.png
-│   └── global.css 
+│   └── Global.css 
 
 ├── >components
 │   ├── >CartModal/ 
@@ -56,23 +56,26 @@ recorda que la estructura actual es:
 │   ├── >Footer/ 
 │   │   ├── footer.css 
 │   │   └── footer.jsx
+│   ├── >ItemListContainer/ 
+│   │   ├── ItemListContainer.jsx 
 │   ├── >Navbar/ 
-│   │   ├── navbar.css 
-│   │   └── navbar.jsx 
-│   ├── >ProductCard/ 
-│   │   ├── ProductCard.css 
-│   │   └── ProductCard.jsx 
-│   ├── >ProductList/ 
-│   │   └── ProductList.jsx  
+│   │   ├── Navbar.css 
+│   │   └── Navbar.jsx 
+│   ├── >Tarjeta/ 
+│   │   └── Tarjeta.jsx 
+│   │   ├── Tarjeta.css 
+│   ├── >TarjetaProducto/ 
+│   │   └── TarjetaProducto.jsx  
+│   │   ├── TarjetaProducto.css 
+│   ├── >TarjetaTutorial/ 
+│   │   └── TarjetaTutorial.jsx  
+│   │   ├── TarjetaTutorial.css 
 |   ├── >Toast/
 │   |   ├── Toast.css
 │   |   └── Toast.jsx
 |   ├── >TutorialCard/
 │   |   ├── TutorialCard.css
 │   |   └── TutorialCard.jsx
-│   ├── ItemListContainer.css
-|   └── ItemListContainer.jsx
-│   
 ├──>config/ 
 │      └── firebaseConfig.js
 ├── >context/               
@@ -84,25 +87,30 @@ recorda que la estructura actual es:
 │   └── useFetchTutorials.js
 │
 ├── >layout/          
-│   └── >MainLayout/
-│       ├── MainLayout.css
-│       └── MainLayout.jsx
-│
+│   ├── >MainLayout/
+│   |   └── MainLayout.jsx
+│   ├── >UsuarioLayout/
+│   |   └── UsuarioLayout.jsx
+│   └── Layout.css
+
 ├── >pages/               
 │   ├── >Admin/
-│   │   ├── AdminOrdenes.jsx 
 │   │   ├── AdminPanel.css
 │   │   ├── AdminPanel.jsx 
+│   ├── >CreateProduct/
 │   │   ├── CreateProduct.jsx 
 │   │   ├── CreateProduct.css
-│   │   ├── EditProduct.css
+│   ├── >ListaProductos/
+│   │   ├── ListaProductos.jsx 
+│   │   ├── ListaProductos.css
+│   ├── >Login/
 │   │   ├── Login.css
 │   │   ├── Login.jsx 
+│   ├── >Ordenes/
 │   │   ├── Ordenes.css
 │   │   ├── Ordenes.jsx
-│   │   ├── OrderList.jsx 
-│   │   ├── PanelOrdenes.jsx 
-│   │   └── ProductList.jsx 
+│   ├── >OrderList/
+│   │   └── OrderList.jsx 
 │   ├── >Carrito/
 │   │   ├── Carrito.css
 │   │   └── Carrito.jsx
@@ -115,18 +123,21 @@ recorda que la estructura actual es:
 │   │   └── Inicio.jsx
 │   ├── >Nosotros/
 │   |   └── Nosotros.jsx  
+│   ├── >SeguimientoOrden/
+│   ├── SeguimientoOrden.css 
+│   └── SeguimientoOrden.jsx 
 │   ├── >Tienda/
 │   │   ├── Tienda.css
 │   │   └── Tienda.jsx
 │   ├── >Tutoriales/ 
 │   |   ├── Tutorials.css
 │   │   └── Tutorials.jsx
+│   ├── >Tienda/
+│   │   └── DetallePedido.jsx
 │   ├── AdminProduts.css
 │   ├── AdminProduts.jsx
 │   ├── ConfirmacionPedido.jsx 
 │   ├── NotFound.jsx 
-│   ├── SeguimientoOrden.css 
-│   └── SeguimientoOrden.jsx 
 ├── >routes/
 │   └── ProtectedRoute.jsx
 ├── >services/

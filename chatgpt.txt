@@ -1,11 +1,15 @@
-REARMAR ESTRUCTURA
+🔲 REARMAR ESTRUCTURA
 
-Gestion de pedidos al entrar en Ver Detalles, que aparezca tambien Editar pedido.
+🔲 Preguntar a GPT
+    App.jsx y main.jsx Importan Global.css
+    Darle ambas hojas y estructura actualizada
 
-Preguntar a GPT
-1:16:30 PM: error during build:
-1:16:30 PM: [vite:load-fallback] Could not load /opt/build/repo/src/assets/Global.css (imported by src/main.jsx): ENOENT: no such file or directory, open '/opt/build/repo/src/assets/Global.css'
-1:16:30 PM: Error: Could not load /opt/build/repo/src/assets/Global.css (imported by src/main.jsx): ENOENT: no such file or directory, open '/opt/build/repo/src/assets/Global.css
+
+Continuar:
+
+🔲 Gestion de pedidos al entrar en Ver Detalles, que aparezca tambien Editar pedido.
+
+🔲 Preguntar si puede ver todas las hojas de la app, y que sugiere de mejorar 
 
 
 
