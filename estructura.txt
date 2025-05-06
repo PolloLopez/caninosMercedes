@@ -45,72 +45,66 @@ recorda que la estructura actual es:
 
 >src
 │   ├── >assets
-│   │   └── >image
-│   │   │   └── logo.png
-│   └── global.css 
-
+│   │   ├── logo.png
+│   │   └── global.css 
 ├── >components
-│   ├── >CartModal/ 
-│   │   ├── CartModal.css 
-│   │   └── CartModal.jsx 
 │   ├── >Footer/ 
-│   │   ├── footer.css 
-│   │   └── footer.jsx
-│   ├── >ItemListContainer/ 
-│   │   ├── ItemListContainer.jsx 
-│   ├── >Navbar/ 
+│   │   ├── Footer.css 
+│   │   └── Footer.jsx
+│   ├── >Navbar/  
 │   │   ├── Navbar.css 
 │   │   └── Navbar.jsx 
 │   ├── >Tarjeta/ 
 │   │   └── Tarjeta.jsx 
 │   │   ├── Tarjeta.css 
-│   ├── >TarjetaProducto/ 
-│   │   └── TarjetaProducto.jsx  
-│   │   ├── TarjetaProducto.css 
 │   ├── >TarjetaTutorial/ 
-│   │   └── TarjetaTutorial.jsx  
-│   │   ├── TarjetaTutorial.css 
-|   ├── >Toast/
-│   |   ├── Toast.css
-│   |   └── Toast.jsx
-|   ├── >TutorialCard/
-│   |   ├── TutorialCard.css
-│   |   └── TutorialCard.jsx
-├──>config/ 
+│   │   ├── TarjetaTutorial.jsx  
+│   │   └──TarjetaTutorial.css 
+├── >config/ 
 │      └── firebaseConfig.js
 ├── >context/               
 │   ├── AuthContext.jsx  
 │   └── CartContext.jsx    
-│
 ├── >hooks/ 
 |   ├── useFetchProducts.js                
 │   └── useFetchTutorials.js
-│
 ├── >layout/          
-│   ├── >MainLayout/
-│   |   └── MainLayout.jsx
+│   ├── >LayoutPrincipal/
+│   |   └── LayoutPrincipal.jsx
 │   ├── >UsuarioLayout/
+|   |   ├── UsuarioLayout.css  
 │   |   └── UsuarioLayout.jsx
-│   └── Layout.css
+│   └── LayoutPrincipal.css 
+├── >pages/ 
+│   ├── >Admin/              
+|   |   ├── >AdminPanel/
+|   |   |   │   ├── Admin.css
+|   |   |   │   └── Admin.jsx 
+|   |   |   ├── >CreateProduct/
+|   |   |   │   ├── CreateProduct.jsx 
+|   |   |   │   └── CreateProduct.css
+|   |   |   ├── >ListaProductos/
+|   |   |   │   ├── ListaProductos.jsx 
+|   |   |   │   └── ListaProductos.css
+|   |   |   ├── >Login/
+|   |   |   │   ├── Login.css
+|   |   |   │   └── Login.jsx 
+|   |   |   ├── >Ordenes/
+|   |   |   │   ├── Ordenes.css
+|   |   |   │   └── Ordenes.jsx
+|   |   |   ├── >Registro/ 
+|   |   |   │   ├── Registro.css
+|   |   |   │   └── Registro.jsx 
+|   |   ├── AdminTutoriales.jsx (Ver en la estructura)
+|   |   ├── AdminTutoriales.css (Ver en la estructura)
+|   |   ├── CrearTutoriales.jsx (Ver en la estructura)
+|   |   ├── CrearTutoriales.css (Ver en la estructura)
+|   |   ├── EditarProducto.jsx (Ver en la estructura)
+|   |   ├── EditarProducto.css (Ver en la estructura)
+|   |   ├── EditarTutorial.jsx (Ver en la estructura)
+|   |   ├── EditarTutorial.css (Ver en la estructura)
 
-├── >pages/               
-│   ├── >Admin/
-│   │   ├── AdminPanel.css
-│   │   ├── AdminPanel.jsx 
-│   ├── >CreateProduct/
-│   │   ├── CreateProduct.jsx 
-│   │   ├── CreateProduct.css
-│   ├── >ListaProductos/
-│   │   ├── ListaProductos.jsx 
-│   │   ├── ListaProductos.css
-│   ├── >Login/
-│   │   ├── Login.css
-│   │   ├── Login.jsx 
-│   ├── >Ordenes/
-│   │   ├── Ordenes.css
-│   │   ├── Ordenes.jsx
-│   ├── >OrderList/
-│   │   └── OrderList.jsx 
+
 │   ├── >Carrito/
 │   │   ├── Carrito.css
 │   │   └── Carrito.jsx
@@ -124,31 +118,32 @@ recorda que la estructura actual es:
 │   ├── >Nosotros/
 │   |   └── Nosotros.jsx  
 │   ├── >SeguimientoOrden/
-│   ├── SeguimientoOrden.css 
-│   └── SeguimientoOrden.jsx 
+│   |   ├── SeguimientoOrden.css 
+│   |   └── SeguimientoOrden.jsx 
 │   ├── >Tienda/
 │   │   ├── Tienda.css
 │   │   └── Tienda.jsx
-│   ├── >Tutoriales/ 
-│   |   ├── Tutorials.css
-│   │   └── Tutorials.jsx
-│   ├── >Tienda/
+│   ├── >Tutoriales/ (Ver en la estructura)
+│   |   ├── Tutoriales.css
+│   │   └── Tutoriales.jsx
+│   ├── >Usuario/ 
+│   |   ├── DetallePedido.css
 │   │   └── DetallePedido.jsx
-│   ├── AdminProduts.css
-│   ├── AdminProduts.jsx
+│   ├── AdminProductos.css (Ver en la estructura)
+│   ├── AdminProductos.jsx (Ver en la estructura)
 │   ├── ConfirmacionPedido.jsx 
 │   ├── NotFound.jsx 
 ├── >routes/
 │   └── ProtectedRoute.jsx
 ├── >services/
 │   └── emailService.js
-├── App.css
 ├── App.jsx
 ├── firebase.js
 ├── main.jsx        
 env.
 .firebaserc
 .gitignore
+chatgpt.txt
 eslint.config.js
 estructura.txt
 et --hard 42f027266c2c31fbbf49b3ca2f2e6b94c9a6131f
@@ -164,6 +159,25 @@ vite.config.js
 
 
 
+Lo que detecte que fue eliminado:
+>src
+│   ├── 
+├── >components
+│   ├── >CartModal/ 
+│   │   ├── CartModal.css 
+│   │   └── CartModal.jsx 
+│   ├── >ItemListContainer/ 
+│   │   ├── ItemListContainer.jsx 
+│   ├── >TarjetaProducto/  
+│   │   └── TarjetaProducto.jsx  
+│   │   ├── TarjetaProducto.css 
+
+|   ├── >Toast/
+│   |   ├── Toast.css
+│   |   └── Toast.jsx
+|   ├── >TutorialCard/
+│   |   ├── TutorialCard.css
+│   |   └── TutorialCard.jsx 
 
 │   ├── / 
 │   │   ├── .jsx 

@@ -1,0 +1,63 @@
+/* src/pages/Usuario/DetallePedido.css */
+
+.detalle-pedido {
+    padding: 2rem;
+    max-width: 600px;
+    margin: 0 auto;
+    background-color: #fefefe;
+    border-radius: 12px;
+    box-shadow: 0 4px 8px rgba(0,0,0,0.1);
+    font-family: sans-serif;
+  }
+  
+  .detalle-pedido h2 {
+    margin-bottom: 1rem;
+  }
+  
+  .detalle-pedido ul {
+    list-style: none;
+    padding: 0;
+  }
+  
+  .detalle-pedido li {
+    margin-bottom: 0.5rem;
+  }
+  
+  /* Estados */
+  .estado-pendiente {
+    color: orange;
+    font-weight: bold;
+  }
+  
+  .estado-preparacion {
+    color: dodgerblue;
+    font-weight: bold;
+  }
+  
+  .estado-envio {
+    color: teal;
+    font-weight: bold;
+  }
+  
+  .estado-finalizado {
+    color: green;
+    font-weight: bold;
+  }
+  
+  /* Botón volver */
+  .btn-volver {
+    margin-top: 2rem;
+    padding: 0.6rem 1.2rem;
+    background-color: #3498db;
+    color: white;
+    border: none;
+    border-radius: 8px;
+    font-size: 1rem;
+    cursor: pointer;
+    transition: background-color 0.2s ease;
+  }
+  
+  .btn-volver:hover {
+    background-color: #2980b9;
+  }
+  

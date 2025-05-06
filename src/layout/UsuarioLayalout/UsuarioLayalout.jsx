@@ -1,32 +1,25 @@
 // src/layout/UsuarioLayout/UsuarioLayout.jsx
 
 import React from "react";
-import { Link, Outlet } from "react-router-dom";
+import { NavLink, Outlet } from "react-router-dom";
 import { useAuth } from "@/context/AuthContext";
-import "@/layout/Layout.css";
+import "./UsuarioLayout.css";
 
 const UsuarioLayout = () => {
   const { logout } = useAuth();
 
   return (
-    <div>
-      <nav className="usuario-navbar">
-        <ul style={{ display: "flex", gap: "1rem", padding: "1rem" }}>
-          <li>
-            <Link to="/tienda">🛍️ Cargar Pedido</Link>
-          </li>
-          <li>
-            <Link to="/admin/productos">📦 Productos</Link>
-          </li>
-          <li>
-            <Link to="/admin/ordenes">📑 Seguimiento</Link>
-          </li>
-          <li>
-            <button onClick={logout}>🚪 Cerrar sesión</button>
-          </li>
-        </ul>
-      </nav>
-      <main>
+    <div className="usuario-layout">
+      <aside className="sidebar">
+        <h2>Panel Admin 🛠️</h2>
+        <nav>
+          <NavLink to="/tienda">🛍️ Cargar Pedido</NavLink>
+          <NavLink to="/admin/productos">📦 Productos</NavLink>
+          <NavLink to="/admin/ordenes">📑 Seguimiento</NavLink>
+          <button onClick={logout} className="logout">🚪 Cerrar sesión</button>
+        </nav>
+      </aside>
+      <main className="usuario-main">
         <Outlet />
       </main>
     </div>

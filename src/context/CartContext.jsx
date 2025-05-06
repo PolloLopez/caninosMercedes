@@ -1,4 +1,6 @@
 // src/context/CartContext.jsx
+
+
 import React, { createContext, useContext, useState } from "react";
 
 const CartContext = createContext();
@@ -17,7 +19,7 @@ export const CartProvider = ({ children }) => {
             ? { ...item, cantidad: item.cantidad + 1 }
             : item
         )
-      ); 
+      );
     } else {
       setCarrito([...carrito, { ...producto, cantidad: 1 }]);
     }
@@ -49,10 +51,8 @@ export const CartProvider = ({ children }) => {
     );
   };
 
-  // Calcular el total de productos (sumando las cantidades)
   const totalProductos = carrito.reduce((acc, item) => acc + item.cantidad, 0);
 
-  // Calcular el total de la compra
   const calcularTotal = () =>
     carrito.reduce((acc, item) => acc + item.precio * item.cantidad, 0);
 
@@ -65,9 +65,9 @@ export const CartProvider = ({ children }) => {
         vaciarCarrito,
         aumentarCantidad,
         disminuirCantidad,
-        totalProductos, // Añadido para contar la cantidad total de productos
+        totalProductos,
         totalPrecio: calcularTotal,
-        clearCart: vaciarCarrito, // por si usás este nombre desde algún archivo viejo
+        clearCart: vaciarCarrito,
       }}
     >
       {children}

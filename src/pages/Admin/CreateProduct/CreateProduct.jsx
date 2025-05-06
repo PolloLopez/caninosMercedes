@@ -1,9 +1,9 @@
-// src/pages/Admin/CreateProduct.jsx
-import "./CreateProduct.css"
+// src/pages/Admin/CreateProduct/CreateProduct.jsx
+import "./CreateProduct.css";
 import React, { useState } from "react";
 import { useNavigate } from "react-router-dom";
 import { db } from "@/firebase";
-import { collection,addDoc } from "firebase/firestore";
+import { collection, addDoc } from "firebase/firestore";
 
 const CreateProduct = () => {
     const [nombre, setNombre] = useState("");
@@ -16,7 +16,6 @@ const CreateProduct = () => {
     const handleSubmit = async (e) => {
         e.preventDefault();
 
-        // Crear el nuevo producto
         const newProduct = {
             nombre,
             descripcion,
@@ -26,14 +25,14 @@ const CreateProduct = () => {
         };
 
         try {
-            // Agregar el producto a Firestore (Firestore manejará el ID automáticamente)
+            // Agregar el producto a Firestore
             await addDoc(collection(db, "productos"), newProduct);
             console.log("Producto agregado:", newProduct);
-            navigate("/admin"); // Redirige al panel de administración
+            navigate("/admin/productos"); // Redirige a la lista de productos
         } catch (error) {
             console.error("Error al agregar producto:", error);
         }
-    }; 
+    };
 
     return (
         <div>
@@ -66,7 +65,7 @@ const CreateProduct = () => {
                     />
                 </div>
                 <div>
-                    <label>Imagen:</label>
+                    <label>Imagen (URL):</label>
                     <input 
                         type="text" 
                         value={imagen} 

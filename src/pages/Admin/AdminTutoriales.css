@@ -1,0 +1,70 @@
+/* src/pages/Admin/AdminTutoriales.css */
+
+.admin-tutoriales-container {
+    padding: 20px;
+    background-color: #f8f9fa;
+    border-radius: 8px;
+    box-shadow: 0 4px 6px rgba(0, 0, 0, 0.1);
+  }
+  
+  h1 {
+    font-size: 2rem;
+    margin-bottom: 20px;
+  }
+  
+  .crear-tutorial-btn {
+    background-color: #28a745;
+    color: white;
+    padding: 10px 15px;
+    text-decoration: none;
+    font-size: 1rem;
+    border-radius: 5px;
+    margin-bottom: 20px;
+    display: inline-block;
+  }
+  
+  .crear-tutorial-btn:hover {
+    background-color: #218838;
+  }
+  
+  table {
+    width: 100%;
+    border-collapse: collapse;
+  }
+  
+  table th,
+  table td {
+    padding: 10px;
+    text-align: left;
+    border-bottom: 1px solid #ddd;
+  }
+  
+  table th {
+    background-color: #343a40;
+    color: white;
+  }
+  
+  .editar-btn,
+  .eliminar-btn {
+    background-color: #007bff;
+    color: white;
+    padding: 5px 10px;
+    margin-right: 10px;
+    text-decoration: none;
+    border-radius: 5px;
+  }
+  
+  .editar-btn:hover {
+    background-color: #0056b3;
+  }
+  
+  .eliminar-btn {
+    background-color: #dc3545;
+    border: none;
+    cursor: pointer;
+  }
+  
+  .eliminar-btn:hover {
+    background-color: #c82333;
+  }
+  

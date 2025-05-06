@@ -37,6 +37,12 @@
   margin-bottom: 1rem;
   padding: 1rem;
   background-color: #fff;
+  transition: transform 0.3s ease, box-shadow 0.3s ease;
+}
+
+.orden-card:hover {
+  transform: scale(1.02);
+  box-shadow: 0 8px 16px rgba(0, 0, 0, 0.1);
 }
 
 .orden-header {
@@ -83,8 +89,9 @@
   cursor: pointer;
   padding: 0.4rem;
   border-radius: 6px;
+  border: 1px solid #ccc;
+  font-size: 0.9rem;
 }
-
 
 .ver-detalles-btn {
   padding: 0.5rem 1rem;
@@ -105,6 +112,7 @@
   background-color: #f9f9f9;
   border-radius: 8px;
   padding: 0.8rem;
+  margin-top: 1rem;
 }
 
 .productos-lista ul {

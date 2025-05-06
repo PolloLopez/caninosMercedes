@@ -1,56 +1,70 @@
 // src/pages/Usuario/DetallePedido.jsx
-
-import React, { useState, useEffect } from 'react';
-import { useParams } from 'react-router-dom';
-import { getFirestore, doc, getDoc } from 'firebase/firestore';
+import { useEffect, useState } from "react";
+import { useParams, useNavigate } from "react-router-dom";
+import { doc, getDoc } from "firebase/firestore";
+import { db } from "../../firebase";
+import "./DetallePedido.css";
 
 const DetallePedido = () => {
-  const { orderId } = useParams();
-  const [orderData, setOrderData] = useState(null);
-  const [loading, setLoading] = useState(true);
-  const [notFound, setNotFound] = useState(false);
+  const { id } = useParams();
+  const navigate = useNavigate();
+  const [pedido, setPedido] = useState(null);
 
   useEffect(() => {
-    const fetchOrder = async () => {
-      if (!orderId) return;
-
-      const db = getFirestore();
-      const orderRef = doc(db, 'orders', orderId);
-
+    const obtenerPedido = async () => {
       try {
-        const orderSnap = await getDoc(orderRef);
-        if (orderSnap.exists()) {
-          setOrderData(orderSnap.data());
+        const referencia = doc(db, "ordenes", id);
+        const documento = await getDoc(referencia);
+        if (documento.exists()) {
+          setPedido({ id: documento.id, ...documento.data() });
         } else {
-          setNotFound(true);
+          console.log("No existe el documento");
         }
       } catch (error) {
-        console.error("Error al obtener la orden:", error);
-      } finally {
-        setLoading(false);
+        console.error("Error al obtener el pedido:", error);
       }
     };
 
-    fetchOrder();
-  }, [orderId]);
+    obtenerPedido();
+  }, [id]);
+
+  const obtenerClaseEstado = (estado) => {
+    switch (estado) {
+      case "pendiente":
+        return "estado-pendiente";
+      case "en preparación":
+        return "estado-preparacion";
+      case "en camino":
+        return "estado-envio";
+      case "finalizado":
+        return "estado-finalizado";
+      default:
+        return "";
+    }
+  };
+
+  if (!pedido) return <p>Cargando pedido...</p>;
 
   return (
-    <div className="main-content">
-      <h2>🧾 Detalle del Pedido</h2>
-
-      {loading && <p>🔄 Cargando datos del pedido...</p>}
-
-      {!loading && notFound && (
-        <p style={{ color: 'red' }}>❌ No se encontró la orden con ID: {orderId}</p>
+    <div className="detalle-pedido">
+      <h2>Pedido #{pedido.id}</h2>
+      <p><strong>Nombre:</strong> {pedido.nombre}</p>
+      <p><strong>Email:</strong> {pedido.email}</p>
+      <p><strong>Estado:</strong> <span className={obtenerClaseEstado(pedido.estado)}>{pedido.estado}</span></p>
+      {pedido.fechaEstado && (
+        <p><strong>Último cambio de estado:</strong> {new Date(pedido.fechaEstado.seconds * 1000).toLocaleString()}</p>
       )}
+      <h3>Productos:</h3>
+      <ul>
+        {pedido.items.map((item) => (
+          <li key={item.id}>
+            {item.nombre} - {item.cantidad} x ${item.precio}
+          </li>
+        ))}
+      </ul>
+      <p><strong>Total:</strong> ${pedido.total}</p>
 
-      {!loading && orderData && (
-        <div>
-          <h3>📦 Estado del pedido:</h3>
-          <p><strong>Estado:</strong> {orderData.status}</p>
-          <p><strong>Total:</strong> ${orderData.total}</p>
-        </div>
-      )}
+      <button className="btn-volver" onClick={() => navigate(-1)}>⬅ Volver</button>
     </div>
   );
 };

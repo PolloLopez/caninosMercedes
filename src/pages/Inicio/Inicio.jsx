@@ -1,3 +1,5 @@
+// src/pages/Inicio/Inicio.jsx
+
 import React from "react";
 import "./Inicio.css";
 

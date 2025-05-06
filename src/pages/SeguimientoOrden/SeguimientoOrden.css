@@ -1,62 +1,51 @@
 /* src/pages/SeguimientoOrden.css */
 
 .seguimiento-container {
-    max-width: 600px;
-    margin: auto;
-    padding: 2rem;
-  }
-  
-  .seguimiento-container h2 {
-    color: var(--color-primario);
-    margin-bottom: 1.5rem;
-  }
-  
-  .seguimiento-container input {
-    width: 100%;
-    padding: 0.75rem;
-    margin-bottom: 1rem;
-    border: 1px solid #ccc;
-    border-radius: 0.5rem;
-  }
-  
-  .orden-info {
-    background-color: #f1f1f1;
-    padding: 1rem;
-    border-radius: 0.75rem;
-    border: 1px solid #ddd;
-  }
-  
-  .orden-info h3 {
-    color: var(--color-primario);
-    margin-bottom: 0.5rem;
-  }
-  
-  .orden-info p {
-    margin: 0.25rem 0;
-  }
-  
-  .btn-recibido {
-    margin-top: 1rem;
-    background-color: var(--color-destacado);
-    color: --color-negro;
-    border: none;
-    padding: 0.75rem;
-    border-radius: 0.5rem;
-    cursor: pointer;
-  }
-  
-  .editar-btn {
-    margin-top: 1rem;
-    padding: 0.5rem 1rem;
-    background-color: #fca311;
-    border: none;
-    border-radius: 8px;
-    color: white;
-    font-weight: bold;
-    cursor: pointer;
-  }
-  
-  .editar-btn:hover {
-    background-color: #ff9900;
-  }
-  
+  padding: 2rem;
+  max-width: 800px;
+  margin: 0 auto;
+}
+
+.orden-card {
+  border: 1px solid #ddd;
+  border-radius: 10px;
+  padding: 1rem;
+  margin-bottom: 1rem;
+  background: #f9f9f9;
+}
+
+.orden-header {
+  margin-bottom: 1rem;
+}
+
+.orden-detalles {
+  margin: 1rem 0;
+  background: #fff;
+  padding: 0.5rem;
+  border-radius: 8px;
+}
+
+.buscador {
+  margin-bottom: 1.5rem;
+  display: flex;
+  gap: 1rem;
+}
+
+.buscador input {
+  flex: 1;
+  padding: 0.5rem;
+}
+
+.btn-recibido {
+  margin-top: 1rem;
+  padding: 0.5rem;
+  background-color: #4caf50;
+  color: white;
+  border: none;
+  border-radius: 5px;
+  cursor: pointer;
+}
+
+.btn-recibido:hover {
+  background-color: #45a049;
+}

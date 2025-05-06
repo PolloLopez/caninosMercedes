@@ -1,6 +1,6 @@
-// src/pages/Checkout/Checkout.jsx 
+// src/pages/Checkout/Checkout.jsx
 
-import React, { useState } from "react";
+import React, { useEffect, useState } from "react";
 import { useNavigate } from "react-router-dom";
 import { collection, addDoc } from "firebase/firestore";
 import { db } from "@/firebase";
@@ -25,6 +25,16 @@ const Checkout = () => {
     direccion: "",
   });
 
+  useEffect(() => {
+    if (currentUser) {
+      setCliente((prev) => ({
+        ...prev,
+        email: currentUser.email,
+        nombre: currentUser.displayName || "",
+      }));
+    }
+  }, [currentUser]);
+
   const handleInputChange = (e) => {
     setCliente({ ...cliente, [e.target.name]: e.target.value });
   };
@@ -38,11 +48,7 @@ const Checkout = () => {
 
       const nuevaOrden = {
         userId: currentUser?.uid || null,
-        nombre: cliente.nombre,
-        Email: cliente.email,
-        telefono: cliente.telefono,
-        ciudad: cliente.ciudad,
-        direccion: cliente.direccion,
+        datosCliente: { ...cliente },
         estado: "Pendiente",
         fecha: new Date(),
         productos: carrito.map((item) => ({
@@ -52,6 +58,13 @@ const Checkout = () => {
         })),
         metodoPago: "Acuerdo con el vendedor",
         total,
+        historial: [
+          {
+            fecha: new Date().toISOString(),
+            accion: "Orden creada",
+            usuario: cliente.email,
+          },
+        ],
       };
 
       const docRef = await addDoc(refOrdenes, nuevaOrden);

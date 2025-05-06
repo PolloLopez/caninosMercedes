@@ -1,38 +1,35 @@
-//src>pages>Admin>ListaProductos>ListaProductos.jsx
-
+// src>pages>AdminProducts.jsx
 import React, { useState, useEffect } from "react";
 import { db } from "@/firebase";
 import { collection, getDocs, deleteDoc, doc } from "firebase/firestore";
-import "./ListaProductos.css";
+import "./AdminProductos.css";
 import { useNavigate } from "react-router-dom";
 
-const ListaProductos = () => {
-    const [products, setProducts] = useState([]);
+const AdminProductos = () => {
+    const [products, setProductos] = useState([]);
     const navigate = useNavigate();
 
-    // Obtener productos desde Firestore
     useEffect(() => {
-        const fetchProducts = async () => {
+        const fetchProductos = async () => { 
             try {
                 const querySnapshot = await getDocs(collection(db, "productos"));
                 const productosArray = querySnapshot.docs.map((doc) => ({
                     id: doc.id,
                     ...doc.data(),
                 }));
-                setProducts(productosArray);
+                setProductos(productosArray);
             } catch (error) {
                 console.error("Error al obtener productos:", error);
             }
         };
 
-        fetchProducts();
+        fetchProductos();
     }, []);
 
-    // Eliminar producto de Firestore
     const handleDelete = async (id) => {
         try {
             await deleteDoc(doc(db, "productos", id));
-            setProducts(products.filter((p) => p.id !== id));
+            setProductos(products.filter((p) => p.id !== id)); 
         } catch (error) {
             console.error("Error al eliminar producto:", error);
         }
@@ -60,4 +57,4 @@ const ListaProductos = () => {
     );
 };
 
-export default ListaProductos;
+export default AdminProductos;

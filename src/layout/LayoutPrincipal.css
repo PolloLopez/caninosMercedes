@@ -1,0 +1,22 @@
+/*src/layout/LayoutPrincipal/LayoutPrincipal.css*/
+.layout-principal {
+  display: flex;
+  flex-direction: column;
+  min-height: 100vh;
+}
+
+.contenido-principal {
+  flex: 1;
+  width: 100%;
+  padding: 1rem;
+  box-sizing: border-box;
+  margin-top: 60px;
+}
+
+.navbar-usuario {
+  display: flex;
+  gap: 1rem;
+  padding: 1rem;
+  background-color: #f9f9f9;
+  border-bottom: 1px solid #ddd;
+}

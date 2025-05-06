@@ -1,8 +1,9 @@
 // src/pages/Tienda/Tienda.jsx
+
 import React from "react";
 import useFetchProductos from "@/hooks/useFetchProductos";
-import { useCart } from "@/context/CartContext"; // Asegúrate de importar useCart para acceder a las funciones del carrito
-import TarjetaProducto from "@/components/TarjetaProducto/TarjetaProducto";
+import { useCart } from "@/context/CartContext"; 
+import Tarjeta from "@/components/Tarjeta/Tarjeta";
 import "./Tienda.css";
 
 const Tienda = () => {
@@ -22,7 +23,7 @@ const Tienda = () => {
       <h1>🛍️ Nuestros Productos</h1>
       <div className="lista-productos">
         {productos.map((producto) => (
-          <TarjetaProducto
+          <Tarjeta
             key={producto.id}
             producto={producto}
             agregarAlCarrito={agregarAlCarrito} // Pasamos la función de agregar al carrito

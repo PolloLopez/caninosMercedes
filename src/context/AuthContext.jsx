@@ -1,57 +1,75 @@
 // src/context/AuthContext.jsx
-import { createContext, useContext, useState, useEffect } from "react";
-import { auth, db } from "@/firebase";
-import { doc, getDoc } from "firebase/firestore";
-import { onAuthStateChanged, signOut } from "firebase/auth";
+import { createContext, useContext, useEffect, useState } from 'react';
+import { auth, db } from '../firebase';
+import { onAuthStateChanged, signInWithEmailAndPassword, signOut, GoogleAuthProvider, signInWithPopup } from 'firebase/auth';
+import { doc, getDoc, setDoc } from 'firebase/firestore';
 
 export const AuthContext = createContext();
 
 export const AuthProvider = ({ children }) => {
-  const [currentUser, setCurrentUser] = useState(null);
-  const [role, setRole] = useState(null);
-  const [userName, setUserName] = useState("");
-  const [loading, setLoading] = useState(true);
+  const [user, setUser] = useState(null);
+  const [authLoading, setAuthLoading] = useState(true);
 
   useEffect(() => {
-    const unsubscribe = onAuthStateChanged(auth, async (user) => {
-      if (user) {
-        setCurrentUser(user);
+    const unsubscribe = onAuthStateChanged(auth, async (firebaseUser) => {
+      if (firebaseUser) {
+        try {
+          const userRef = doc(db, 'user', firebaseUser.uid);  // Asegúrate de que la colección se llama 'user'
+          const userSnap = await getDoc(userRef);
 
-        // Buscar el rol en Firestore
-        const docRef = doc(db, "user", user.uid);
-        const docSnap = await getDoc(docRef);
+          if (userSnap.exists()) {
+            const userData = userSnap.data();
+            console.log('Usuario recuperado:', userData);  // Verifica que los datos se estén recuperando correctamente
 
-        if (docSnap.exists()) {
-          const data = docSnap.data();
-          setUserName(data.name || "🐾");
-          setRole(data.role || "user");
-        } else {
-          setUserName("🐾");
-          setRole("user");
+            setUser({
+              uid: firebaseUser.uid,
+              email: firebaseUser.email,
+              name: userData.name || firebaseUser.email,  // Usar name si está disponible, sino el email
+              role: userData.role || 'user',
+            });
+          } else {
+            // Si el documento de usuario no existe, lo creamos
+            await setDoc(userRef, {
+              name: firebaseUser.email,  // Si no tiene nombre, usamos el email como nombre
+              role: 'user',
+            });
+
+            setUser({
+              uid: firebaseUser.uid,
+              email: firebaseUser.email,
+              name: firebaseUser.email,  // Usamos email como nombre
+              role: 'user',
+            });
+          }
+        } catch (error) {
+          console.error('Error al obtener el usuario:', error);
+          setUser(null);
         }
       } else {
-        setCurrentUser(null);
-        setRole(null);
-        setUserName("");
+        setUser(null);
       }
-      setLoading(false);
+
+      setAuthLoading(false);
     });
 
     return () => unsubscribe();
   }, []);
 
-  const logout = async () => {
-    await signOut(auth);
-    setCurrentUser(null);
-    setRole(null);
-    setUserName("");
+  const login = (email, password) =>
+    signInWithEmailAndPassword(auth, email, password);
+
+  const logout = () => signOut(auth);
+
+  const loginWithGoogle = () => {
+    const provider = new GoogleAuthProvider();
+    return signInWithPopup(auth, provider);
   };
 
-  const user = currentUser ? { ...currentUser, role, name: userName } : null;
-
   return (
-    <AuthContext.Provider value={{ user, currentUser, role, userName, logout, loading }}>
-      {!loading && children}
+    <AuthContext.Provider
+      value={{ user, login, logout, loginWithGoogle, authLoading }}
+    >
+      {children}
     </AuthContext.Provider>
   );
 };

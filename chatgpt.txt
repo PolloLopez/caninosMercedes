@@ -1,7 +1,202 @@
-
 🔲 Preguntar a GPT
-    App.jsx y main.jsx Importan Global.css
-    Darle ambas hojas y estructura actualizada
+
+
+Devolvemelo con las classname en castellano por favor:
+// src/pages/SeguimientoOrden.jsx
+//solo para los User
+
+import { useEffect, useState } from "react";
+import {
+  collection,
+  onSnapshot,
+  orderBy,
+  query,
+  updateDoc,
+  doc,
+} from "firebase/firestore";
+import { db } from "@/firebase";
+import { useAuth } from "@/context/AuthContext";
+import "./SeguimientoOrden.css";
+
+const SeguimientoOrden = () => {
+  const { user, userData, loading } = useAuth();
+  const [ordenes, setOrdenes] = useState([]);
+  const [searchTerm, setSearchTerm] = useState("");
+  const [expandida, setExpandida] = useState({});
+  const [confirmando, setConfirmando] = useState(null);
+
+  useEffect(() => {
+    if (!user?.email) return;
+
+    const q = query(collection(db, "ordenes"), orderBy("fecha", "desc"));
+    const unsubscribe = onSnapshot(q, (snapshot) => {
+      const ordenesFiltradas = snapshot.docs
+        .map((doc) => ({ id: doc.id, ...doc.data() }))
+        .filter((orden) => orden.email === user.email);
+
+      setOrdenes(ordenesFiltradas);
+    });
+
+    return () => unsubscribe();
+  }, [user]);
+
+  const toggleExpandida = (id) => {
+    setExpandida((prev) => ({
+      ...prev,
+      [id]: !prev[id],
+    }));
+  };
+
+  const confirmarRecepcion = async (ordenId) => {
+    try {
+      setConfirmando(ordenId);
+      const ordenRef = doc(db, "ordenes", ordenId);
+      await updateDoc(ordenRef, { estado: "Entregado" });
+    } catch (error) {
+      console.error("Error al confirmar la recepción:", error);
+    } finally {
+      setConfirmando(null);
+    }
+  };
+
+  const ordenesFiltradas = ordenes.filter(
+    (orden) =>
+      orden.id.toLowerCase().includes(searchTerm.toLowerCase()) ||
+      orden.estado?.toLowerCase().includes(searchTerm.toLowerCase())
+  );
+
+  // ⏳ Cargando
+  if (loading) return <p>Cargando...</p>;
+
+  // ❌ Bloquear si no hay user o si es admin
+  if (!user || userData?.role === "admin")
+    return <p>Acceso denegado 🚫</p>;
+
+  return (
+    <div className="seguimiento-container">
+      <h2>📦 Seguimiento de órdenes</h2>
+
+      <div className="buscador">
+        <input
+          type="text"
+          placeholder="Buscar por ID o estado"
+          value={searchTerm}
+          onChange={(e) => setSearchTerm(e.target.value)}
+        />
+        {searchTerm && (
+          <button onClick={() => setSearchTerm("")}>Limpiar</button>
+        )}
+      </div>
+
+      {ordenes.length === 0 ? (
+        <p>No tenés pedidos realizados aún 😢</p>
+      ) : ordenesFiltradas.length === 0 ? (
+        <p>No se encontraron órdenes 🧐</p>
+      ) : (
+        ordenesFiltradas.map((orden) => (
+          <div key={orden.id} className="orden-card">
+            <div className="orden-header">
+              <p><strong>ID:</strong> {orden.id}</p>
+              <p><strong>Fecha:</strong> {new Date(orden.fecha.seconds * 1000).toLocaleString()}</p>
+              <div className={`estado-label ${orden.estado?.toLowerCase() || "pendiente"}`}>
+                {orden.estado === "Pendiente" && "🕓 Pendiente"}
+                {orden.estado === "Preparado" && "📦 Preparado"}
+                {orden.estado === "Despachado" && "🚚 Despachado"}
+                {orden.estado === "Entregado" && "✅ Entregado"}
+              </div>
+            </div>
+
+            <button onClick={() => toggleExpandida(orden.id)}>
+              {expandida[orden.id] ? "Ocultar detalles" : "Ver detalles"}
+            </button>
+
+            {expandida[orden.id] && (
+              <div className="orden-details">
+                <pre>{JSON.stringify(orden, null, 2)}</pre>
+                {orden.estado === "Despachado" && (
+                  <button className="btn-recibido"
+                    onClick={() => confirmarRecepcion(orden.id)}
+                    disabled={confirmando === orden.id}
+                  >
+                    {confirmando === orden.id ? "Confirmando..." : "Confirmar recepción"}
+                  </button>
+                )}
+              </div>
+            )}
+          </div>
+        ))
+      )}
+    </div>
+  );
+};
+
+export default SeguimientoOrden;
+-
+/* src/pages/SeguimientoOrden.css */
+
+.seguimiento-container {
+  padding: 2rem;
+  max-width: 800px;
+  margin: 0 auto;
+}
+
+.orden-card {
+  border: 1px solid #ddd;
+  border-radius: 10px;
+  padding: 1rem;
+  margin-bottom: 1rem;
+  background: #f9f9f9;
+}
+
+.orden-header {
+  margin-bottom: 1rem;
+}
+
+.orden-detalles {
+  margin: 1rem 0;
+  background: #fff;
+  padding: 0.5rem;
+  border-radius: 8px;
+}
+
+.buscador {
+  margin-bottom: 1.5rem;
+  display: flex;
+  gap: 1rem;
+}
+
+.buscador input {
+  flex: 1;
+  padding: 0.5rem;
+}
+
+.btn-recibido {
+  margin-top: 1rem;
+  padding: 0.5rem;
+  background-color: #4caf50;
+  color: white;
+  border: none;
+  border-radius: 5px;
+  cursor: pointer;
+}
+
+.btn-recibido:hover {
+  background-color: #45a049;
+}
+
+-
+
+Te informo: en firestore la orden se guardo en la coleccion "ordenes" asi:
+datosCliente (mapa)   ciudad "mercede" (string)   direccion "mi casa" (string)   email "caninosmercedes@gmail.com" (string)   nombre "caninos" (string)   telefono "2324589620" (string)   estado "Pendiente" (string)   fecha 6 de mayo de 2025, 5:35:27 p.m. UTC-3 (marca de tiempo)    historial (matriz)    0 (mapa)   accion "Orden creada" (string)   fecha "2025-05-06T20:35:27.109Z" (string)   usuario "caninosmercedes@gmail.com" (string)   metodoPago "Acuerdo con el vendedor" (string)    productos (matriz)    0 (mapa)   cantidad 1 (número)   nombre "Plato comelento" (string)   precio 3000 (número)    1 (mapa)   cantidad 4 (número)   nombre "Rampa Plegable" (string)   precio 75000 (número)   total 303000 (número)   userId null
+
+
+-    falta Funcionalidad en navbar al ser user: Admin
+
+
+-    Ver y dar buen estilo y redirigir a AdminPanel
+
+// src/pages/Admin/Login.jsx
+
 
 
 Continuar:

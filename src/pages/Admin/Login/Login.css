@@ -1,58 +1,63 @@
 /* src/pages/Admin/Login.css */
 
-.contenedor-login {
-    max-width: 400px;
-    margin: 5rem auto;
-    padding: 2rem;
-    background-color: #fff;
-    border-radius: 1rem;
-    box-shadow: 0 4px 12px rgba(0, 0, 0, 0.15);
-    text-align: center;
-  }
-  
-  .contenedor-login h2 {
-    color: var(--color-primario);
-    margin-bottom: 1.5rem;
-    font-size: 2rem;
-  }
-  
-  .contenedor-login form {
-    display: flex;
-    flex-direction: column;
-    gap: 1rem;
-  }
-  
-  .contenedor-login input {
-    padding: 0.75rem;
-    border-radius: 0.5rem;
-    border: 1px solid var(--color-primario);
-    font-size: 1rem;
-    outline: none;
-    transition: border-color var(--velocidad-transicion);
-  }
-  
-  .contenedor-login input:focus {
-    border-color: var(--color-destacado);
-  }
-  
-  .contenedor-login button {
-    padding: 0.75rem;
-    border: none;
-    background-color: var(--color-primario);
-    color: --color-blanco;
-    font-size: 1rem;
-    border-radius: 0.5rem;
-    cursor: pointer;
-    transition: background-color var(--velocidad-transicion);
-  }
-  
-  .contenedor-login button:hover {
-    background-color: var(--color-destacado);
-    color: --color-negro;
-  }
-  
-  .contenedor-login p {
-    color: red;
-    margin-top: 0.5rem;
-    font-size: 0.9rem;
-  }
+.login-container {
+  max-width: 400px;
+  margin: 100px auto;
+  padding: 2rem;
+  background-color: #fdfdfd;
+  border-radius: 1rem;
+  box-shadow: 0 4px 12px rgba(0, 0, 0, 0.1);
+  text-align: center;
+}
+
+.login-container h2 {
+  margin-bottom: 1rem;
+  color: #333;
+}
+
+.login-container form {
+  display: flex;
+  flex-direction: column;
+  gap: 1rem;
+}
+
+.login-container input {
+  padding: 0.8rem;
+  border: 1px solid #ccc;
+  border-radius: 0.5rem;
+  font-size: 1rem;
+}
+
+.login-container button {
+  padding: 0.8rem;
+  background-color: #1e88e5;
+  color: white;
+  border: none;
+  border-radius: 0.5rem;
+  font-size: 1rem;
+  cursor: pointer;
+  transition: background-color 0.2s ease;
+}
+
+.login-container button:hover {
+  background-color: #1565c0;
+}
+
+.login-container .error {
+  color: #d32f2f;
+  margin-top: 0.5rem;
+  font-weight: bold;
+}
+.register-link {
+  text-align: center;
+  margin-top: 1rem;
+}
+
+.register-link a {
+  color: #3f51b5;
+  text-decoration: none;
+}
+
+.register-link a:hover {
+  text-decoration: underline;
+}

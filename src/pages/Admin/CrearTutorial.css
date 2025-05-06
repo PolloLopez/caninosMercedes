@@ -1,0 +1,59 @@
+/* src/pages/Admin/CrearTutorial.css */
+
+.crear-tutorial-container {
+    max-width: 640px;
+    margin: 48px auto;
+    padding: 32px;
+    background-color: #ffffff;
+    border-radius: 16px;
+    box-shadow: 0 6px 20px rgba(0, 0, 0, 0.12);
+  }
+  
+  .crear-tutorial-container h1 {
+    text-align: center;
+    margin-bottom: 24px;
+    color: #2e2e2e;
+    font-size: 28px;
+    font-weight: 700;
+  }
+  
+  .crear-formulario {
+    display: flex;
+    flex-direction: column;
+    gap: 20px;
+  }
+  
+  .crear-formulario label {
+    font-weight: 600;
+    color: #444;
+  }
+  
+  .crear-formulario input,
+  .crear-formulario textarea {
+    padding: 14px;
+    font-size: 16px;
+    border: 1px solid #ccc;
+    border-radius: 10px;
+    outline-color: #4caf50;
+    background-color: #fafafa;
+  }
+  
+  .crear-formulario textarea {
+    min-height: 100px;
+  }
+  
+  .crear-formulario button {
+    background-color: #4caf50;
+    color: white;
+    padding: 14px;
+    font-size: 17px;
+    border: none;
+    border-radius: 10px;
+    cursor: pointer;
+    transition: background-color 0.2s ease;
+  }
+  
+  .crear-formulario button:hover {
+    background-color: #388e3c;
+  }
+  

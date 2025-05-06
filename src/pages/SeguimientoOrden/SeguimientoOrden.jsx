@@ -1,94 +1,129 @@
-// src/pages/SeguimientoOrden/SeguimientoOrden.jsx 
+// src/pages/SeguimientoOrden.jsx
+//solo para los User
 
-import React, { useState } from "react";
-import { collection, query, where, getDocs } from "firebase/firestore";
+import { useEffect, useState } from "react";
+import {
+  collection,
+  onSnapshot,
+  orderBy,
+  query,
+  updateDoc,
+  doc,
+} from "firebase/firestore";
 import { db } from "@/firebase";
 import { useAuth } from "@/context/AuthContext";
-import { useNavigate } from "react-router-dom";
 import "./SeguimientoOrden.css";
 
 const SeguimientoOrden = () => {
-  const { user } = useAuth();
-  const [orderDetails, setOrderDetails] = useState(null);
-  const [busqueda, setBusqueda] = useState("");
-  const [error, setError] = useState(null);
-  const navigate = useNavigate();
+  const { user, userData, loading } = useAuth();
+  const [ordenes, setOrdenes] = useState([]);
+  const [terminoBusqueda, setTerminoBusqueda] = useState("");
+  const [expandida, setExpandida] = useState({});
+  const [confirmando, setConfirmando] = useState(null);
 
-  const handleInputChange = (e) => {
-    setBusqueda(e.target.value);
-  };
+  useEffect(() => {
+    if (!user?.email) return;
 
-  const handleSearch = async () => {
-    if (!busqueda) {
-      setError("Por favor ingresa tu nombre o correo.");
-      return;
-    }
-
-    try {
-      const q = query(
-        collection(db, "ordenes"),
-        where("userId", "==", user?.uid)
-      );
-
-      const querySnapshot = await getDocs(q);
-      const coincidencias = querySnapshot.docs
-        .map(doc => ({ id: doc.id, ...doc.data() }))
-        .filter(pedido =>
-          pedido.email?.toLowerCase() === busqueda.toLowerCase() ||
-          pedido.nombre?.toLowerCase().includes(busqueda.toLowerCase())
+    const q = query(collection(db, "ordenes"), orderBy("fecha", "desc"));
+    const unsubscribe = onSnapshot(q, (snapshot) => {
+      const ordenesFiltradas = snapshot.docs
+        .map((doc) => ({ id: doc.id, ...doc.data() }))
+        .filter(
+          (orden) =>
+            orden.datosCliente?.email?.toLowerCase() ===
+            user.email?.toLowerCase()
         );
 
-      if (coincidencias.length > 0) {
-        setOrderDetails(coincidencias[0]);
-        setError(null);
-      } else {
-        setOrderDetails(null);
-        setError("No se encontró un pedido con ese nombre o correo.");
-      }
+      setOrdenes(ordenesFiltradas);
+    });
+
+    return () => unsubscribe();
+  }, [user]);
+
+  const alternarExpandida = (id) => {
+    setExpandida((prev) => ({
+      ...prev,
+      [id]: !prev[id],
+    }));
+  };
+
+  const confirmarRecepcion = async (ordenId) => {
+    try {
+      setConfirmando(ordenId);
+      const ordenRef = doc(db, "ordenes", ordenId);
+      await updateDoc(ordenRef, { estado: "Entregado" });
     } catch (error) {
-      setError("Hubo un error al recuperar el pedido.");
+      console.error("Error al confirmar la recepción:", error);
+    } finally {
+      setConfirmando(null);
     }
   };
 
-  const handleEditarPedido = () => {
-    navigate("/tienda");
-  };
+  const ordenesFiltradas = ordenes.filter(
+    (orden) =>
+      orden.id.toLowerCase().includes(terminoBusqueda.toLowerCase()) ||
+      orden.estado?.toLowerCase().includes(terminoBusqueda.toLowerCase())
+  );
+
+  if (loading) return <p>Cargando...</p>;
+  if (!user || userData?.role === "admin")
+    return <p>Acceso denegado 🚫</p>;
 
   return (
     <div className="seguimiento-container">
-      <h2>Seguimiento de Pedido</h2>
+      <h2>📦 Mis Pedidos </h2>
 
-      <div className="search-container">
-        <input
-          type="text"
-          placeholder="Ingresa tu nombre o correo"
-          value={busqueda}
-          onChange={handleInputChange}
-        />
-        <button onClick={handleSearch}>Buscar Pedido</button>
+      <div className="buscador">
+        {terminoBusqueda && (
+          <button onClick={() => setTerminoBusqueda("")}>Limpiar</button>
+        )}
       </div>
 
-      {error && <p className="error">{error}</p>}
-
-      {orderDetails ? (
-        <div className="order-details">
-          <p><strong>Pedido ID:</strong> {orderDetails.id}</p>
-          <p><strong>Nombre:</strong> {orderDetails.nombre}</p>
-          <p><strong>Correo:</strong> {orderDetails.email}</p>
-          <p><strong>Estado:</strong> {orderDetails.estado}</p>
-          <p><strong>Productos:</strong></p>
-          <ul>
-            {orderDetails.productos.map((item, index) => (
-              <li key={index}>{item.nombre} - {item.cantidad} x ${item.precio}</li>
-            ))}
-          </ul>
-          <p><strong>Total:</strong> ${orderDetails.total}</p>
-          <button className="editar-btn" onClick={handleEditarPedido}>
-            Editar Pedido
-          </button>
-        </div>
+      {ordenes.length === 0 ? (
+        <p>No tenés pedidos realizados aún 😢</p>
+      ) : ordenesFiltradas.length === 0 ? (
+        <p>No se encontraron pdos 🧐</p>
       ) : (
-        !error && <p>Busca un pedido ingresando nombre o correo 😊</p>
+        ordenesFiltradas.map((orden) => (
+          <div key={orden.id} className="tarjeta-orden">
+            <div className="encabezado-orden">
+              <p><strong>ID:</strong> {orden.id}</p>
+              <p>
+                <strong>Fecha:</strong>{" "}
+                {new Date(orden.fecha.seconds * 1000).toLocaleString()}
+              </p>
+              <div
+                className={`estado-label ${orden.estado?.toLowerCase() || "pendiente"}`}
+              >
+                {orden.estado === "Pendiente" && "🕓 Pendiente"}
+                {orden.estado === "Preparado" && "📦 Preparado"}
+                {orden.estado === "Despachado" && "🚚 Despachado"}
+                {orden.estado === "Entregado" && "✅ Entregado"}
+              </div>
+            </div>
+
+            <button onClick={() => alternarExpandida(orden.id)}>
+              {expandida[orden.id] ? "Ocultar detalles" : "Ver detalles"}
+            </button>
+
+            {expandida[orden.id] && (
+              <div className="detalles-orden">
+                <pre>{JSON.stringify(orden, null, 2)}</pre>
+                {orden.estado === "Despachado" && (
+                  <button
+                    className="btn-recibido"
+                    onClick={() => confirmarRecepcion(orden.id)}
+                    disabled={confirmando === orden.id}
+                  >
+                    {confirmando === orden.id
+                      ? "Confirmando..."
+                      : "Confirmar recepción"}
+                  </button>
+                )}
+              </div>
+            )}
+          </div>
+        ))
       )}
     </div>
   );
