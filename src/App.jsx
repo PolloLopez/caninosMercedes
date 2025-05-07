@@ -21,8 +21,9 @@ import CrearTutorial from "@/pages/Admin/CrearTutorial";
 import EditarTutorial from "@/pages/Admin/EditarTutorial";
 import Ordenes from "@/pages/Admin/Ordenes/Ordenes";
 import AdminTutoriales from "@/pages/Admin/AdminTutoriales";
+import Admin from "./pages/Admin/AdminPanel/Admin";
 
-// Rutas protegidas
+// Rutas protegidas 
 import ProtectedRoute from "@/routes/ProtectedRoute";
 
 const App = () => {
@@ -42,8 +43,9 @@ const App = () => {
         {/* Admin */}
         <Route path="login" element={<Login />} />
         <Route path="admin" element={<ProtectedRoute><PanelAdmin /></ProtectedRoute>} />
+        <Route path="admin/panel" element={<ProtectedRoute><Admin /></ProtectedRoute>} />
         <Route path="admin/productos" element={<ProtectedRoute><AdminProductos /></ProtectedRoute>} />
-        <Route path="admin/edit-producto/:id" element={<ProtectedRoute><EditarProducto /></ProtectedRoute>} />
+        <Route path="admin/editarproducto" element={<ProtectedRoute><EditarProducto /></ProtectedRoute>} />
         <Route path="admin/ordenes" element={<ProtectedRoute><Ordenes /></ProtectedRoute>} />
         <Route path="admin/tutoriales" element={<ProtectedRoute><AdminTutoriales /></ProtectedRoute>} />
         <Route path="admin/crear-tutorial" element={<ProtectedRoute><CrearTutorial /></ProtectedRoute>} />

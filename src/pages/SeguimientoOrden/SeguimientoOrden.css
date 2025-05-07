@@ -1,51 +1,107 @@
 /* src/pages/SeguimientoOrden.css */
 
-.seguimiento-container {
-  padding: 2rem;
-  max-width: 800px;
-  margin: 0 auto;
-}
-
-.orden-card {
-  border: 1px solid #ddd;
-  border-radius: 10px;
+.tarjeta-orden {
+  background-color: var(--color-blanco);
+  border: 2px solid #ddd;
+  border-radius: var(--border-radius);
   padding: 1rem;
-  margin-bottom: 1rem;
-  background: #f9f9f9;
+  margin: 1.5rem 0;
+  box-shadow: var(--sombra-suave);
+  transition: var(--transicion-suave);
 }
 
-.orden-header {
-  margin-bottom: 1rem;
-}
-
-.orden-detalles {
-  margin: 1rem 0;
-  background: #fff;
-  padding: 0.5rem;
-  border-radius: 8px;
-}
-
-.buscador {
-  margin-bottom: 1.5rem;
+.encabezado-orden {
   display: flex;
-  gap: 1rem;
+  flex-wrap: wrap;
+  justify-content: space-between;
+  align-items: center;
+  gap: 0.75rem;
 }
 
-.buscador input {
-  flex: 1;
-  padding: 0.5rem;
+.estado-label {
+  padding: 0.25rem 0.75rem;
+  border-radius: 1rem;
+  font-weight: bold;
+  font-size: 0.9rem;
+  text-align: center;
+  white-space: nowrap;
+} 
+
+/* Colores según estado */
+.estado-label.pendiente {
+  background-color: var(--color-amarillo);
+  color: var(--color-negro);
 }
 
-.btn-recibido {
-  margin-top: 1rem;
-  padding: 0.5rem;
-  background-color: #4caf50;
-  color: white;
+.estado-label.preparado {
+  background-color: var(--color-destacado);
+  color: var(--color-negro);
+}
+
+.estado-label.despachado {
+  background-color: var(--color-primario);
+  color: var(--color-blanco);
+}
+
+.estado-label.entregado {
+  background-color: var(--color-verde);
+  color: var(--color-blanco);
+}
+
+button {
+  margin-top: 0.75rem;
+  padding: 0.5rem 1rem;
+  background-color: var(--color-primario);
+  color: var(--color-blanco);
   border: none;
-  border-radius: 5px;
+  border-radius: var(--border-radius);
   cursor: pointer;
+  font-weight: bold;
+  transition: var(--transicion-suave);
 }
 
-.btn-recibido:hover {
-  background-color: #45a049;
+button:hover {
+  background-color: var(--color-oscuro);
+}
+
+.boton-recibido {
+  background-color: var(--color-verde);
+}
+
+.boton-recibido:hover {
+  background-color: #0b8a1a;
+}
+
+/* Detalles con animación */
+.detalles-orden {
+  overflow: hidden;
+  max-height: 0;
+  opacity: 0;
+  transition: max-height 0.4s ease, opacity 0.4s ease;
+  padding-top: 0;
+  margin-top: 0;
+  border-top: none;
+}
+
+/* Clase activa al expandir */
+.detalles-orden.activo {
+  max-height: 500px; /* suficiente para mostrar todo el contenido */
+  opacity: 1;
+  margin-top: 1rem;
+  padding-top: 1rem;
+  border-top: 1px solid #ccc;
+}
+
+.detalles-orden h4 {
+  margin-bottom: 0.5rem;
+}
+
+.detalles-orden ul {
+  list-style: none;
+  padding-left: 0;
+  margin-bottom: 0.75rem;
+}
+
+.detalles-orden li {
+  margin-bottom: 0.25rem;
 }

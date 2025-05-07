@@ -28,7 +28,7 @@
   gap: .75rem;
 }
 
-.nav-links a, .nav-links button {
+.nav-links a, .nav-links {
   color: var(--color-blanco);
   text-decoration: none;
   font-weight: bold;
@@ -38,12 +38,12 @@
   font-size: 1rem;
 }
 
-.nav-links button:hover,
+.nav-links
 .nav-links a:hover {
   color: var(--color-destacado);
 }
 
-.user-name {
+.users-name {
   margin-right: .1rem;
   font-weight: 500;
   color: var(--color-amarillo);
@@ -55,7 +55,6 @@
   border-radius: 50%;
   object-fit: cover;
   margin-right: 1rem;
-
 }
 
 .cart-link {
@@ -66,8 +65,8 @@
 }
 
 .cart-count {
-  background: red;
-  color: white;
+  background: var(--color-rojo);
+  color: var(--color-blanco);
   border-radius: 50%;
   padding: 2px 6px;
   font-size: 0.75rem;
@@ -75,6 +74,23 @@
   top: -8px;
   right: -12px;
 }
+
+.btn-salir {
+  background: var(--color-rojo);
+  border: none;
+  color: var(--color-blanco);
+  cursor: pointer;
+  font-size: 1rem;
+  transition: color 0.2s;
+  margin-top: 0;
+  padding: 5px 10px;
+}
+
+.btn-salir:hover {
+  background-color: var(--color-texto);
+  color: var(--color-blanco);
+}
+
 
 
 

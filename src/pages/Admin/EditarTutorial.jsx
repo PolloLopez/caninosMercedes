@@ -44,7 +44,7 @@ const EditarTutorial = () => {
       <form className="editar-form" onSubmit={handleSubmit}>
         <label>Título</label>
         <input name="titulo" value={form.titulo} onChange={handleChange} required />
-
+ 
         <label>Descripción</label>
         <textarea name="descripcion" value={form.descripcion} onChange={handleChange} required />
 

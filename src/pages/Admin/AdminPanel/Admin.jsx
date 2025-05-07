@@ -1,5 +1,5 @@
 // src/pages/Admin/AdminPanel/Admin.jsx
-
+ 
 import { useNavigate } from "react-router-dom";
 import "./Admin.css";
 
@@ -9,7 +9,9 @@ const Admin = () => {
   const accesos = [
     { label: "🛒 Cargar Pedido", route: "/tienda", color: "card-uno" },
     { label: "📦 Admin Pedidos", route: "/admin/ordenes", color: "card-dos" },
-    { label: "🛍️ Admin Productos", route: "/admin/productos", color: "card-tres" },
+    { label: "🛍️ Admin Productos", route: "/admin/editarproducto", color: "card-tres" },
+    // deberia redirigir a src>pages>Admin>EditarProducto.jsx
+    // o//src>pages>Admin>ListaProductos>ListaProductos.jsx con el boton editar agregar
     { label: "🔙 Volver al Inicio", route: "/", color: "card-cuatro" },
   ];
 

@@ -1,130 +1,127 @@
 // src/pages/SeguimientoOrden.jsx
-//solo para los User
+//solo para los users
 
-import { useEffect, useState } from "react";
-import {
-  collection,
-  onSnapshot,
-  orderBy,
-  query,
-  updateDoc,
-  doc,
-} from "firebase/firestore";
-import { db } from "@/firebase";
-import { useAuth } from "@/context/AuthContext";
-import "./SeguimientoOrden.css";
+import React, { useEffect, useState } from 'react';
+import { getDocs, collection, updateDoc, doc } from 'firebase/firestore';
+import { db } from '../../firebase';
+import { useAuth } from '../../context/AuthContext';
+import { useNavigate } from 'react-router-dom';
+import './SeguimientoOrden.css';
 
 const SeguimientoOrden = () => {
-  const { user, userData, loading } = useAuth();
+  const { users } = useAuth();
+  const navigate = useNavigate();
   const [ordenes, setOrdenes] = useState([]);
-  const [terminoBusqueda, setTerminoBusqueda] = useState("");
-  const [expandida, setExpandida] = useState({});
-  const [confirmando, setConfirmando] = useState(null);
+  const [ordenesAbiertas, setOrdenesAbiertas] = useState({});
+
+  // Redirigir a admin si el usuario es admin
+  useEffect(() => {
+    if (users?.role === 'admin') {
+      navigate('/admin/ordenes');
+    }
+  }, [users, navigate]);
+
+  // Si no es un usuario normal, mostrar mensaje de acceso restringido
+  if (users?.role !== 'users') {
+    return <p>Acceso restringido, solo usuarios pueden ver sus órdenes.</p>;
+  }
 
   useEffect(() => {
-    if (!user?.email) return;
+    const fetchOrdenes = async () => {
+      const ordenesSnapshot = await getDocs(collection(db, 'ordenes'));
+      const ordenesData = ordenesSnapshot.docs
+        .map((doc) => ({
+          id: doc.id,
+          ...doc.data(),
+        }))
+        .filter((orden) => orden.datosCliente?.email === users?.email); // ✅ filtra por usuario
+      setOrdenes(ordenesData);
+    };
 
-    const q = query(collection(db, "ordenes"), orderBy("fecha", "desc"));
-    const unsubscribe = onSnapshot(q, (snapshot) => {
-      const ordenesFiltradas = snapshot.docs
-        .map((doc) => ({ id: doc.id, ...doc.data() }))
-        .filter(
-          (orden) =>
-            orden.datosCliente?.email?.toLowerCase() ===
-            user.email?.toLowerCase()
-        );
+    if (users?.email) {
+      fetchOrdenes();
+    }
+  }, [users]);
 
-      setOrdenes(ordenesFiltradas);
-    });
-
-    return () => unsubscribe();
-  }, [user]);
-
-  const alternarExpandida = (id) => {
-    setExpandida((prev) => ({
+  const toggleDetalles = (id) => {
+    setOrdenesAbiertas((prev) => ({
       ...prev,
       [id]: !prev[id],
     }));
   };
 
-  const confirmarRecepcion = async (ordenId) => {
-    try {
-      setConfirmando(ordenId);
-      const ordenRef = doc(db, "ordenes", ordenId);
-      await updateDoc(ordenRef, { estado: "Entregado" });
-    } catch (error) {
-      console.error("Error al confirmar la recepción:", error);
-    } finally {
-      setConfirmando(null);
-    }
+  const confirmarRecepcion = async (orden) => {
+    const nuevaAccion = {
+      accion: 'Recibido por el cliente',
+      fecha: new Date().toISOString(),
+      usuario: orden.datosCliente.email,
+    };
+
+    const nuevaHistorial = [...(orden.historial || []), nuevaAccion];
+
+    await updateDoc(doc(db, 'ordenes', orden.id), {
+      estado: 'Finalizado',
+      historial: nuevaHistorial,
+    });
+
+    setOrdenes((prev) =>
+      prev.map((o) =>
+        o.id === orden.id ? { ...o, estado: 'Finalizado', historial: nuevaHistorial } : o
+      )
+    );
   };
 
-  const ordenesFiltradas = ordenes.filter(
-    (orden) =>
-      orden.id.toLowerCase().includes(terminoBusqueda.toLowerCase()) ||
-      orden.estado?.toLowerCase().includes(terminoBusqueda.toLowerCase())
-  );
-
-  if (loading) return <p>Cargando...</p>;
-  if (!user || userData?.role === "admin")
-    return <p>Acceso denegado 🚫</p>;
-
   return (
-    <div className="seguimiento-container">
-      <h2>📦 Mis Pedidos </h2>
-
-      <div className="buscador">
-        {terminoBusqueda && (
-          <button onClick={() => setTerminoBusqueda("")}>Limpiar</button>
-        )}
-      </div>
-
-      {ordenes.length === 0 ? (
-        <p>No tenés pedidos realizados aún 😢</p>
-      ) : ordenesFiltradas.length === 0 ? (
-        <p>No se encontraron pdos 🧐</p>
-      ) : (
-        ordenesFiltradas.map((orden) => (
-          <div key={orden.id} className="tarjeta-orden">
-            <div className="encabezado-orden">
-              <p><strong>ID:</strong> {orden.id}</p>
-              <p>
-                <strong>Fecha:</strong>{" "}
-                {new Date(orden.fecha.seconds * 1000).toLocaleString()}
-              </p>
-              <div
-                className={`estado-label ${orden.estado?.toLowerCase() || "pendiente"}`}
-              >
-                {orden.estado === "Pendiente" && "🕓 Pendiente"}
-                {orden.estado === "Preparado" && "📦 Preparado"}
-                {orden.estado === "Despachado" && "🚚 Despachado"}
-                {orden.estado === "Entregado" && "✅ Entregado"}
-              </div>
+    <div style={{ maxWidth: '700px', margin: '2rem auto', padding: '1rem' }}>
+      <h2>📦 Seguimiento de tus órdenes</h2>
+      {ordenes.map((orden) => (
+        <div className="tarjeta-orden" key={orden.id}>
+          <div className="encabezado-orden">
+            <p><strong>ID:</strong> {orden.id}</p>
+            <div className={`estado-label ${orden.estado?.toLowerCase() || "pendiente"}`}>
+              {orden.estado === "Pendiente" && "🕓 Pendiente"}
+              {orden.estado === "Preparado" && "📦 Preparado"}
+              {orden.estado === "Despachado" && "🚚 Despachado"}
+              {orden.estado === "Entregado" && "✅ Entregado"}
+              {orden.estado === "Finalizado" && "🎉 Finalizado"}
             </div>
-
-            <button onClick={() => alternarExpandida(orden.id)}>
-              {expandida[orden.id] ? "Ocultar detalles" : "Ver detalles"}
-            </button>
-
-            {expandida[orden.id] && (
-              <div className="detalles-orden">
-                <pre>{JSON.stringify(orden, null, 2)}</pre>
-                {orden.estado === "Despachado" && (
-                  <button
-                    className="btn-recibido"
-                    onClick={() => confirmarRecepcion(orden.id)}
-                    disabled={confirmando === orden.id}
-                  >
-                    {confirmando === orden.id
-                      ? "Confirmando..."
-                      : "Confirmar recepción"}
-                  </button>
-                )}
-              </div>
-            )}
           </div>
-        ))
-      )}
+
+          <button onClick={() => toggleDetalles(orden.id)}>
+            {ordenesAbiertas[orden.id] ? 'Ocultar Detalles' : 'Ver Detalles'}
+          </button>
+
+          <div className={`detalles-orden ${ordenesAbiertas[orden.id] ? 'activo' : ''}`}>
+            <h4>📋 Productos</h4>
+            <ul>
+              {orden.productos.map((p, idx) => (
+                <li key={idx}>
+                  {p.nombre} x{p.cantidad} - ${p.precio.toLocaleString()}
+                </li>
+              ))}
+            </ul>
+
+            <h4>👤 Cliente</h4>
+            <p><strong>Nombre:</strong> {orden.datosCliente?.nombre}</p>
+            <p><strong>Ciudad:</strong> {orden.datosCliente?.ciudad}</p>
+            <p><strong>Dirección:</strong> {orden.datosCliente?.direccion}</p>
+            <p><strong>Email:</strong> {orden.datosCliente?.email}</p>
+            <p><strong>Teléfono:</strong> {orden.datosCliente?.telefono}</p>
+
+            <h4>💰 Total:</h4>
+            <p>${orden.total.toLocaleString()}</p>
+          </div>
+
+          {orden.estado !== 'Finalizado' && (
+            <button
+              className="boton-recibido"
+              onClick={() => confirmarRecepcion(orden)}
+            >
+              Confirmar recepción
+            </button>
+          )}
+        </div>
+      ))}
     </div>
   );
 };

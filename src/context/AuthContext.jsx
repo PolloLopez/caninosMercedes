@@ -1,62 +1,24 @@
 // src/context/AuthContext.jsx
 import { createContext, useContext, useEffect, useState } from 'react';
+import {
+  onAuthStateChanged,
+  signInWithEmailAndPassword,
+  signOut,
+  GoogleAuthProvider,
+  signInWithPopup,
+} from 'firebase/auth';
 import { auth, db } from '../firebase';
-import { onAuthStateChanged, signInWithEmailAndPassword, signOut, GoogleAuthProvider, signInWithPopup } from 'firebase/auth';
 import { doc, getDoc, setDoc } from 'firebase/firestore';
 
-export const AuthContext = createContext();
+const AuthContext = createContext();
+
+export const useAuth = () => useContext(AuthContext);
 
 export const AuthProvider = ({ children }) => {
-  const [user, setUser] = useState(null);
-  const [authLoading, setAuthLoading] = useState(true);
+  const [users, setusers] = useState(null);
+  const [loading, setLoading] = useState(true);
 
-  useEffect(() => {
-    const unsubscribe = onAuthStateChanged(auth, async (firebaseUser) => {
-      if (firebaseUser) {
-        try {
-          const userRef = doc(db, 'user', firebaseUser.uid);  // Asegúrate de que la colección se llama 'user'
-          const userSnap = await getDoc(userRef);
-
-          if (userSnap.exists()) {
-            const userData = userSnap.data();
-            console.log('Usuario recuperado:', userData);  // Verifica que los datos se estén recuperando correctamente
-
-            setUser({
-              uid: firebaseUser.uid,
-              email: firebaseUser.email,
-              name: userData.name || firebaseUser.email,  // Usar name si está disponible, sino el email
-              role: userData.role || 'user',
-            });
-          } else {
-            // Si el documento de usuario no existe, lo creamos
-            await setDoc(userRef, {
-              name: firebaseUser.email,  // Si no tiene nombre, usamos el email como nombre
-              role: 'user',
-            });
-
-            setUser({
-              uid: firebaseUser.uid,
-              email: firebaseUser.email,
-              name: firebaseUser.email,  // Usamos email como nombre
-              role: 'user',
-            });
-          }
-        } catch (error) {
-          console.error('Error al obtener el usuario:', error);
-          setUser(null);
-        }
-      } else {
-        setUser(null);
-      }
-
-      setAuthLoading(false);
-    });
-
-    return () => unsubscribe();
-  }, []);
-
-  const login = (email, password) =>
-    signInWithEmailAndPassword(auth, email, password);
+  const login = (email, password) => signInWithEmailAndPassword(auth, email, password);
 
   const logout = () => signOut(auth);
 
@@ -65,13 +27,50 @@ export const AuthProvider = ({ children }) => {
     return signInWithPopup(auth, provider);
   };
 
+  useEffect(() => {
+    const unsubscribe = onAuthStateChanged(auth, async (firebaseusers) => {
+      if (firebaseusers) {
+        const usersRef = doc(db, 'usuarios', firebaseusers.uid);
+        const docSnap = await getDoc(usersRef);
+
+        if (docSnap.exists()) {
+          const usersData = docSnap.data();
+          setusers({
+            uid: firebaseusers.uid,
+            email: firebaseusers.email,
+            nombreCompleto: usersData.nombreCompleto || firebaseusers.email,
+            role: usersData.role || 'users',
+          });
+          console.log("📄 Documento Firestore:", usersData);
+
+        } else {
+          await setDoc(usersRef, {
+            nombreCompleto: firebaseusers.email,
+            role: 'users',
+          });
+
+          setusers({
+            uid: firebaseusers.uid,
+            email: firebaseusers.email,
+            nombreCompleto: firebaseusers.email,
+            role: 'users',
+          });
+          
+        }
+
+
+      } else {
+        setusers(null);
+      }
+      setLoading(false);
+    });
+
+    return () => unsubscribe();
+  }, []);
+
   return (
-    <AuthContext.Provider
-      value={{ user, login, logout, loginWithGoogle, authLoading }}
-    >
-      {children}
+    <AuthContext.Provider value={{ users, login, logout, loginWithGoogle }}>
+      {!loading && children}
     </AuthContext.Provider>
   );
 };
-
-export const useAuth = () => useContext(AuthContext);

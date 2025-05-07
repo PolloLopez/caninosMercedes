@@ -1,5 +1,5 @@
 // src/pages/Admin/Ordenes.jsx
-//solo para los admin
+//solo para los admin 
 
 import "./Ordenes.css";
 import { useState, useEffect } from "react";
@@ -12,7 +12,7 @@ const Ordenes = () => {
   const [searchTerm, setSearchTerm] = useState("");
   const [ordenesExpandida, setOrdenesExpandida] = useState({});
 
-  const { user, userData, loading } = useAuth();
+  const { users, usersData, loading } = useAuth();
 
   useEffect(() => {
     const unsubscribe = onSnapshot(
@@ -49,8 +49,8 @@ const Ordenes = () => {
   if (loading) return <p>Cargando...</p>;
 
   // ❌ Bloquear acceso si no es admin
-  const esAdmin = userData?.role === "admin"; 
-  if (!user || !esAdmin) return <p>Acceso denegado 🚫</p>;
+  const esAdmin = usersData?.role === "admin"; 
+  if (!users || !esAdmin) return <p>Acceso denegado 🚫</p>;
 
   const filteredOrdenes = ordenes.filter((orden) =>
     orden.nombre?.toLowerCase().includes(searchTerm.toLowerCase()) ||

@@ -5,7 +5,7 @@ import { useState } from "react";
 import { useNavigate, Link } from "react-router-dom";
 import { auth } from "@/config/firebaseConfig";
 import { db } from "@/firebase";
-import { createUserWithEmailAndPassword } from "firebase/auth";
+import { createusersWithEmailAndPassword } from "firebase/auth";
 import { doc, setDoc } from "firebase/firestore";
 
 const Registro = () => {
@@ -21,13 +21,13 @@ const Registro = () => {
     setLoading(true);
 
     try {
-      const userCredential = await createUserWithEmailAndPassword(auth, email, password);
-      const user = userCredential.user;
+      const usersCredential = await createusersWithEmailAndPassword(auth, email, password);
+      const users = usersCredential.users;
 
       // Guardamos datos básicos en Firestore
-      await setDoc(doc(db, "user", user.uid), {
-        email: user.email,
-        role: "user", // Por defecto se registra como usuario común
+      await setDoc(doc(db, "users", users.uid), {
+        email: users.email,
+        role: "users", // Por defecto se registra como usuario común
         createdAt: new Date(),
       });
 

@@ -42,7 +42,7 @@
 
 .editar-form button {
   background-color: #4caf50;
-  color: white;
+  color: var(--color-blanco);
   padding: 12px;
   font-size: 16px;
   border: none;

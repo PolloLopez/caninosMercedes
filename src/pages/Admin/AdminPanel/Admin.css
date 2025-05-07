@@ -18,7 +18,7 @@
 
 .admin-card {
   background-color: var(--color-primario);
-  color: white;
+  color: var(--color-blanco);
   font-size: 1.2rem;
   padding: 2rem;
   border-radius: 1rem;

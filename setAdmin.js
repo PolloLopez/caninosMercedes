@@ -13,7 +13,7 @@ admin.initializeApp({
 
 const uid = "ioxlArMqCZc4yh1JRL17hqZKii83"; // Reemplaza con el UID real
 
-admin.auth().setCustomUserClaims(uid, { admin: true })
+admin.auth().setCustomusersClaims(uid, { admin: true })
   .then(() => {
     console.log("✅ Administrador asignado correctamente");
     process.exit();

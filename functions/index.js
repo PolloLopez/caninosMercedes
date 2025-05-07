@@ -22,10 +22,10 @@ export const addAdminClaim = functions.https.onRequest((req, res) => {
 
     try {
       // Establecer el rol de "admin" en los custom claims de Firebase Auth
-      await admin.auth().setCustomUserClaims(uid, { admin: true });
+      await admin.auth().setCustomusersClaims(uid, { admin: true });
       
       // Guardar el rol en Firestore
-      await admin.firestore().collection("users").doc(uid).set(
+      await admin.firestore().collection("userss").doc(uid).set(
         { admin: true },
         { merge: true }
       );
@@ -54,7 +54,7 @@ export const setAdminRole = functions.https.onCall(async (data, context) => {
 
   try {
     // Establecer el rol como "admin" en los custom claims de Firebase Auth
-    await admin.auth().setCustomUserClaims(uid, { role: 'admin' });
+    await admin.auth().setCustomusersClaims(uid, { role: 'admin' });
 
     return { message: `El usuario ${uid} ahora es admin.` };
   } catch (error) {

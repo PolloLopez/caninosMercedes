@@ -11,14 +11,14 @@ import "./Checkout.css";
 const Checkout = () => {
   const navigate = useNavigate();
   const { carrito, vaciarCarrito, totalPrecio } = useCart();
-  const { currentUser } = useAuth();
+  const { currentusers } = useAuth();
   const total = totalPrecio();
   const [procesando, setProcesando] = useState(false);
   const [idOrden, setIdOrden] = useState(null);
   const [error, setError] = useState(null);
 
   const [cliente, setCliente] = useState({
-    nombre: "",
+    nombreCompleto: "",
     email: "",
     telefono: "",
     ciudad: "",
@@ -26,14 +26,14 @@ const Checkout = () => {
   });
 
   useEffect(() => {
-    if (currentUser) {
+    if (currentusers) {
       setCliente((prev) => ({
         ...prev,
-        email: currentUser.email,
-        nombre: currentUser.displayName || "",
+        email: currentusers.email,
+        nombreCompleto: currentusers.displayName || "",
       }));
     }
-  }, [currentUser]);
+  }, [currentusers]);
 
   const handleInputChange = (e) => {
     setCliente({ ...cliente, [e.target.name]: e.target.value });
@@ -47,7 +47,7 @@ const Checkout = () => {
       const refOrdenes = collection(db, "ordenes");
 
       const nuevaOrden = {
-        userId: currentUser?.uid || null,
+        usersId: currentusers?.uid || null,
         datosCliente: { ...cliente },
         estado: "Pendiente",
         fecha: new Date(),
@@ -92,9 +92,9 @@ const Checkout = () => {
       <div className="checkout-form">
         <input
           type="text"
-          name="nombre"
+          name="nombreCompleto"
           placeholder="Nombre completo"
-          value={cliente.nombre}
+          value={cliente.nombre} 
           onChange={handleInputChange}
           required
         />

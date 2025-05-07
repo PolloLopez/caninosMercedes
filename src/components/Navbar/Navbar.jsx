@@ -1,14 +1,15 @@
 // src/components/Navbar/Navbar.jsx
-import React, { useContext } from 'react';
+
+import React from 'react';
 import { Link, useNavigate } from 'react-router-dom';
-import { AuthContext } from '../../context/AuthContext';
+import { useAuth } from '../../context/AuthContext';
 import { useCart } from '../../context/CartContext';
 import { ShoppingCart } from 'lucide-react'; 
 import logo from '../../assets/logo.png';
 import './Navbar.css';
 
 const Navbar = () => {
-  const { user, logout } = useContext(AuthContext);
+  const { users, logout } = useAuth();
   const { carrito } = useCart();
   const navigate = useNavigate();
 
@@ -19,76 +20,58 @@ const Navbar = () => {
     navigate('/');
   };
 
-  const isAdmin = user?.role === 'admin';
-  const isUser = user && user?.role !== 'admin'; 
-
-  console.log('isAdmin:', isAdmin);  
-  console.log('isUser:', isUser);   
+  const isAdmin = users?.role === 'admin';
+  const isusers = users && users?.role !== 'admin';  
 
   return (
     <nav className="navbar">
-  <div className="navbar-container">
-    <Link to="/">
-      <img src={logo} alt="logo" className="logo-navbar" />
-    </Link>
+      <div className="navbar-container">
+        <Link to="/">
+          <img src={logo} alt="logo" className="logo-navbar" />
+        </Link>
 
-    <div className="nav-links">
+        <div className="nav-links">
+          <Link to="/carrito" className="cart-link">
+            <ShoppingCart size={20} />
+            <span className="cart-count">{totalItems}</span>
+          </Link>
 
-            {/* ✅ Carrito visible para todos los usuarios */}
-            <Link to="/carrito" className="cart-link">
-        <ShoppingCart size={20} />
-        <span className="cart-count">{totalItems}</span>
-      </Link>
+          {!isAdmin && (
+            <>
+              <Link to="/" className="nav-link">Inicio</Link>
+              <Link to="/tienda" className="nav-link">Tienda</Link>
+              <Link to="/nosotros" className="nav-link">Nosotros</Link>
+              <Link to="/tutoriales" className="nav-link">Tutoriales</Link>
+            </>
+          )}
 
-      {/* ✅ Estos links se muestran solo si NO sos admin (user común o no logueado) */}
-      {!isAdmin && (
-        <>
-          <Link to="/" className="nav-link">Inicio</Link>
-          <Link to="/tienda" className="nav-link">Tienda</Link>
-          <Link to="/nosotros" className="nav-link">Nosotros</Link>
-          <Link to="/tutoriales" className="nav-link">Tutoriales</Link>
-        </>
-      )}
+          {!users && (
+            <>
+              <Link to="/login" className="nav-link">Entrar</Link>      
+            </>
+          )}
 
+          {isusers && (
+            <>
+              <Link to="/seguimientoorden" className="nav-link">Mis Pedidos</Link>
+              <span className="users-name">{users?.nombreCompleto}</span>
+              <button onClick={handleLogout} className="btn-salir">Salir</button>
+            </>
+          )}
 
-
-      {/* ✅ Mostrar botón de login si NO hay usuario logueado */}
-      {!user && (
-        <>
-        <Link to="/login" className="nav-link">Iniciar Sesión</Link>      
-      
-      </>
-      )}
-
-
-      {/* ✅ Links visibles solo si sos usuario común (logueado y NO admin) */}
-      {isUser && (
-        <>
-          <Link to="/seguimientoorden" className="nav-link">Mis Pedidos</Link>
-          <span className="user-name">User: {user?.name}</span>
-          <button onClick={handleLogout} className="logout-button">Cerrar sesión</button>
-        </>
-      )}
-
-      {/* ✅ Links visibles solo si sos admin */}
-
-      {/*solo funciona tienda*/}
-
-
-      {isAdmin && (
-        <>
-          <Link to="/admin" className="nav-link">Panel Admin</Link>
-          <Link to="/tienda" className="nav-link">Cargar Pedido</Link>
-          <Link to="/admin/productos" className="nav-link">Productos</Link>
-          <Link to="/admin/ordenes" className="nav-link">Gestión Pedidos</Link>
-          <span className="user-name">Admin: {user?.name}</span>
-          <button onClick={handleLogout} className="logout-button">Cerrar sesión</button>
-        </>
-      )}
-    </div>
-  </div>
-</nav>
-
+          {isAdmin && (
+            <>
+              <Link to="/admin" className="nav-link">Panel Admin</Link>
+              <Link to="/tienda" className="nav-link">Nuevo Pedido</Link>
+              <Link to="/admin/productos" className="nav-link">Productos</Link>
+              <Link to="/admin/ordenes" className="nav-link">Ver Pedidos</Link>
+              <span className="users-name">{users?.nombreCompleto}</span>
+              <button onClick={handleLogout} className="btn-salir">Salir</button>
+            </>
+          )}
+        </div>
+      </div>
+    </nav>
   );
 };
 

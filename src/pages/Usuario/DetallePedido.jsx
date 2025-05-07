@@ -43,14 +43,14 @@ const DetallePedido = () => {
     }
   };
 
-  if (!pedido) return <p>Cargando pedido...</p>;
+  if (!pedido) return <div>Cargando pedido...</div>;
 
   return (
     <div className="detalle-pedido">
       <h2>Pedido #{pedido.id}</h2>
-      <p><strong>Nombre:</strong> {pedido.nombre}</p>
-      <p><strong>Email:</strong> {pedido.email}</p>
-      <p><strong>Estado:</strong> <span className={obtenerClaseEstado(pedido.estado)}>{pedido.estado}</span></p>
+      <div><strong>Nombre:</strong> {pedido.nombre}</div>
+      <div><strong>Email:</strong> {pedido.email}</div>
+      <div><strong>Estado:</strong> <span className={obtenerClaseEstado(pedido.estado)}>{pedido.estado}</span></div>
       {pedido.fechaEstado && (
         <p><strong>Último cambio de estado:</strong> {new Date(pedido.fechaEstado.seconds * 1000).toLocaleString()}</p>
       )}
@@ -62,7 +62,7 @@ const DetallePedido = () => {
           </li>
         ))}
       </ul>
-      <p><strong>Total:</strong> ${pedido.total}</p>
+      <p><strong>Total:</strong> ${pedido.total.toFixed(2)}</p>
 
       <button className="btn-volver" onClick={() => navigate(-1)}>⬅ Volver</button>
     </div>

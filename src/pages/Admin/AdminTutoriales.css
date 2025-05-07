@@ -14,7 +14,7 @@
   
   .crear-tutorial-btn {
     background-color: #28a745;
-    color: white;
+    color: var(--color-blanco);
     padding: 10px 15px;
     text-decoration: none;
     font-size: 1rem;
@@ -41,13 +41,13 @@
   
   table th {
     background-color: #343a40;
-    color: white;
+    color: var(--color-blanco);
   }
   
   .editar-btn,
   .eliminar-btn {
     background-color: #007bff;
-    color: white;
+    color: var(--color-blanco);
     padding: 5px 10px;
     margin-right: 10px;
     text-decoration: none;
