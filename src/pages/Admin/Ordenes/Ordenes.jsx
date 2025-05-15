@@ -1,18 +1,23 @@
 // src/pages/Admin/Ordenes.jsx
-//solo para los admin 
+//solo para los admin
 
 import "./Ordenes.css";
 import { useState, useEffect } from "react";
 import { db } from "@/firebase";
-import { collection, doc, updateDoc, onSnapshot, orderBy, query } from "firebase/firestore";
-import { useAuth } from "@/context/AuthContext";
+import {
+  collection,
+  doc,
+  updateDoc,
+  onSnapshot,
+  orderBy,
+  query,
+} from "firebase/firestore";
 
 const Ordenes = () => {
   const [ordenes, setOrdenes] = useState([]);
   const [searchTerm, setSearchTerm] = useState("");
+  const [filtroEstado, setFiltroEstado] = useState(""); // Nuevo estado para filtrar por estado
   const [ordenesExpandida, setOrdenesExpandida] = useState({});
-
-  const { users, usersData, loading } = useAuth();
 
   useEffect(() => {
     const unsubscribe = onSnapshot(
@@ -26,7 +31,6 @@ const Ordenes = () => {
         setOrdenes(ordenesData);
       }
     );
-
     return () => unsubscribe();
   }, []);
 
@@ -45,17 +49,14 @@ const Ordenes = () => {
     }));
   };
 
-  // ⏳ Mientras carga el usuario
-  if (loading) return <p>Cargando...</p>;
-
-  // ❌ Bloquear acceso si no es admin
-  const esAdmin = usersData?.role === "admin"; 
-  if (!users || !esAdmin) return <p>Acceso denegado 🚫</p>;
-
-  const filteredOrdenes = ordenes.filter((orden) =>
-    orden.nombre?.toLowerCase().includes(searchTerm.toLowerCase()) ||
-    orden.email?.toLowerCase().includes(searchTerm.toLowerCase())
-  );
+  // 🔍 Filtrado por texto + estado
+  const filteredOrdenes = ordenes.filter((orden) => {
+    const coincideBusqueda =
+      orden.nombre?.toLowerCase().includes(searchTerm.toLowerCase()) ||
+      orden.email?.toLowerCase().includes(searchTerm.toLowerCase());
+    const coincideEstado = filtroEstado === "" || orden.estado === filtroEstado;
+    return coincideBusqueda && coincideEstado;
+  });
 
   return (
     <div className="ordenes-container">
@@ -68,7 +69,14 @@ const Ordenes = () => {
           onChange={(e) => setSearchTerm(e.target.value)}
           placeholder="Buscar por cliente o email"
         />
-        <button onClick={() => setSearchTerm("")}>Limpiar</button>
+        <select value={filtroEstado} onChange={(e) => setFiltroEstado(e.target.value)}>
+          <option value="">Todos los estados</option>
+          <option value="Pendiente">🕓 Pendiente</option>
+          <option value="Preparado">📦 Preparado</option>
+          <option value="Despachado">🚚 Despachado</option>
+          <option value="Entregado">✅ Entregado</option>
+        </select>
+        <button onClick={() => { setSearchTerm(""); setFiltroEstado(""); }}>Limpiar</button>
       </div>
 
       {filteredOrdenes.map((orden) => (
@@ -77,10 +85,17 @@ const Ordenes = () => {
             <div className="orden-info">
               <p><strong>ID:</strong> {orden.id}</p>
               <p><strong>Cliente:</strong> {orden.nombre} ({orden.email})</p>
-              <p><strong>Fecha:</strong> {new Date(orden.fecha.seconds * 1000).toLocaleString()}</p>
+              <p>
+                <strong>Fecha:</strong>{" "}
+                {new Date(orden.fecha.seconds * 1000).toLocaleString()}
+              </p>
             </div>
 
-            <div className={`estado-label ${orden.estado?.toLowerCase() || "pendiente"}`}>
+            <div
+              className={`estado-label ${
+                orden.estado?.toLowerCase() || "pendiente"
+              }`}
+            >
               {orden.estado === "Pendiente" && "🕓 Pendiente"}
               {orden.estado === "Preparado" && "📦 Preparado"}
               {orden.estado === "Despachado" && "🚚 Despachado"}
@@ -89,34 +104,41 @@ const Ordenes = () => {
           </div>
 
           <div className="orden-body">
-            <div className="orden-actions">
-              <button
-                onClick={() => handleEstadoChange(orden.id, "Preparado")}
-                disabled={orden.estado === "Preparado"}
+            <div className="estado-control">
+              <select
+                value={orden.estado}
+                onChange={(e) => handleEstadoChange(orden.id, e.target.value)}
               >
-                Preparar
-              </button>
-              <button
-                onClick={() => handleEstadoChange(orden.id, "Despachado")}
-                disabled={orden.estado === "Despachado"}
-              >
-                Despachar
-              </button>
-              <button
-                onClick={() => handleEstadoChange(orden.id, "Entregado")}
-                disabled={orden.estado === "Entregado"}
-              >
-                Entregar
-              </button>
+                <option value="Pendiente">🕓 Pendiente</option>
+                <option value="Preparado">📦 Preparado</option>
+                <option value="Despachado">🚚 Despachado</option>
+                <option value="Entregado">✅ Entregado</option>
+              </select>
             </div>
 
-            <button onClick={() => toggleExpandir(orden.id)}>
+            <button
+              className="ver-detalles-btn"
+              onClick={() => toggleExpandir(orden.id)}
+            >
               {ordenesExpandida[orden.id] ? "Ver menos" : "Ver más"}
             </button>
 
             {ordenesExpandida[orden.id] && (
-              <div className="orden-details">
-                <pre>{JSON.stringify(orden, null, 2)}</pre>
+              <div className="orden-details productos-lista">
+                <h4>🛒 Productos:</h4>
+                <ul>
+                  {orden.items?.map((item, index) => (
+                    <li key={index}>
+                      <strong>{item.nombre}</strong> — {item.cantidad} x $
+                      {item.precio} ={" "}
+                      <strong>${item.precio * item.cantidad}</strong>
+                    </li>
+                  ))}
+                </ul>
+                <p><strong>Total:</strong> ${orden.total}</p>
+                <p><strong>Dirección:</strong> {orden.direccion}</p>
+                <p><strong>Teléfono:</strong> {orden.telefono}</p>
+                <p><strong>Método de pago:</strong> {orden.metodoPago || "N/A"}</p>
               </div>
             )}
           </div>

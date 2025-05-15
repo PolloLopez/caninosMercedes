@@ -6,7 +6,7 @@ recorda que la estructura actual es:
 |   ├──functions-serve
 |   |   ├── getOrders
 |   |   |   ├── ___netlify-telemetry.mjs
-|   |   |   ├──getOrders.js
+|   |   |   ├──getOrders.js 
 |   |   │   └──package.json
 |   ├──v1
 |   |   ├──functions 
@@ -52,6 +52,9 @@ recorda que la estructura actual es:
 │   │   ├── Footer.css 
 │   │   └── Footer.jsx
 │   ├── >Navbar/  
+|   |   |── >Loader/
+|   |   |   ├── Loader.jsx 
+|   |   |   └── Loader.css
 │   │   ├── Navbar.css 
 │   │   └── Navbar.jsx 
 │   ├── >Tarjeta/ 
@@ -59,7 +62,7 @@ recorda que la estructura actual es:
 │   │   ├── Tarjeta.css 
 │   ├── >TarjetaTutorial/ 
 │   │   ├── TarjetaTutorial.jsx  
-│   │   └──TarjetaTutorial.css 
+│   │   └── TarjetaTutorial.css 
 ├── >config/ 
 │      └── firebaseConfig.js
 ├── >context/               
@@ -70,6 +73,7 @@ recorda que la estructura actual es:
 │   └── useFetchTutorials.js
 ├── >layout/          
 │   ├── >LayoutPrincipal/
+|   |   ├── LayoutPrincipal.css 
 │   |   └── LayoutPrincipal.jsx
 │   ├── >UsuarioLayout/
 |   |   ├── UsuarioLayout.css  
@@ -78,32 +82,28 @@ recorda que la estructura actual es:
 ├── >pages/ 
 │   ├── >Admin/              
 |   |   ├── >AdminPanel/
-|   |   |   │   ├── Admin.css
-|   |   |   │   └── Admin.jsx 
-|   |   |   ├── >CreateProduct/
-|   |   |   │   ├── CreateProduct.jsx 
-|   |   |   │   └── CreateProduct.css
-|   |   |   ├── >ListaProductos/
-|   |   |   │   ├── ListaProductos.jsx 
-|   |   |   │   └── ListaProductos.css
-|   |   |   ├── >Login/
-|   |   |   │   ├── Login.css
-|   |   |   │   └── Login.jsx 
-|   |   |   ├── >Ordenes/
-|   |   |   │   ├── Ordenes.css
-|   |   |   │   └── Ordenes.jsx
-|   |   |   ├── >Registro/ 
-|   |   |   │   ├── Registro.css
-|   |   |   │   └── Registro.jsx 
-|   |   ├── AdminTutoriales.jsx (Ver en la estructura)
-|   |   ├── AdminTutoriales.css (Ver en la estructura)
-|   |   ├── CrearTutoriales.jsx (Ver en la estructura)
-|   |   ├── CrearTutoriales.css (Ver en la estructura)
-|   |   ├── EditarProducto.jsx (Ver en la estructura)
-|   |   ├── EditarProducto.css (Ver en la estructura)
-|   |   ├── EditarTutorial.jsx (Ver en la estructura)
-|   |   ├── EditarTutorial.css (Ver en la estructura)
-
+|   |   │   ├── Admin.css
+|   |   │   └── Admin.jsx 
+|   |   ├── >ListaProductos/
+|   |   │   ├── ListaProductos.jsx 
+|   |   │   └── ListaProductos.css
+|   |   ├── >Login/
+|   |   │   ├── Login.css
+|   |   │   └── Login.jsx 
+|   |   ├── >Ordenes/
+|   |   │   ├── Ordenes.css
+|   |   │   └── Ordenes.jsx
+|   |   ├── >Registro/ 
+|   |   │   ├── Registro.css
+|   |   │   └── Registro.jsx 
+|   |   |   ├── AdminTutoriales.jsx
+|   |   |   ├── AdminTutoriales.css 
+|   |   |   ├── CrearTutoriales.jsx 
+|   |   |   ├── CrearTutoriales.css 
+|   |   |   ├── EditarTutorial.jsx 
+|   |   |   ├── EditarTutorial.css 
+|   |   |   ├── FormularioProducto.jsx 
+|   |   |   ├── FormularioProducto.css 
 
 │   ├── >Carrito/
 │   │   ├── Carrito.css
@@ -123,14 +123,15 @@ recorda que la estructura actual es:
 │   ├── >Tienda/
 │   │   ├── Tienda.css
 │   │   └── Tienda.jsx
-│   ├── >Tutoriales/ (Ver en la estructura)
+│   ├── >Tutoriales/ 
 │   |   ├── Tutoriales.css
 │   │   └── Tutoriales.jsx
 │   ├── >Usuario/ 
 │   |   ├── DetallePedido.css
 │   │   └── DetallePedido.jsx
-│   ├── AdminProductos.css (Ver en la estructura)
-│   ├── AdminProductos.jsx (Ver en la estructura)
+│   ├── AdminProductos.css 
+│   ├── AdminProductos.jsx 
+│   ├── ConfirmacionPedido.css 
 │   ├── ConfirmacionPedido.jsx 
 │   ├── NotFound.jsx 
 ├── >routes/
@@ -140,7 +141,7 @@ recorda que la estructura actual es:
 ├── App.jsx
 ├── firebase.js
 ├── main.jsx        
-env.
+.env
 .firebaserc
 .gitignore
 chatgpt.txt
@@ -148,12 +149,14 @@ eslint.config.js
 estructura.txt
 et --hard 42f027266c2c31fbbf49b3ca2f2e6b94c9a6131f
 firebase.json
+firestore.indexes.json
+firestore.rules
 index.html
 netlify.toml
 package-lock.json
 package.json
 README.md
-serviceAccountKey.json
+serviceAccountKey.json (sombreado)
 setAdmin.js
 vite.config.js
 

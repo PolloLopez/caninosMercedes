@@ -1,0 +1,75 @@
+/* src/pages/Admin/FormularioProducto.css */
+
+.c.contenedor-formulario-producto {
+  max-width: 500px;
+  margin: 2rem auto;
+  padding: 2rem;
+  background-color: #fdfdfd;
+  border-radius: 12px;
+  box-shadow: 0 4px 12px rgba(0, 0, 0, 0.1);
+}
+
+.contenedor-formulario-producto h1 {
+  text-align: center;
+  margin-bottom: 1.5rem;
+  font-size: 1.8rem;
+  color: #333;
+}
+
+.formulario-producto {
+  display: flex;
+  flex-direction: column;
+  gap: 1.2rem;
+}
+
+.formulario-producto label {
+  font-weight: 600;
+  color: #555;
+}
+
+.formulario-producto input,
+.formulario-producto select,
+.formulario-producto textarea {
+  padding: 0.7rem 1rem;
+  border: 1px solid #ccc;
+  border-radius: 8px;
+  font-size: 1rem;
+  background-color: #fff;
+  transition: border 0.3s ease;
+}
+
+.formulario-producto input:focus,
+.formulario-producto select:focus,
+.formulario-producto textarea:focus {
+  border-color: #3399ff;
+  outline: none;
+  box-shadow: 0 0 0 2px rgba(51, 153, 255, 0.2);
+}
+
+.formulario-producto textarea {
+  resize: vertical;
+  min-height: 80px;
+}
+
+.formulario-producto button {
+  background-color: #3399ff;
+  color: #fff;
+  padding: 0.9rem;
+  border: none;
+  border-radius: 8px;
+  font-size: 1rem;
+  font-weight: bold;
+  cursor: pointer;
+  transition: background-color 0.3s ease;
+}
+
+.formulario-producto button:hover {
+  background-color: #2678cc;
+}
+
+@media (max-width: 600px) {
+  .contenedor-formulario-producto {
+    margin: 1rem;
+    padding: 1.5rem;
+  }
+}

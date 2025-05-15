@@ -1,39 +1,3 @@
-🔲 Preguntar a GPT
-
-falta x haburguesa navbar contraida.
-/* src/components/Navbar/Navbar.css */
-// src/components/Navbar/Navbar.jsx
-
--   "falta mock para detalles de pedido desde user"
-
--    falta Funcionalidad en navbar al ser user: Admin
-
-🔲 Gestion de pedidos, productos al entrar en Ver Detalles, que aparezca tambien Editar pedido.
-
-dar:
-// src/components/Navbar/Navbar.jsx
-// src/pages/Admin/AdminPanel/Admin.jsx
-
-    { label: "🛍️ Admin Productos", route: "/admin/productos", color: "card-tres" },
-         deberia redirigir
-
-
-
-         ver diferencias y funcionalidad de cada una
-         
-     a  src>pages>Admin>EditarProducto.jsx
-     o
-        src>pages>Admin>ListaProductos>ListaProductos.jsx con el boton editar agregar
-
-
-
-
-// src/pages/Admin/Ordenes.jsx
-//src>pages>Admin>ListaProductos>ListaProductos.jsx
-// src>pages>AdminProducts.jsx
-// src/pages/Admin/EditarProducto.jsx
-
-// src/App.jsx
 
 
 

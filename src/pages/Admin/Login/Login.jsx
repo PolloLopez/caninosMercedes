@@ -1,50 +1,54 @@
 // src/pages/Admin/Login/Login.jsx
-
 import React, { useState } from 'react';
 import { useNavigate } from 'react-router-dom';
-import { useAuth } from "@/context/AuthContext"; 
+import { useAuth } from '@/context/AuthContext';
+import './Login.css'; 
 
 const Login = () => {
-  const [email, setEmail] = useState('');
-  const [password, setPassword] = useState('');
+  const [correo, setCorreo] = useState('');
+  const [contraseña, setContraseña] = useState('');
   const [error, setError] = useState('');
   const { login } = useAuth();
   const navigate = useNavigate();
 
-  const handleSubmit = async (e) => {
+  const manejarEnvio = async (e) => {
     e.preventDefault();
-    setError('');  // Limpiar error previo
+    setError('');
 
     try {
-      await login(email, password);
-      navigate('/');  // Redirigir después del login
+      await login(correo, contraseña);
+      navigate('/');
     } catch (err) {
       console.error('Error al iniciar sesión:', err.message);
-      setError('Error al iniciar sesión. Intenta de nuevo.');  // Mostrar mensaje de error
+      setError('Hubo un error al iniciar sesión. Intenta nuevamente.');
     }
   };
 
   return (
-    <div className="login-container">
-      <form onSubmit={handleSubmit}>
+    <div className="contenedor-login">
+      <form className="formulario-login" onSubmit={manejarEnvio}>
+        <h2 className="titulo-login">Iniciar sesión</h2>
         <input
           type="email"
-          value={email}
-          onChange={(e) => setEmail(e.target.value)}
-          placeholder="Email"
+          value={correo}
+          onChange={(e) => setCorreo(e.target.value)}
+          placeholder="Correo electrónico"
+          className="campo-entrada"
+          required
         />
         <input
           type="password"
-          value={password}
-          onChange={(e) => setPassword(e.target.value)}
+          value={contraseña}
+          onChange={(e) => setContraseña(e.target.value)}
           placeholder="Contraseña"
+          className="campo-entrada"
+          required
         />
-        <button type="submit">Iniciar sesión</button>
+        <button type="submit" className="boton-primario">Ingresar</button>
+        {error && <p className="mensaje-error">{error}</p>}
       </form>
-      {error && <p>{error}</p>}  {/* Mostrar mensaje de error si ocurre */}
     </div>
   );
 };
 
 export default Login;
-
