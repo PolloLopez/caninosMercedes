@@ -1,148 +1,194 @@
-// src/pages/Checkout/Checkout.jsx
+// src/pages/Checkout.jsx
 
-import React, { useEffect, useState } from "react";
+import { useState, useContext, useEffect } from "react";
 import { useNavigate } from "react-router-dom";
 import { collection, addDoc } from "firebase/firestore";
-import { db } from "@/firebase";
-import { useCart } from "@/context/CartContext";
-import { useAuth } from "@/context/AuthContext";
-import "./Checkout.css";
+import { auth, db } from "@/firebase";
+import { onAuthStateChanged, signOut } from "firebase/auth";
+import { CartContext } from "@/context/CartContext";
+import GoogleLoginButton from "@/components/Auth/GoogleLoginButton";
+
+import "@/assets/global.css";
 
 const Checkout = () => {
-  const navigate = useNavigate();
-  const { carrito, vaciarCarrito, totalPrecio } = useCart();
-  const { currentusers } = useAuth();
+  const { carrito, totalPrecio, vaciarCarrito } = useContext(CartContext);
   const total = totalPrecio();
-  const [procesando, setProcesando] = useState(false);
-  const [idOrden, setIdOrden] = useState(null);
-  const [error, setError] = useState(null);
+  const [nombreCompleto, setNombreCompleto] = useState("");
+  const [email, setEmail] = useState("");
+  const [direccion, setDireccion] = useState("");
+  const [cargando, setCargando] = useState(false);
+  const [error, setError] = useState("");
+  const [usuarioGoogleLogueado, setUsuarioGoogleLogueado] = useState(false);
 
-  const [cliente, setCliente] = useState({
-    nombreCompleto: "",
-    email: "",
-    telefono: "",
-    ciudad: "",
-    direccion: "",
-  });
+  const navigate = useNavigate();
 
   useEffect(() => {
-    if (currentusers) {
-      setCliente((prev) => ({
-        ...prev,
-        email: currentusers.email,
-        nombreCompleto: currentusers.displayName || "",
-      }));
-    }
-  }, [currentusers]);
+    const unsubscribe = onAuthStateChanged(auth, (user) => {
+      if (user) {
+        setUsuarioGoogleLogueado(true);
+        if (user.displayName && !user.displayName.includes("@")) {
+          setNombreCompleto(user.displayName);
+        } else if (user.email) {
+          setNombreCompleto(user.email.split("@")[0]);
+        }
+        if (user.email) setEmail(user.email);
+      } else {
+        setUsuarioGoogleLogueado(false);
+        setNombreCompleto("");
+        setEmail("");
+      }
+    });
 
-  const handleInputChange = (e) => {
-    setCliente({ ...cliente, [e.target.name]: e.target.value });
+    return () => unsubscribe();
+  }, []);
+
+  const obtenerNombreParaGuardar = (user, nombreFormulario) => {
+    if (user?.displayName && !user.displayName.includes("@")) {
+      return user.displayName;
+    }
+    if (user?.email) {
+      return user.email.split("@")[0];
+    }
+    if (nombreFormulario && !nombreFormulario.includes("@")) {
+      return nombreFormulario;
+    }
+    return "Cliente sin nombre";
   };
 
-  const handlePago = async () => {
-    setProcesando(true);
-    setError(null);
+  const handleSubmit = async (e) => {
+    e.preventDefault();
+    setCargando(true);
+    setError("");
+
+    if (carrito.length === 0) {
+      setError("El carrito está vacío. Agregá productos antes de continuar.");
+      setCargando(false);
+      return;
+    }
 
     try {
-      const refOrdenes = collection(db, "ordenes");
+      const user = auth.currentUser;
+      const nombreParaGuardar = obtenerNombreParaGuardar(user, nombreCompleto);
 
       const nuevaOrden = {
-        usersId: currentusers?.uid || null,
-        datosCliente: { ...cliente },
-        estado: "Pendiente",
-        fecha: new Date(),
-        productos: carrito.map((item) => ({
-          nombre: item.nombre,
-          cantidad: item.cantidad ?? 1,
-          precio: item.precio,
+        cliente: {
+          nombreCompleto: nombreParaGuardar,
+          email: email || (user ? user.email : ""),
+          direccion,
+          uid: user ? user.uid : null,
+          role: "users",
+        },
+        items: carrito.map(({ id, nombre, precio, cantidad }) => ({
+          id,
+          nombre: nombre || "Sin nombre",
+          precio: precio || 0,
+          cantidad: cantidad || 1,
+          subtotal: (precio || 0) * (cantidad || 1),
         })),
-        metodoPago: "Acuerdo con el vendedor",
         total,
-        historial: [
-          {
-            fecha: new Date().toISOString(),
-            accion: "Orden creada",
-            usuario: cliente.email,
-          },
-        ],
+        estado: "pendiente",
+        fecha: new Date().toISOString(),
+        metodoPago: "Acuerdo con el vendedor",
       };
 
-      const docRef = await addDoc(refOrdenes, nuevaOrden);
-      setIdOrden(docRef.id);
-      alert(`¡Pedido registrado con éxito! ID: ${docRef.id}`);
+      const docRef = await addDoc(collection(db, "ordenes"), nuevaOrden);
 
       vaciarCarrito();
-      navigate("/", { state: { orderId: docRef.id } });
-    } catch (error) {
-      console.error("Error al guardar el pedido:", error);
-      setError(error.message);
+      setNombreCompleto("");
+      setEmail("");
+      setDireccion("");
+
+      if (!user) {
+        navigate("/registro-post-compra", {
+          state: {
+            pedidoId: docRef.id,
+            Cliente: { nombreCompleto: nombreParaGuardar, email, direccion },
+          },
+        });
+      } else {
+        navigate("/seguimientoorden");
+      }
+    } catch (err) {
+      console.error("Error al finalizar la compra:", err);
+      setError("Ocurrió un error al procesar la orden. Intentá nuevamente.");
     } finally {
-      setProcesando(false);
+      setCargando(false);
+    }
+  };
+
+  const handleGoogleLoginSuccess = (user) => {
+    setUsuarioGoogleLogueado(true);
+    if (user.displayName && !user.displayName.includes("@")) {
+      setNombreCompleto(user.displayName);
+    } else if (user.email) {
+      setNombreCompleto(user.email.split("@")[0]);
+    }
+    if (user.email) setEmail(user.email);
+  };
+
+  const handleCerrarSesion = async () => {
+    try {
+      await signOut(auth);
+    } catch (error) {
+      console.error("Error al cerrar sesión:", error);
     }
   };
 
   return (
-    <div className="checkout-container">
-      <h2>Finalizar pedido</h2>
+    <div className="formulario-basico">
+      <h2>Finalizar compra</h2>
 
-      <div className="checkout-resumen">
-        <p><strong>Total a pagar:</strong> ${total}</p>
-      </div>
-
-      <div className="checkout-form">
-        <input
-          type="text"
-          name="nombreCompleto"
-          placeholder="Nombre completo"
-          value={cliente.nombre} 
-          onChange={handleInputChange}
-          required
-        />
-        <input
-          type="email"
-          name="email"
-          placeholder="Correo electrónico"
-          value={cliente.email}
-          onChange={handleInputChange}
-          required
-        />
-        <input
-          type="tel"
-          name="telefono"
-          placeholder="Teléfono"
-          value={cliente.telefono}
-          onChange={handleInputChange}
-          required
-        />
-        <input
-          type="text"
-          name="ciudad"
-          placeholder="Ciudad"
-          value={cliente.ciudad}
-          onChange={handleInputChange}
-          required
-        />
-        <input
-          type="text"
-          name="direccion"
-          placeholder="Dirección"
-          value={cliente.direccion}
-          onChange={handleInputChange}
-          required
-        />
-        <button onClick={handlePago} disabled={procesando}>
-          {procesando ? "Procesando..." : "Confirmar pedido"}
-        </button>
-      </div>
-
-      {idOrden && (
-        <p className="order-confirmation">
-          ✔ Pedido generado: <strong>{idOrden}</strong>
+      {!auth.currentUser && (
+        <p className="mensaje-info">
+          ✨ Podés registrarte o hacer la compra sin cuenta. Si ya tenés cuenta,
+          iniciá sesión para guardar tu pedido en tu perfil.
         </p>
       )}
-      {error && <p className="checkout-error">⚠ {error}</p>}
 
-      <p className="checkout-note">Acuerdo de pago con el vendedor</p>
+      {usuarioGoogleLogueado && (
+        <div className="mensaje-info">
+          <p>✅ Ya iniciaste sesión con Google 😊. Ahora completá la dirección y tocá “Confirmar compra”.</p>
+          <button className="boton-secundario" onClick={handleCerrarSesion}>
+            Cerrar sesión
+          </button>
+        </div>
+      )}
+
+      <form onSubmit={handleSubmit}>
+        <input
+          className="campo-entrada"
+          type="text"
+          placeholder="Nombre completo"
+          value={nombreCompleto}
+          onChange={(e) => setNombreCompleto(e.target.value)}
+          required
+        />
+        <input
+          className="campo-entrada"
+          type="email"
+          placeholder="Correo electrónico"
+          value={email}
+          onChange={(e) => setEmail(e.target.value)}
+          required
+        />
+        <input
+          className="campo-entrada"
+          type="text"
+          placeholder="Dirección de entrega"
+          value={direccion}
+          onChange={(e) => setDireccion(e.target.value)}
+          required
+        />
+        <button className="boton-primario" type="submit" disabled={cargando}>
+          {cargando ? "Procesando..." : "Confirmar compra"}
+        </button>
+      </form>
+
+      <p style={{ textAlign: "center", margin: "1rem 0" }}>O registrate con:</p>
+
+      {!usuarioGoogleLogueado && <GoogleLoginButton onSuccess={handleGoogleLoginSuccess} />}
+
+      {error && <p className="mensaje-error">⚠ {error}</p>}
     </div>
   );
 };

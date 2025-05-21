@@ -1,6 +1,5 @@
 // src/context/CartContext.jsx
-
-
+ 
 import React, { createContext, useContext, useState } from "react";
 
 const CartContext = createContext();
@@ -74,3 +73,5 @@ export const CartProvider = ({ children }) => {
     </CartContext.Provider>
   );
 };
+
+export {CartContext};

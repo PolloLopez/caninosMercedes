@@ -1,99 +1,89 @@
 
 
 
--    Ver y dar buen estilo a // src/pages/Admin/Login.jsx  y redirigir a AdminPanel
+# Plan de revisión para desarrollo de CaninosMercedes
 
+=== FASE 1 – MVP funcional y profesional ===
 
-Continuar:
+1. Mejorar estilos en:
+   - /login
+   - /admin
+   - /tienda
+   - /carrito
 
+2. Revisar diseño responsivo en móvil y desktop para:
+   - /login
+   - /admin
+   - /tienda
+   - /carrito
 
+3. Agregar feedback visual (loading, errores, confirmaciones) en:
+   - /login
+   - /checkout
+   - /admin
+   - /tienda
+   - /carrito
 
-✅ FASE 1 – Terminá lo esencial (MVP funcional y profesional)
-🔲 Pulir diseño del panel y páginas clave
+4. Validación en formularios (campos vacíos, inputs mal escritos) en:
+   - /login
+   - /admin (crear/editar producto)
+   - /checkout
 
- Mejorar estilos en el Login, AdminPanel, Tienda y Carrito.
+5. Proteger rutas de admin:
+   - /admin
+   - /admin/productos
+   - demás rutas privadas de admin
 
- Agregar feedback visual (loading, errores, confirmaciones).
+=== FASE 2 – Funcionalidades clave ===
 
- Asegurar diseño responsivo en móvil y desktop.
+1. Subida de imágenes con Firebase Storage en:
+   - /admin/create-product
+   - /admin/edit-product
 
-🔲 Seguridad y flujo de usuarios
+2. Filtros y buscador en productos/tutoriales en:
+   - /tienda
+   - /tutoriales
+   - /admin/productos
 
- Proteger rutas de admin (/admin, /admin/productos, etc.).
+3. Historial de pedidos para clientes (requiere login) en:
+   - /seguimiento
+   - /perfil (si existe)
 
- Verificar persistencia del login (si se cierra el navegador, que siga logueado).
+4. Cliente puede marcar pedido como “recibido” en:
+   - /seguimiento
 
- Agregar validación en formularios (campos vacíos, inputs mal escritos).
+5. Emails automáticos al cliente en:
+   - Backend (servicios o funciones)
+   - Checkout
+   - Panel admin para cambios de estado
 
-🔲 Control de stock en checkout
+=== FASE 3 – Branding y escalabilidad ===
 
- Validar si hay suficiente stock antes de permitir la compra.
+1. Sistema multi-usuario (admin con su propia tienda/productos):
+   - /admin (panel con filtro por usuario)
 
- Actualizar stock automáticamente después de la compra.
+2. Panel personalizado para cada negocio (logo, colores):
+   - /admin
+   - páginas principales del admin
 
-🔲 Mejorar experiencia de compra
+3. Configuración de dominio y branding:
+   - No aplica a páginas, es configuración general del proyecto
 
- Mostrar resumen claro del pedido antes de confirmar.
+=== FASE 4 – Optimización y performance ===
 
- Redirección después del checkout + mensaje de éxito.
+1. Paginación o lazy loading con Firestore en:
+   - /tienda
+   - /tutoriales
+   - /admin/productos
 
-🧩 FASE 2 – Funcionalidades clave para vender como sistema completo
-🔲 Gestión completa de productos/tutoriales
+2. Optimización de componentes con React.lazy y React.memo:
+   - Componentes usados globalmente en toda la app
 
- Subida de imágenes (con Firebase Storage).
+3. Auditoría de performance con Lighthouse y revisión de consola:
+   - Todo el sitio
 
- Filtros y buscador en productos/tutoriales.
+---
 
- Paginación si hay muchos ítems.
-
-🔲 Gestión de pedidos avanzada
-
- Filtrar pedidos por estado (pendiente, enviado, entregado).
-
- Agregar historial de pedidos para clientes (requiere login).
-
- Posibilidad de que el cliente marque el pedido como “recibido”.
-
-🔲 Emails de confirmación (opcional)
-
- Enviar email al cliente al hacer pedido.
-
- Enviar email cuando cambia el estado.
-
-🚀 FASE 3 – Preparar para vender a otros negocios (escalabilidad/SaaS)
-🔲 Sistema multi-usuario (opcional)
-
- Que cada cuenta admin pueda tener su propia tienda/productos.
-
- Base de datos separada por usuario o con uid como filtro.
-
-🔲 Panel personalizado
-
- Que cada negocio vea sólo sus pedidos/productos.
-
- Logo, colores o nombre editable por el admin.
-
-🔲 Dominio y branding
-
- Configurar dominio personalizado (ej: caninosmercedes.com).
-
- Logo en favicon y títulos de pestañas.
-
-🧼 FASE 4 – Optimización y performance
-🔲 Optimizar carga de datos
-
- Paginación o lazy loading con Firestore.
-
- Evitar recargas innecesarias (usar useMemo, React.memo).
-
-🔲 Optimizar componentes
-
- Lazy loading en páginas con React.lazy() + Suspense.
-
- Optimizar imágenes para no pesar demasiado.
-
-🔲 Auditoría de performance
-
- Usar herramientas como Lighthouse (Chrome DevTools).
-
- Revisar errores en consola o advertencias de React.
+# Notas:
+- Para cada ítem, cuando avancemos, mostrar el código o la página específica para facilitar la revisión y corrección.
+- El objetivo es avanzar ordenadamente, validando cada funcionalidad clave antes de seguir.

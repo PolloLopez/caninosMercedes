@@ -104,6 +104,7 @@ recorda que la estructura actual es:
 |   |   |   ├── EditarTutorial.css 
 |   |   |   ├── FormularioProducto.jsx 
 |   |   |   ├── FormularioProducto.css 
+|   |   |   ├── RegistroCompras.jsx
 
 │   ├── >Carrito/
 │   │   ├── Carrito.css

@@ -59,9 +59,9 @@ const Navbar = () => {
               <Link to="/" className="nav-link" onClick={cerrarMenu}>Inicio</Link>
               <Link to="/tienda" className="nav-link" onClick={cerrarMenu}>Tienda</Link>
               <Link to="/nosotros" className="nav-link" onClick={cerrarMenu}>Nosotros</Link>
-              <Link to="/tutoriales" className="nav-link" onClick={cerrarMenu}>Tutoriales</Link>
             </>
           )}
+
 
           {!users && (
             <Link to="/login" className="nav-link" onClick={cerrarMenu}>Entrar</Link>

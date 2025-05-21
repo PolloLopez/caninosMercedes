@@ -62,3 +62,53 @@ ul, ol {
     font-size: 15px;
   }
 }
+
+
+/* ==== Estilos reutilizables ==== */
+
+.formulario-basico {
+  max-width: 400px;
+  margin: 2rem auto;
+  padding: 2rem;
+  background-color: var(--color-blanco);
+  border-radius: var(--border-radius);
+  box-shadow: var(--sombra-suave);
+}
+
+.campo-entrada {
+  width: 100%;
+  padding: 0.75rem;
+  margin-bottom: 1rem;
+  border: 1px solid #ccc;
+  border-radius: var(--border-radius);
+  font-size: 1rem;
+}
+
+.boton-primario {
+  width: 100%;
+  padding: 0.75rem;
+  background-color: var(--color-primario);
+  color: var(--color-blanco);
+  font-weight: bold;
+  border: none;
+  border-radius: var(--border-radius);
+  cursor: pointer;
+  transition: var(--transicion-suave);
+}
+
+.boton-primario:hover {
+  background-color: var(--color-oscuro);
+}
+
+.mensaje-error {
+  color: var(--color-rojo);
+  margin-top: 0.5rem;
+  text-align: center;
+  font-weight: 600;    /* para que se vea un poco más fuerte */
+  font-size: 0.9rem;   /* tamaño cómodo para lectura */
+}
+
+.login-link {
+  text-align: center;
+  margin-top: 1rem;
+}

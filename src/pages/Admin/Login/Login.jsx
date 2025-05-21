@@ -1,52 +1,51 @@
 // src/pages/Admin/Login/Login.jsx
-import React, { useState } from 'react';
-import { useNavigate } from 'react-router-dom';
-import { useAuth } from '@/context/AuthContext';
-import './Login.css'; 
+// src/pages/Admin/Login.jsx
+
+import React, { useState } from "react";
+import { Link } from "react-router-dom";
+import "../../../assets/global.css";
 
 const Login = () => {
-  const [correo, setCorreo] = useState('');
-  const [contraseña, setContraseña] = useState('');
-  const [error, setError] = useState('');
-  const { login } = useAuth();
-  const navigate = useNavigate();
+  const [email, setEmail] = useState("");
+  const [password, setPassword] = useState("");
+  const [error, setError] = useState("");
 
-  const manejarEnvio = async (e) => {
+  const handleSubmit = (e) => {
     e.preventDefault();
-    setError('');
-
-    try {
-      await login(correo, contraseña);
-      navigate('/');
-    } catch (err) {
-      console.error('Error al iniciar sesión:', err.message);
-      setError('Hubo un error al iniciar sesión. Intenta nuevamente.');
-    }
+    // lógica de login acá
   };
 
   return (
-    <div className="contenedor-login">
-      <form className="formulario-login" onSubmit={manejarEnvio}>
-        <h2 className="titulo-login">Iniciar sesión</h2>
+    <div className="formulario-basico">
+      <h2 className="titulo-login">Iniciar sesión</h2>
+
+      <form className="formulario-login" onSubmit={handleSubmit}>
         <input
           type="email"
-          value={correo}
-          onChange={(e) => setCorreo(e.target.value)}
-          placeholder="Correo electrónico"
+          placeholder="Email"
           className="campo-entrada"
+          value={email}
+          onChange={(e) => setEmail(e.target.value)}
           required
         />
         <input
           type="password"
-          value={contraseña}
-          onChange={(e) => setContraseña(e.target.value)}
           placeholder="Contraseña"
           className="campo-entrada"
+          value={password}
+          onChange={(e) => setPassword(e.target.value)}
           required
         />
-        <button type="submit" className="boton-primario">Ingresar</button>
-        {error && <p className="mensaje-error">{error}</p>}
+        <button type="submit" className="boton-primario">
+          Entrar
+        </button>
       </form>
+
+      {error && <p className="mensaje-error">{error}</p>}
+
+      <p className="login-link">
+        ¿No tienes cuenta? <Link to="/registro">Regístrate aquí</Link>
+      </p>
     </div>
   );
 };

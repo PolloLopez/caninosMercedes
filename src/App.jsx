@@ -11,6 +11,7 @@ import Carrito from "@/pages/Carrito/Carrito";
 import Checkout from "@/pages/Checkout/Checkout";
 import SeguimientoOrden from "@/pages/SeguimientoOrden/SeguimientoOrden";
 import ConfirmacionPedido from "@/pages/ConfirmacionPedido";
+import RegistroPostCompra from "@/pages/RegistroPostCompra";
 
 // Admin
 import Login from "@/pages/Admin/Login/Login";
@@ -30,6 +31,7 @@ import AdminTutoriales from "@/pages/Admin/AdminTutoriales";
 // Rutas protegidas 
 import ProtectedRoute from "@/routes/ProtectedRoute";
 
+
 const App = () => {
   return (
     <Routes>
@@ -43,6 +45,8 @@ const App = () => {
         <Route path="checkout" element={<Checkout />} />
         <Route path="seguimientoorden" element={<SeguimientoOrden />} />
         <Route path="confirmacion" element={<ConfirmacionPedido />} />
+        <Route path="confirmacion/:id" element={<ConfirmacionPedido />} />
+        <Route path="registro-post-compra" element={<RegistroPostCompra />} />
 
         {/* Admin */}
         <Route path="login" element={<Login />} />
