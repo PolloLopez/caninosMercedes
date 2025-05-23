@@ -146,8 +146,8 @@ const RegistroPostCompra = () => {
       <h2>Crear cuenta</h2>
       {pedidoId && (
         <p className="registro-info-text">
-          🐾 ¡Gracias por tu compra! Solo queda registrarte para poder seguir tu
-          pedido.
+          Falta registrarte para confirmar tu pedido!
+          🐾 ¡Gracias por tu compra!
         </p>
       )}
 

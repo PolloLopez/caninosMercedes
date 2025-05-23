@@ -61,7 +61,7 @@ const Checkout = () => {
     setError("");
 
     if (carrito.length === 0) {
-      setError("El carrito está vacío. Agregá productos antes de continuar.");
+      setError("El carrito está vacío. Agregá productos para continuar.");
       setCargando(false);
       return;
     }
@@ -147,7 +147,7 @@ const Checkout = () => {
 
       {usuarioGoogleLogueado && (
         <div className="mensaje-info">
-          <p>✅ Ya iniciaste sesión con Google 😊. Ahora completá la dirección y tocá “Confirmar compra”.</p>
+          <p>✅ Ya iniciaste sesión con Google 😊. Completá la dirección y “Confirma la compra”.</p>
           <button className="boton-secundario" onClick={handleCerrarSesion}>
             Cerrar sesión
           </button>
