@@ -111,8 +111,7 @@ recorda que la estructura actual es:
 │   │   └── Carrito.jsx
 │   ├── >Checkout/
 │   │   ├── Checkout.css
-│   │   ├── Checkout.jsx
-│   │   └── OrdenConfirmation.jsx  
+│   │   └── Checkout.jsx
 │   ├── >Inicio/
 │   │   ├── Inicio.css
 │   │   └── Inicio.jsx
@@ -132,8 +131,6 @@ recorda que la estructura actual es:
 │   │   └── DetallePedido.jsx
 │   ├── AdminProductos.css 
 │   ├── AdminProductos.jsx 
-│   ├── ConfirmacionPedido.css 
-│   ├── ConfirmacionPedido.jsx 
 │   ├── NotFound.jsx 
 ├── >routes/
 │   └── ProtectedRoute.jsx

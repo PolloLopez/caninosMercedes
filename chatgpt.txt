@@ -1,8 +1,7 @@
-Registrarse en: https://caninosmercedes.netlify.app/login 
-tiene que redirigir a: 
 
 notificacion mas visible de producto agregado al carrito.
 carrito flotante en Navbar "Finalizar Compra"
+
 
 
 # Plan de revisión para desarrollo de CaninosMercedes

@@ -10,7 +10,6 @@ import Tutoriales from "@/pages/Tutoriales/Tutoriales";
 import Carrito from "@/pages/Carrito/Carrito";
 import Checkout from "@/pages/Checkout/Checkout";
 import SeguimientoOrden from "@/pages/SeguimientoOrden/SeguimientoOrden";
-import ConfirmacionPedido from "@/pages/ConfirmacionPedido";
 import RegistroPostCompra from "@/pages/RegistroPostCompra";
 
 // Admin
@@ -44,8 +43,6 @@ const App = () => {
         <Route path="carrito" element={<Carrito />} />
         <Route path="checkout" element={<Checkout />} />
         <Route path="seguimientoorden" element={<SeguimientoOrden />} />
-        <Route path="confirmacion" element={<ConfirmacionPedido />} />
-        <Route path="confirmacion/:id" element={<ConfirmacionPedido />} />
         <Route path="registro-post-compra" element={<RegistroPostCompra />} />
 
         {/* Admin */}

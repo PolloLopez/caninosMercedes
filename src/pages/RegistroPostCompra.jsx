@@ -43,10 +43,10 @@ const RegistroPostCompra = () => {
             const ordenRef = doc(db, "ordenes", pedidoId);
             const nombreParaGuardar = user.displayName
               ? user.displayName
-              : (datosCliente.nombreCompleto &&
+              : datosCliente.nombreCompleto &&
                 !datosCliente.nombreCompleto.includes("@")
-                ? datosCliente.nombreCompleto
-                : "Cliente sin nombre");
+              ? datosCliente.nombreCompleto
+              : "Cliente sin nombre";
 
             await updateDoc(ordenRef, {
               cliente: {
@@ -82,6 +82,11 @@ const RegistroPostCompra = () => {
     }
 
     try {
+      const emailValido = /^[^\s@]+@[^\s@]+\.[^\s@]+$/.test(email);
+      if (!emailValido) {
+        setMensajeError("Ingresá un correo válido.");
+        return;
+      }
       setCargando(true);
       const userCredential = await createUserWithEmailAndPassword(
         auth,
@@ -128,7 +133,10 @@ const RegistroPostCompra = () => {
     } catch (error) {
       console.error("Error con Google:", error);
       if (error.code === "auth/account-exists-with-different-credential") {
-        const methods = await fetchSignInMethodsForEmail(auth, error.customData.email);
+        const methods = await fetchSignInMethodsForEmail(
+          auth,
+          error.customData.email
+        );
         setMensajeError(
           `Ya existe una cuenta con este correo registrada con: ${methods.join(
             ", "
@@ -143,24 +151,18 @@ const RegistroPostCompra = () => {
 
   return (
     <div className="formulario-basico">
-      <h2>Crear cuenta</h2>
+      <h2>Registrate</h2>
       {pedidoId && (
         <p className="registro-info-text">
-          Falta registrarte para confirmar tu pedido!
-          🐾 ¡Gracias por tu compra!
+          ¡Estas a un paso de finalizar tu pedido! 🐾 ¡Gracias!
         </p>
       )}
-
-      <button
-        className="boton-google"
-        onClick={handleGoogleSignup}
-        disabled={cargando}
-      >
-        {cargando ? "Procesando..." : "Registrarse con Google"}
-      </button>
-
-      <div className="separador">o registrate con tu correo</div>
-
+      {!pedidoId && (
+        <p style={{ color: "orange", marginBottom: "1rem" }}>
+          No encontramos un pedido activo. Podés registrarte igual si querés
+          guardar tus datos.
+        </p>
+      )}
       <form onSubmit={handleRegistro}>
         <input
           className="campo-entrada"
@@ -195,14 +197,21 @@ const RegistroPostCompra = () => {
           required
         />
         <button className="boton-primario" type="submit" disabled={cargando}>
-          {cargando ? "Creando cuenta..." : "Crear cuenta"}
+          {cargando ? "Creando cuenta..." : "Crear tu cuenta"}
         </button>
       </form>
+      <div className="separador"></div>
 
+      <button
+        className="boton-google"
+        onClick={handleGoogleSignup}
+        disabled={cargando}
+      >
+        {cargando ? "Procesando..." : "Hacelo con Google"}
+      </button>
       {mensajeError && <p className="mensaje-error">⚠ {mensajeError}</p>}
     </div>
   );
 };
 
 export default RegistroPostCompra;
-

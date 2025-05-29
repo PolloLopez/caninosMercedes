@@ -1,5 +1,4 @@
 // src/pages/Admin/Login/Login.jsx
-// src/pages/Admin/Login.jsx
 
 import React, { useState } from "react";
 import { Link } from "react-router-dom";
@@ -44,7 +43,7 @@ const Login = () => {
       {error && <p className="mensaje-error">{error}</p>}
 
       <p className="login-link">
-        ¿No tienes cuenta? <Link to="/registro">Regístrate aquí</Link>
+        ¿No tienes cuenta? <Link to="/registro-post-compra">Regístrate acá</Link> 
       </p>
     </div>
   );

@@ -110,5 +110,16 @@ ul, ol {
 
 .login-link {
   text-align: center;
-  margin-top: 1rem;
+  margin-top: .25rem;
+  color: var(--color-texto);
+}
+
+.login-link a {
+  color: var(--color-negro);
+  font-weight: bold;
+}
+.login-link a:hover {
+  background-color: var(--color-primario);
+  padding: 2.5px;
+  border-radius: .5rem;
 }
