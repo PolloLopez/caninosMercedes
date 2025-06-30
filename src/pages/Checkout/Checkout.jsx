@@ -7,6 +7,8 @@ import { auth, db } from "@/firebase";
 import { onAuthStateChanged, signOut } from "firebase/auth";
 import { CartContext } from "@/context/CartContext";
 import GoogleLoginButton from "@/components/Auth/GoogleLoginButton";
+import { Timestamp } from "firebase/firestore";
+import { useAuth } from "@/context/AuthContext";
 
 import "@/assets/global.css";
 
@@ -87,7 +89,7 @@ const Checkout = () => {
         })),
         total,
         estado: "pendiente",
-        fecha: new Date().toISOString(),
+        fecha: Timestamp.now(),
         metodoPago: "Acuerdo con el vendedor",
       };
 

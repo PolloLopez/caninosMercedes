@@ -52,8 +52,8 @@ const Ordenes = () => {
   // 🔍 Filtrado por texto + estado
   const filteredOrdenes = ordenes.filter((orden) => {
     const coincideBusqueda =
-      orden.nombre?.toLowerCase().includes(searchTerm.toLowerCase()) ||
-      orden.email?.toLowerCase().includes(searchTerm.toLowerCase());
+      orden.cliente?.nombreCompleto?.toLowerCase().includes(searchTerm.toLowerCase()) ||
+      orden.cliente?.email?.toLowerCase().includes(searchTerm.toLowerCase());
     const coincideEstado = filtroEstado === "" || orden.estado === filtroEstado;
     return coincideBusqueda && coincideEstado;
   });
@@ -84,7 +84,7 @@ const Ordenes = () => {
           <div className="orden-header">
             <div className="orden-info">
               <p><strong>ID:</strong> {orden.id}</p>
-              <p><strong>Cliente:</strong> {orden.nombre} ({orden.email})</p>
+              <p><strong>Cliente:</strong> {orden.cliente?.nombreCompleto} ({orden.cliente?.email})</p>
               <p>
                 <strong>Fecha:</strong>{" "}
                 {new Date(orden.fecha.seconds * 1000).toLocaleString()}

@@ -1,5 +1,5 @@
 // src/App.jsx
-import { Routes, Route } from "react-router-dom";
+import { Routes, Route, Navigate } from "react-router-dom";
 import LayoutPrincipal from "@/layout/LayoutPrincipal/LayoutPrincipal";
 
 // Páginas públicas
@@ -11,6 +11,8 @@ import Carrito from "@/pages/Carrito/Carrito";
 import Checkout from "@/pages/Checkout/Checkout";
 import SeguimientoOrden from "@/pages/SeguimientoOrden/SeguimientoOrden";
 import RegistroPostCompra from "@/pages/RegistroPostCompra";
+import Registro from "@/pages/Registro";
+
 
 // Admin
 import Login from "@/pages/Admin/Login/Login";
@@ -43,6 +45,9 @@ const App = () => {
         <Route path="carrito" element={<Carrito />} />
         <Route path="checkout" element={<Checkout />} />
         <Route path="seguimientoorden" element={<SeguimientoOrden />} />
+        <Route path="/seguimiento" element={<Navigate to="/seguimientoorden" />} />
+        <Route path="*" element={<h1>404 - Página no encontrada</h1>} />
+        <Route path="registro" element={<Registro />} />
         <Route path="registro-post-compra" element={<RegistroPostCompra />} />
 
         {/* Admin */}

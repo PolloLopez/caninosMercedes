@@ -1,50 +1,100 @@
-// src/pages/Admin/Login/Login.jsx
-
-import React, { useState } from "react";
-import { Link } from "react-router-dom";
-import "../../../assets/global.css";
+// src/pages/Admin/Login.jsx
+import { useState, useEffect } from "react";
+import { useNavigate, Link } from "react-router-dom";
+import { useAuth } from "@/context/AuthContext";
+import "@/assets/global.css";
 
 const Login = () => {
+  const { users, login, loginWithGoogle } = useAuth();
+  const navigate = useNavigate();
+
   const [email, setEmail] = useState("");
   const [password, setPassword] = useState("");
-  const [error, setError] = useState("");
+  const [mensajeError, setMensajeError] = useState("");
+  const [cargando, setCargando] = useState(false);
 
-  const handleSubmit = (e) => {
+  useEffect(() => {
+    if (users?.role === "admin") {
+      navigate("/admin/ordenes");
+    } else if (users?.role === "users") {
+      navigate("/seguimientoorden"); // ✅ Redirección corregida
+    }
+  }, [users, navigate]);
+
+  const handleSubmit = async (e) => {
     e.preventDefault();
-    // lógica de login acá
+    try {
+      setCargando(true);
+      setMensajeError("");
+      await login(email, password);
+    } catch (err) {
+      console.error("❌ Error al iniciar sesión:", err.message);
+      setMensajeError("Correo o contraseña incorrectos.");
+    } finally {
+      setCargando(false);
+    }
+  };
+
+  const handleGoogle = async () => {
+    try {
+      setCargando(true);
+      setMensajeError("");
+      await loginWithGoogle();
+    } catch (err) {
+      console.error("❌ Error al iniciar con Google:", err.message);
+      setMensajeError("No se pudo iniciar con Google.");
+    } finally {
+      setCargando(false);
+    }
   };
 
   return (
     <div className="formulario-basico">
-      <h2 className="titulo-login">Iniciar sesión</h2>
-
-      <form className="formulario-login" onSubmit={handleSubmit}>
+      <h2>Iniciar sesión</h2>
+      <form onSubmit={handleSubmit}>
         <input
-          type="email"
-          placeholder="Email"
           className="campo-entrada"
+          type="email"
+          placeholder="Correo electrónico"
           value={email}
           onChange={(e) => setEmail(e.target.value)}
           required
         />
+
         <input
+          className="campo-entrada"
           type="password"
           placeholder="Contraseña"
-          className="campo-entrada"
           value={password}
           onChange={(e) => setPassword(e.target.value)}
           required
         />
-        <button type="submit" className="boton-primario">
-          Entrar
+
+        <button className="boton-primario" type="submit" disabled={cargando}>
+          {cargando ? "Ingresando..." : "Ingresar"}
         </button>
       </form>
 
-      {error && <p className="mensaje-error">{error}</p>}
+      <div className="separador"></div>
 
-      <p className="login-link">
-        ¿No tienes cuenta? <Link to="/registro-post-compra">Regístrate acá</Link> 
-      </p>
+      <button
+        className="boton-primario"
+        type="button"
+        onClick={handleGoogle}
+        disabled={cargando}
+        style={{ marginTop: "0.5rem", backgroundColor: "#db4437" }}
+      >
+        {cargando ? "Cargando..." : "Ingresar con Google"}
+      </button>
+
+      {mensajeError && <p className="mensaje-error">⚠ {mensajeError}</p>}
+
+      <div className="login-link">
+        <p>
+          ¿No tenés cuenta?{" "}
+          <Link to="/registro">Registrate</Link>
+        </p>
+      </div>
     </div>
   );
 };

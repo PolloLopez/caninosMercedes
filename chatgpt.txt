@@ -1,4 +1,4 @@
-
+no inicia sesion para gestion
 notificacion mas visible de producto agregado al carrito.
 carrito flotante en Navbar "Finalizar Compra"
 

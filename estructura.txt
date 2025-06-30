@@ -130,7 +130,7 @@ recorda que la estructura actual es:
 │   |   ├── DetallePedido.css
 │   │   └── DetallePedido.jsx
 │   ├── AdminProductos.css 
-│   ├── AdminProductos.jsx 
+│   ├── AdminProductos.jsx
 │   ├── NotFound.jsx 
 ├── >routes/
 │   └── ProtectedRoute.jsx

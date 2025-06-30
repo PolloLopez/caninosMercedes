@@ -1,7 +1,15 @@
 // src/pages/SeguimientoOrden.jsx
-//solo para los users
+// solo para los users
+
 import { useEffect, useState } from "react";
-import { getDocs, collection, updateDoc, doc } from "firebase/firestore";
+import {
+  getDocs,
+  collection,
+  updateDoc,
+  doc,
+  query,
+  where,
+} from "firebase/firestore";
 import { db } from "@/firebase";
 import { useAuth } from "@/context/AuthContext";
 import { useNavigate } from "react-router-dom";
@@ -22,12 +30,18 @@ const SeguimientoOrden = () => {
     const fetchOrdenes = async () => {
       if (!users?.uid) return;
 
-      const snapshot = await getDocs(collection(db, "ordenes"));
-      const filtradas = snapshot.docs
-        .map((doc) => ({ id: doc.id, ...doc.data() }))
-        .filter((orden) => orden.cliente?.uid === users.uid);
+      const ordenesQuery = query(
+        collection(db, "ordenes"),
+        where("cliente.uid", "==", users.uid)
+      );
 
-      setOrdenes(filtradas);
+      const snapshot = await getDocs(ordenesQuery);
+      const ordenesFiltradas = snapshot.docs.map((doc) => ({
+        id: doc.id,
+        ...doc.data(),
+      }));
+
+      setOrdenes(ordenesFiltradas);
     };
 
     fetchOrdenes();
@@ -48,9 +62,44 @@ const SeguimientoOrden = () => {
         <ul className="ordenes-lista">
           {ordenes.map((orden) => (
             <li key={orden.id} className="orden-item">
-              <p><strong>Fecha:</strong> {orden.fecha}</p>
-              <p><strong>Estado:</strong> {orden.estado}</p>
-              <p><strong>Total:</strong> ${orden.total}</p>
+              <p>
+                <strong>Fecha:</strong>{" "}
+                {orden.fecha?.seconds
+                  ? new Date(orden.fecha.seconds * 1000).toLocaleDateString()
+                  : "Sin fecha"}
+              </p>
+
+              <p>
+                <strong>Estado:</strong>{" "}
+                <span className={`estado-label ${orden.estado?.toLowerCase()}`}>
+                  {orden.estado}
+                </span>
+              </p>
+
+              {orden.estado === "Despachado" && (
+                <button
+                  className="boton-recibido"
+                  onClick={async () => {
+                    const confirmacion = window.confirm(
+                      "¿Confirmás que recibiste el pedido?"
+                    );
+                    if (!confirmacion) return;
+                    const ordenRef = doc(db, "ordenes", orden.id);
+                    await updateDoc(ordenRef, { estado: "Entregado" });
+                    setOrdenes((prev) =>
+                      prev.map((o) =>
+                        o.id === orden.id ? { ...o, estado: "Entregado" } : o
+                      )
+                    );
+                  }}
+                >
+                  ✅ Marcar como recibido
+                </button>
+              )}
+
+              <p>
+                <strong>Total:</strong> ${orden.total}
+              </p>
               <details>
                 <summary>Ver productos</summary>
                 <ul>
