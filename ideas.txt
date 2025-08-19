@@ -1,3 +1,5 @@
+no esta iniciando sesion para comprar, despues no puede seguir la compra
+
 cancelar compra desde admin 
 cargar pedido a nombre de un cliente, nuevo o ya existente
 
