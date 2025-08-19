@@ -12,6 +12,7 @@ import Checkout from "@/pages/Checkout/Checkout";
 import SeguimientoOrden from "@/pages/SeguimientoOrden/SeguimientoOrden";
 import RegistroPostCompra from "@/pages/RegistroPostCompra";
 import Registro from "@/pages/Registro";
+import OrderConfirmation from "@/pages/Checkout/OrderConfirmation";
 
 
 // Admin
@@ -44,8 +45,8 @@ const App = () => {
         <Route path="tutoriales" element={<Tutoriales />} />
         <Route path="carrito" element={<Carrito />} />
         <Route path="checkout" element={<Checkout />} />
-        <Route path="seguimientoorden" element={<SeguimientoOrden />} />
-        <Route path="/seguimiento" element={<Navigate to="/seguimientoorden" />} />
+        <Route path="order-confirmation/:id" element={<OrderConfirmation />} />
+        <Route path="seguimiento" element={<SeguimientoOrden />} />
         <Route path="*" element={<h1>404 - Página no encontrada</h1>} />
         <Route path="registro" element={<Registro />} />
         <Route path="registro-post-compra" element={<RegistroPostCompra />} />

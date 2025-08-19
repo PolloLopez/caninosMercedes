@@ -1,0 +1,124 @@
+// src/pages/Admin/Ordenes.jsx
+
+import "./Ordenes.css";
+import { useState, useEffect } from "react";
+import { db } from "@/firebase";
+import {
+  collection,
+  doc,
+  updateDoc,
+  onSnapshot,
+  query,
+  orderBy,
+} from "firebase/firestore";
+
+const Ordenes = () => {
+  const [ordenes, setOrdenes] = useState([]);
+  const [searchTerm, setSearchTerm] = useState("");
+  const [categoriaFiltro, setCategoriaFiltro] = useState("todas");
+  const [estadoFiltro, setEstadoFiltro] = useState("todos");
+
+  useEffect(() => {
+    const q = query(collection(db, "ordenes"), orderBy("fecha", "desc"));
+    const unsub = onSnapshot(q, (snapshot) => {
+      const ordenesData = snapshot.docs.map((doc) => ({
+        id: doc.id,
+        ...doc.data(),
+      }));
+      setOrdenes(ordenesData);
+    });
+    return () => unsub();
+  }, []);
+
+  const cambiarEstado = async (id, nuevoEstado) => {
+    const ordenRef = doc(db, "ordenes", id);
+    await updateDoc(ordenRef, { estado: nuevoEstado });
+  };
+
+  const ordenesFiltradas = ordenes.filter((orden) => {
+    const nombreIncluye = orden.nombre?.toLowerCase().includes(searchTerm.toLowerCase());
+    const emailIncluye = orden.email?.toLowerCase().includes(searchTerm.toLowerCase());
+    const categoriaIncluye =
+      categoriaFiltro === "todas" || true; // 🔁 Ajustar si implementás categorías más adelante
+    const estadoIncluye =
+      estadoFiltro === "todos" || orden.estado === estadoFiltro;
+
+    return (nombreIncluye || emailIncluye) && categoriaIncluye && estadoIncluye;
+  });
+
+  return (
+    <div className="ordenes-container">
+      <h2>📦 Gestión de Órdenes</h2>
+
+      <div className="filtros">
+        <input
+          type="text"
+          placeholder="Buscar por nombre o email..."
+          value={searchTerm}
+          onChange={(e) => setSearchTerm(e.target.value)}
+        />
+
+        <select value={categoriaFiltro} onChange={(e) => setCategoriaFiltro(e.target.value)}>
+          <option value="todas">Todas las categorías</option>
+          {/* Podés agregar filtros reales por categorías si tu producto los incluye */}
+        </select>
+
+        <select value={estadoFiltro} onChange={(e) => setEstadoFiltro(e.target.value)}>
+          <option value="todos">Todos los estados</option>
+          <option value="pendiente">Pendiente</option>
+          <option value="en camino">En camino</option>
+          <option value="entregado">Entregado</option>
+          <option value="finalizado">Finalizado</option>
+        </select>
+      </div>
+
+      {ordenesFiltradas.length === 0 ? (
+        <p>No se encontraron órdenes.</p>
+      ) : (
+        ordenesFiltradas.map((orden) => (
+          <div key={orden.id} className="orden-card">
+            <h3>{orden.nombre || "Sin nombre"}</h3>
+            <p><strong>Email:</strong> {orden.email || "No disponible"}</p>
+            <p><strong>Teléfono:</strong> {orden.telefono || "No disponible"}</p>
+            <p><strong>Dirección:</strong> {orden.direccion}, {orden.ciudad}</p>
+            <p><strong>Método de pago:</strong> {orden.paymentMethod}</p>
+
+            <p><strong>Estado:</strong> {orden.estado}</p>
+            <select
+              value={orden.estado || "pendiente"}
+              onChange={(e) => cambiarEstado(orden.id, e.target.value)}
+            >
+              <option value="pendiente">Pendiente</option>
+              <option value="en camino">En camino</option>
+              <option value="entregado">Entregado</option>
+              <option value="finalizado">Finalizado</option>
+            </select>
+
+            <ul>
+              {Array.isArray(orden.productos) && orden.productos.length > 0 ? (
+                orden.productos.map((producto, index) => (
+                  <li key={index}>
+                    {producto.nombre} x{producto.cantidad} — ${producto.precio}
+                  </li>
+                ))
+              ) : (
+                <li>Sin productos</li>
+              )}
+            </ul>
+
+            <p><strong>Total:</strong> ${orden.total || 0}</p>
+            <p>
+              <small>
+                {orden.fecha?.seconds
+                  ? new Date(orden.fecha.seconds * 1000).toLocaleString()
+                  : "Fecha no disponible"}
+              </small>
+            </p>
+          </div>
+        ))
+      )}
+    </div>
+  );
+};
+
+export default Ordenes;

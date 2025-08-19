@@ -57,7 +57,8 @@ const RegistroPostCompra = () => {
               },
             });
           }
-          navigate("/seguimientoorden");
+          navigate(`/order-confirmation/${pedidoId}`);
+
         }
       } catch (error) {
         console.error("Error en el resultado de redirección:", error);
@@ -112,7 +113,8 @@ const RegistroPostCompra = () => {
         });
       }
 
-      navigate("/seguimientoorden");
+      navigate(`/order-confirmation/${pedidoId}`);
+
     } catch (error) {
       console.error("Error al registrar usuario:", error);
       setMensajeError(

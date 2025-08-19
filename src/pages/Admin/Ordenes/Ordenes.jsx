@@ -1,5 +1,4 @@
 // src/pages/Admin/Ordenes.jsx
-//solo para los admin
 
 import "./Ordenes.css";
 import { useState, useEffect } from "react";
@@ -9,52 +8,54 @@ import {
   doc,
   updateDoc,
   onSnapshot,
-  orderBy,
   query,
+  orderBy,
 } from "firebase/firestore";
 
 const Ordenes = () => {
   const [ordenes, setOrdenes] = useState([]);
   const [searchTerm, setSearchTerm] = useState("");
-  const [filtroEstado, setFiltroEstado] = useState(""); // Nuevo estado para filtrar por estado
-  const [ordenesExpandida, setOrdenesExpandida] = useState({});
+  const [estadoFiltro, setEstadoFiltro] = useState("todos");
 
   useEffect(() => {
-    const unsubscribe = onSnapshot(
-      query(collection(db, "ordenes"), orderBy("fecha", "desc")),
-      (snapshot) => {
-        const ordenesData = snapshot.docs.map((doc) => ({
-          id: doc.id,
-          ...doc.data(),
-        }));
-        ordenesData.sort((a, b) => a.nombre?.localeCompare(b.nombre));
-        setOrdenes(ordenesData);
-      }
-    );
-    return () => unsubscribe();
+    const q = query(collection(db, "ordenes"), orderBy("fecha", "desc"));
+    const unsub = onSnapshot(q, (snapshot) => {
+      const ordenesData = snapshot.docs.map((doc) => ({
+        id: doc.id,
+        ...doc.data(),
+      }));
+      setOrdenes(ordenesData);
+    });
+    return () => unsub();
   }, []);
 
-  const handleEstadoChange = async (ordenId, nuevoEstado) => {
-    const confirmacion = window.confirm("¿Cambiar el estado de esta orden?");
-    if (!confirmacion) return;
-    const ordenRef = doc(db, "ordenes", ordenId);
+  const cambiarEstado = async (id, nuevoEstado) => {
+    const ordenRef = doc(db, "ordenes", id);
     await updateDoc(ordenRef, { estado: nuevoEstado });
-    console.log(`Estado de orden ${ordenId} actualizado a: ${nuevoEstado}`);
   };
 
-  const toggleExpandir = (id) => {
-    setOrdenesExpandida((prev) => ({
-      ...prev,
-      [id]: !prev[id],
-    }));
-  };
+  // 🔎 Búsqueda global: busca en nombre, email, dirección, ciudad y teléfono
+  const ordenesFiltradas = ordenes.filter((orden) => {
+    const cliente = orden.cliente || {};
 
-  // 🔍 Filtrado por texto + estado
-  const filteredOrdenes = ordenes.filter((orden) => {
+    const nombre = cliente.nombreCompleto?.toLowerCase() || "";
+    const email = cliente.email?.toLowerCase() || "";
+    const direccion = cliente.direccion?.toLowerCase() || "";
+    const ciudad = cliente.ciudad?.toLowerCase() || "";
+    const telefono = cliente.telefono?.toLowerCase() || "";
+
+    const termino = searchTerm.toLowerCase();
+
     const coincideBusqueda =
-      orden.cliente?.nombreCompleto?.toLowerCase().includes(searchTerm.toLowerCase()) ||
-      orden.cliente?.email?.toLowerCase().includes(searchTerm.toLowerCase());
-    const coincideEstado = filtroEstado === "" || orden.estado === filtroEstado;
+      nombre.includes(termino) ||
+      email.includes(termino) ||
+      direccion.includes(termino) ||
+      ciudad.includes(termino) ||
+      telefono.includes(termino);
+
+    const coincideEstado =
+      estadoFiltro === "todos" || orden.estado === estadoFiltro;
+
     return coincideBusqueda && coincideEstado;
   });
 
@@ -62,88 +63,74 @@ const Ordenes = () => {
     <div className="ordenes-container">
       <h2>📦 Gestión de Órdenes</h2>
 
-      <div className="buscador">
+      {/* 🔹 Filtros */}
+      <div className="filtros">
         <input
           type="text"
+          placeholder="Buscar cliente por nombre, email, dirección..."
           value={searchTerm}
           onChange={(e) => setSearchTerm(e.target.value)}
-          placeholder="Buscar por cliente o email"
         />
-        <select value={filtroEstado} onChange={(e) => setFiltroEstado(e.target.value)}>
-          <option value="">Todos los estados</option>
-          <option value="Pendiente">🕓 Pendiente</option>
-          <option value="Preparado">📦 Preparado</option>
-          <option value="Despachado">🚚 Despachado</option>
-          <option value="Entregado">✅ Entregado</option>
+
+        <select value={estadoFiltro} onChange={(e) => setEstadoFiltro(e.target.value)}>
+          <option value="todos">Todos los estados</option>
+          <option value="pendiente">Pendiente</option>
+          <option value="en camino">En camino</option>
+          <option value="entregado">Entregado</option>
+          <option value="finalizado">Finalizado</option>
         </select>
-        <button onClick={() => { setSearchTerm(""); setFiltroEstado(""); }}>Limpiar</button>
       </div>
 
-      {filteredOrdenes.map((orden) => (
-        <div key={orden.id} className="orden-card">
-          <div className="orden-header">
-            <div className="orden-info">
-              <p><strong>ID:</strong> {orden.id}</p>
-              <p><strong>Cliente:</strong> {orden.cliente?.nombreCompleto} ({orden.cliente?.email})</p>
+      {/* 🔹 Lista de órdenes */}
+      {ordenesFiltradas.length === 0 ? (
+        <p>No se encontraron órdenes.</p>
+      ) : (
+        ordenesFiltradas.map((orden) => {
+          const cliente = orden.cliente || {};
+
+          return (
+            <div key={orden.id} className="orden-card">
+              <h3>{cliente.nombreCompleto || "Sin nombre"}</h3>
+              <p><strong>Email:</strong> {cliente.email || "No disponible"}</p>
+              <p><strong>Teléfono:</strong> {cliente.telefono || "No disponible"}</p>
+              <p><strong>Dirección:</strong> {cliente.direccion || "No disponible"}{cliente.ciudad ? `, ${cliente.ciudad}` : ""}</p>
+              <p><strong>Método de pago:</strong> {orden.metodoPago || "No especificado"}</p>
+
+              <p><strong>Estado:</strong> {orden.estado}</p>
+              <select
+                value={orden.estado || "pendiente"}
+                onChange={(e) => cambiarEstado(orden.id, e.target.value)}
+              >
+                <option value="pendiente">Pendiente</option>
+                <option value="en camino">En camino</option>
+                <option value="entregado">Entregado</option>
+                <option value="finalizado">Finalizado</option>
+              </select>
+
+              <ul>
+                {Array.isArray(orden.items) && orden.items.length > 0 ? (
+                  orden.items.map((producto, index) => (
+                    <li key={index}>
+                      {producto.nombre} x{producto.cantidad} — ${producto.precio}
+                    </li>
+                  ))
+                ) : (
+                  <li>Sin productos</li>
+                )}
+              </ul>
+
+              <p><strong>Total:</strong> ${orden.total || 0}</p>
               <p>
-                <strong>Fecha:</strong>{" "}
-                {new Date(orden.fecha.seconds * 1000).toLocaleString()}
+                <small>
+                  {orden.fecha?.seconds
+                    ? new Date(orden.fecha.seconds * 1000).toLocaleString()
+                    : "Fecha no disponible"}
+                </small>
               </p>
             </div>
-
-            <div
-              className={`estado-label ${
-                orden.estado?.toLowerCase() || "pendiente"
-              }`}
-            >
-              {orden.estado === "Pendiente" && "🕓 Pendiente"}
-              {orden.estado === "Preparado" && "📦 Preparado"}
-              {orden.estado === "Despachado" && "🚚 Despachado"}
-              {orden.estado === "Entregado" && "✅ Entregado"}
-            </div>
-          </div>
-
-          <div className="orden-body">
-            <div className="estado-control">
-              <select
-                value={orden.estado}
-                onChange={(e) => handleEstadoChange(orden.id, e.target.value)}
-              >
-                <option value="Pendiente">🕓 Pendiente</option>
-                <option value="Preparado">📦 Preparado</option>
-                <option value="Despachado">🚚 Despachado</option>
-                <option value="Entregado">✅ Entregado</option>
-              </select>
-            </div>
-
-            <button
-              className="ver-detalles-btn"
-              onClick={() => toggleExpandir(orden.id)}
-            >
-              {ordenesExpandida[orden.id] ? "Ver menos" : "Ver más"}
-            </button>
-
-            {ordenesExpandida[orden.id] && (
-              <div className="orden-details productos-lista">
-                <h4>🛒 Productos:</h4>
-                <ul>
-                  {orden.items?.map((item, index) => (
-                    <li key={index}>
-                      <strong>{item.nombre}</strong> — {item.cantidad} x $
-                      {item.precio} ={" "}
-                      <strong>${item.precio * item.cantidad}</strong>
-                    </li>
-                  ))}
-                </ul>
-                <p><strong>Total:</strong> ${orden.total}</p>
-                <p><strong>Dirección:</strong> {orden.direccion}</p>
-                <p><strong>Teléfono:</strong> {orden.telefono}</p>
-                <p><strong>Método de pago:</strong> {orden.metodoPago || "N/A"}</p>
-              </div>
-            )}
-          </div>
-        </div>
-      ))}
+          );
+        })
+      )}
     </div>
   );
 };

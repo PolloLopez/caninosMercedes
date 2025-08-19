@@ -1,118 +1,109 @@
-// src/pages/SeguimientoOrden.jsx
-// solo para los users
-
-import { useEffect, useState } from "react";
+// src/pages/SeguimientoOrden/SeguimientoOrden.jsx
+import React, { useEffect, useState } from "react";
+import { useAuth } from "@/context/AuthContext";
+import { db } from "@/config/firebaseConfig";
 import {
-  getDocs,
   collection,
-  updateDoc,
-  doc,
   query,
   where,
+  orderBy,
+  getDocs,
+  updateDoc,
+  doc,
 } from "firebase/firestore";
-import { db } from "@/firebase";
-import { useAuth } from "@/context/AuthContext";
-import { useNavigate } from "react-router-dom";
 import "./SeguimientoOrden.css";
 
 const SeguimientoOrden = () => {
   const { users } = useAuth();
-  const navigate = useNavigate();
   const [ordenes, setOrdenes] = useState([]);
+  const [loading, setLoading] = useState(true);
 
   useEffect(() => {
-    if (users?.role === "admin") {
-      navigate("/admin/ordenes");
-    }
-  }, [users, navigate]);
+    if (!users) return;
 
-  useEffect(() => {
     const fetchOrdenes = async () => {
-      if (!users?.uid) return;
+      try {
+        const ordenesRef = collection(db, "ordenes");
+        const q = query(
+          ordenesRef,
+          where("userId", "==", users.uid),
+          //orderBy("fecha", "desc") // ordena de más nuevo a más viejo
+        );
 
-      const ordenesQuery = query(
-        collection(db, "ordenes"),
-        where("cliente.uid", "==", users.uid)
-      );
+        const snapshot = await getDocs(q);
+        const ordenesData = snapshot.docs.map((doc) => ({
+          id: doc.id,
+          ...doc.data(),
+        }));
 
-      const snapshot = await getDocs(ordenesQuery);
-      const ordenesFiltradas = snapshot.docs.map((doc) => ({
-        id: doc.id,
-        ...doc.data(),
-      }));
-
-      setOrdenes(ordenesFiltradas);
+        setOrdenes(ordenesData);
+      } catch (error) {
+        console.error("Error al obtener órdenes:", error);
+      } finally {
+        setLoading(false);
+      }
     };
 
     fetchOrdenes();
   }, [users]);
 
-  if (!users) return <p>Cargando usuario...</p>;
+  const marcarComoRecibida = async (id) => {
+    try {
+      const ordenRef = doc(db, "ordenes", id);
+      await updateDoc(ordenRef, { estado: "Recibida" });
 
-  if (users?.role !== "users") {
-    return <p>Acceso restringido, solo usuarios pueden ver sus órdenes.</p>;
-  }
+      setOrdenes((prev) =>
+        prev.map((orden) =>
+          orden.id === id ? { ...orden, estado: "Recibida" } : orden
+        )
+      );
+    } catch (error) {
+      console.error("Error al actualizar orden:", error);
+    }
+  };
+
+  if (loading) return <p className="mensaje">Cargando pedidos...</p>;
 
   return (
     <div className="seguimiento-container">
-      <h2>Mis órdenes</h2>
+      <h2>Mis Pedidos</h2>
       {ordenes.length === 0 ? (
-        <p>No hay órdenes para mostrar.</p>
+        <p className="mensaje">No hay pedidos registrados para este usuario.</p>
       ) : (
-        <ul className="ordenes-lista">
-          {ordenes.map((orden) => (
-            <li key={orden.id} className="orden-item">
-              <p>
-                <strong>Fecha:</strong>{" "}
-                {orden.fecha?.seconds
-                  ? new Date(orden.fecha.seconds * 1000).toLocaleDateString()
-                  : "Sin fecha"}
-              </p>
+        ordenes.map((orden) => (
+          <div key={orden.id} className="orden-card">
+            <h3>Pedido #{orden.id}</h3>
+            <p>
+              <strong>Fecha:</strong>{" "}
+              {orden.fecha?.toDate
+                ? orden.fecha.toDate().toLocaleString()
+                : "Sin fecha"}
+            </p>
+            <p>
+              <strong>Estado:</strong> {orden.estado}
+            </p>
+            <p>
+              <strong>Total:</strong> ${orden.total}
+            </p>
+            <h4>Productos:</h4>
+            <ul>
+              {orden.items?.map((item, idx) => (
+                <li key={idx}>
+                  {item.nombre} x {item.cantidad} — ${item.precio}
+                </li>
+              ))}
+            </ul>
 
-              <p>
-                <strong>Estado:</strong>{" "}
-                <span className={`estado-label ${orden.estado?.toLowerCase()}`}>
-                  {orden.estado}
-                </span>
-              </p>
-
-              {orden.estado === "Despachado" && (
-                <button
-                  className="boton-recibido"
-                  onClick={async () => {
-                    const confirmacion = window.confirm(
-                      "¿Confirmás que recibiste el pedido?"
-                    );
-                    if (!confirmacion) return;
-                    const ordenRef = doc(db, "ordenes", orden.id);
-                    await updateDoc(ordenRef, { estado: "Entregado" });
-                    setOrdenes((prev) =>
-                      prev.map((o) =>
-                        o.id === orden.id ? { ...o, estado: "Entregado" } : o
-                      )
-                    );
-                  }}
-                >
-                  ✅ Marcar como recibido
-                </button>
-              )}
-
-              <p>
-                <strong>Total:</strong> ${orden.total}
-              </p>
-              <details>
-                <summary>Ver productos</summary>
-                <ul>
-                  {orden.items.map((item, idx) => (
-                    <li key={idx}>
-                      {item.nombre} x{item.cantidad} = ${item.subtotal}
-                    </li>
-                  ))}
-                </ul>
-              </details>
-            </li>
-          ))}
-        </ul>
+            {orden.estado !== "Recibida" && (
+              <button
+                className="boton-recibido"
+                onClick={() => marcarComoRecibida(orden.id)}
+              >
+                Marcar como Recibida
+              </button>
+            )}
+          </div>
+        ))
       )}
     </div>
   );

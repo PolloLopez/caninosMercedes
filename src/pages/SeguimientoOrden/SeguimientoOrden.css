@@ -1,107 +1,52 @@
-/* src/pages/SeguimientoOrden.css */
+/* Reutilizando variables globales */
+.seguimiento-container {
+  padding: 2rem;
+  max-width: 800px;
+  margin: auto;
+}
 
-.tarjeta-orden {
+.orden-card {
   background-color: var(--color-blanco);
-  border: 2px solid #ddd;
+  border: 1px solid #ddd;
   border-radius: var(--border-radius);
-  padding: 1rem;
-  margin: 1.5rem 0;
+  padding: 1.5rem;
+  margin-bottom: 1.5rem;
   box-shadow: var(--sombra-suave);
-  transition: var(--transicion-suave);
 }
 
-.encabezado-orden {
-  display: flex;
-  flex-wrap: wrap;
-  justify-content: space-between;
-  align-items: center;
-  gap: 0.75rem;
+.orden-card h3 {
+  margin-top: 0;
+  color: var(--color-texto);
 }
 
-.estado-label {
-  padding: 0.25rem 0.75rem;
-  border-radius: 1rem;
-  font-weight: bold;
-  font-size: 0.9rem;
-  text-align: center;
-  white-space: nowrap;
-} 
-
-/* Colores según estado */
-.estado-label.pendiente {
-  background-color: var(--color-amarillo);
-  color: var(--color-negro);
+.orden-card p {
+  margin: 0.5rem 0;
 }
 
-.estado-label.preparado {
-  background-color: var(--color-destacado);
-  color: var(--color-negro);
-}
-
-.estado-label.despachado {
-  background-color: var(--color-primario);
-  color: var(--color-blanco);
-}
-
-.estado-label.entregado {
-  background-color: var(--color-verde);
-  color: var(--color-blanco);
-}
-
-button {
-  margin-top: 0.75rem;
-  padding: 0.5rem 1rem;
-  background-color: var(--color-primario);
-  color: var(--color-blanco);
-  border: none;
-  border-radius: var(--border-radius);
-  cursor: pointer;
-  font-weight: bold;
-  transition: var(--transicion-suave);
-}
-
-button:hover {
-  background-color: var(--color-oscuro);
+.orden-card ul {
+  list-style: disc;
+  padding-left: 1.5rem;
 }
 
 .boton-recibido {
+  margin-top: 1rem;
+  padding: 0.6rem 1.2rem;
   background-color: var(--color-verde);
+  border: none;
+  color: var(--color-blanco);
+  font-weight: bold;
+  border-radius: var(--border-radius);
+  cursor: pointer;
+  transition: var(--transicion-suave);
 }
 
 .boton-recibido:hover {
-  background-color: #0b8a1a;
+  background-color: #0a7a15;
 }
 
-/* Detalles con animación */
-.detalles-orden {
-  overflow: hidden;
-  max-height: 0;
-  opacity: 0;
-  transition: max-height 0.4s ease, opacity 0.4s ease;
-  padding-top: 0;
-  margin-top: 0;
-  border-top: none;
-}
-
-/* Clase activa al expandir */
-.detalles-orden.activo {
-  max-height: 500px; /* suficiente para mostrar todo el contenido */
-  opacity: 1;
-  margin-top: 1rem;
-  padding-top: 1rem;
-  border-top: 1px solid #ccc;
-}
-
-.detalles-orden h4 {
-  margin-bottom: 0.5rem;
-}
-
-.detalles-orden ul {
-  list-style: none;
-  padding-left: 0;
-  margin-bottom: 0.75rem;
-}
-
-.detalles-orden li {
-  margin-bottom: 0.25rem;
+.mensaje {
+  text-align: center;
+  margin-top: 3rem;
+  font-size: 1.1rem;
+  color: var(--color-texto);
 }

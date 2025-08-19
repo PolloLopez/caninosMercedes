@@ -1,95 +1,75 @@
 // src/components/Navbar/Navbar.jsx
 
-import React, { useState } from 'react';
-import { Link, useNavigate } from 'react-router-dom';
-import { useAuth } from '../../context/AuthContext';
-import { useCart } from '../../context/CartContext';
-import { ShoppingCart, Menu, X } from 'lucide-react';
-import logo from '../../assets/logo.png';
-import './Navbar.css';
+import { useState, useEffect, useRef } from "react";
+import { Link } from "react-router-dom";
+import { useAuth } from "@/context/AuthContext";
+import { useCart } from "@/context/CartContext";
+import "./Navbar.css";
 
 const Navbar = () => {
-  const { users, logout } = useAuth();
-  const { carrito } = useCart();
-  const navigate = useNavigate();
+  const { user, logout } = useAuth();
+  const { totalProductos } = useCart();
   const [menuAbierto, setMenuAbierto] = useState(false);
+  const [shake, setShake] = useState(false);
 
-  const totalItems = carrito.reduce((acc, item) => acc + item.cantidad, 0);
+  const prevTotalRef = useRef(totalProductos);
 
-  const handleLogout = () => {
-    logout();
-    navigate('/');
-  };
+  const toggleMenu = () => setMenuAbierto(!menuAbierto);
 
-  const isAdmin = users?.role === 'admin';
-  const isUser = users && users?.role !== 'admin';
+  // Animación "shake" solo si se agregan productos nuevos
+  useEffect(() => {
+    if (totalProductos > prevTotalRef.current) {
+      setShake(true);
+      const timer = setTimeout(() => setShake(false), 400);
+      return () => clearTimeout(timer);
+    }
+    prevTotalRef.current = totalProductos;
+  }, [totalProductos]);
 
-  const toggleMenu = () => {
-    setMenuAbierto(prev => {
-      document.body.classList.toggle('menu-abierto', !prev);
-      return !prev;
-    });
-  };
-  
-  const cerrarMenu = () => {
-    document.body.classList.remove('menu-abierto');
-    setMenuAbierto(false);
-  };
-  
+  // Render de links de navegación
+  const renderLinks = (mobile = false) => (
+    <>
+      <li><Link to="/carrito" className={`cart-link ${shake ? "cart-shake" : ""}`} onClick={mobile ? toggleMenu : undefined}>🛒{totalProductos > 0 && <span className="cart-count">{totalProductos}</span>}</Link></li>
+      <li><Link to="/" onClick={mobile ? toggleMenu : undefined}>Inicio</Link></li>
+      <li><Link to="/tienda" onClick={mobile ? toggleMenu : undefined}>Tienda</Link></li>
+      <li><Link to="/tutoriales" onClick={mobile ? toggleMenu : undefined}>Tutoriales</Link></li>
+      <li><Link to="/nosotros" onClick={mobile ? toggleMenu : undefined}>Nosotros</Link></li>
+      <li><Link to="/seguimiento" className="btn-seguimiento" onClick={mobile ? toggleMenu : undefined}>📦 Seguimiento {user?.tienePedidosPendientes && <span className="badge-pendiente"></span>}</Link></li>
+      {user && (
+        <>
+          {user.email === "caninosmercedes@gmail.com" && (
+            <li><Link to="/admin" onClick={mobile ? toggleMenu : undefined}>Admin</Link></li>
+          )}
+          <li>
+            <button onClick={logout} className="btn-logout">Cerrar sesión</button>
+          </li>
+        </>
+      )}
+
+      {!user && (
+        <li><Link to="/login" onClick={mobile ? toggleMenu : undefined}>Iniciar Sesión</Link></li>
+      )}
+
+
+    </>
+  );
 
   return (
     <nav className="navbar">
       <div className="navbar-container">
-        <Link to="/" onClick={cerrarMenu}>
-          <img src={logo} alt="logo" className="logo-navbar" />
-        </Link>
+        <Link to="/" className="navbar-logo">🐶 Caninos Mercedes</Link>
 
-        <button className="menu-toggle" onClick={toggleMenu}>
-          {menuAbierto ? <X size={28} /> : <Menu size={28} />}
-        </button>
+        {/* Menú Desktop */}
+        <ul className="nav-links">{renderLinks()}</ul>
 
-        <div className={`nav-links ${menuAbierto ? 'active' : ''}`}>
-          <Link to="/carrito" className="cart-link" onClick={cerrarMenu}>
-            <ShoppingCart size={20} />
-            <span className="cart-count">{totalItems}</span>
-          </Link>
-
-          {!isAdmin && (
-            <>
-              <Link to="/" className="nav-link" onClick={cerrarMenu}>Inicio</Link>
-              <Link to="/tienda" className="nav-link" onClick={cerrarMenu}>Tienda</Link>
-              <Link to="/nosotros" className="nav-link" onClick={cerrarMenu}>Nosotros</Link>
-            </>
-          )}
-
-
-          {!users && (
-            <Link to="/login" className="nav-link" onClick={cerrarMenu}>Entrar</Link>
-          )}
-
-          {isUser && (
-            <>
-              <Link to="/seguimientoorden" className="nav-link" onClick={cerrarMenu}>Mis Pedidos</Link>
-              <span className="users-name">{users?.nombreCompleto}</span>
-              <button onClick={() => { handleLogout(); cerrarMenu(); }} className="btn-salir">Salir</button>
-            </>
-          )}
-
-          {isAdmin && (
-            <>
-              <Link to="/admin" className="nav-link" onClick={cerrarMenu}>Administrador</Link>
-              <Link to="/tienda" className="nav-link" onClick={cerrarMenu}>Cargar Pedido</Link>
-              <Link to="/admin/ordenes" className="nav-link" onClick={cerrarMenu}>Ver Pedidos</Link>
-              <Link to="/admin/productos" className="nav-link" onClick={cerrarMenu}>Productos</Link>
-              <span className="users-name">{users?.nombreCompleto}</span>
-              <button onClick={() => { handleLogout(); cerrarMenu(); }} className="btn-salir">Salir</button>
-            </>
-          )}
-        </div>
+        {/* Botón Hamburguesa (Mobile) */}
+        <button className="menu-toggle" onClick={toggleMenu}>☰</button>
       </div>
+
+      {/* Menú Mobile */}
+      {menuAbierto && <ul className="nav-links active">{renderLinks(true)}</ul>}
     </nav>
   );
 };
 
 export default Navbar;
-

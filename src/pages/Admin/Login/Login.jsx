@@ -17,7 +17,7 @@ const Login = () => {
     if (users?.role === "admin") {
       navigate("/admin/ordenes");
     } else if (users?.role === "users") {
-      navigate("/seguimientoorden"); // ✅ Redirección corregida
+      navigate("/seguimiento");
     }
   }, [users, navigate]);
 

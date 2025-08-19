@@ -1,6 +1,6 @@
-no inicia sesion para gestion
-notificacion mas visible de producto agregado al carrito.
-carrito flotante en Navbar "Finalizar Compra"
+cancelar compra desde admin 
+cargar pedido a nombre de un cliente, nuevo o ya existente
+
 
 
 

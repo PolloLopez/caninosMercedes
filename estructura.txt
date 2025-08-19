@@ -2,7 +2,7 @@ recorda que la estructura actual es:
 
 >.netlify
 |   ├──blobs-serve
-|   ├──functions-internal
+|   ├──functions-internal 
 |   ├──functions-serve
 |   |   ├── getOrders
 |   |   |   ├── ___netlify-telemetry.mjs
@@ -48,6 +48,8 @@ recorda que la estructura actual es:
 │   │   ├── logo.png
 │   │   └── global.css 
 ├── >components
+│   ├── >Auth/ 
+│   │   ├── GoogleLoginButton.jsx 
 │   ├── >Footer/ 
 │   │   ├── Footer.css 
 │   │   └── Footer.jsx
@@ -88,30 +90,25 @@ recorda que la estructura actual es:
 |   |   │   ├── ListaProductos.jsx 
 |   |   │   └── ListaProductos.css
 |   |   ├── >Login/
-|   |   │   ├── Login.css
+|   |   │   ├── Login.css (falta esta usando: /global.css)
 |   |   │   └── Login.jsx 
 |   |   ├── >Ordenes/
 |   |   │   ├── Ordenes.css
 |   |   │   └── Ordenes.jsx
-|   |   ├── >Registro/ 
-|   |   │   ├── Registro.css
-|   |   │   └── Registro.jsx 
 |   |   |   ├── AdminTutoriales.jsx
 |   |   |   ├── AdminTutoriales.css 
-|   |   |   ├── CrearTutoriales.jsx 
-|   |   |   ├── CrearTutoriales.css 
-|   |   |   ├── EditarTutorial.jsx 
+|   |   |   ├── CrearTutorial.jsx 
+|   |   |   ├── CrearTutorial.css 
 |   |   |   ├── EditarTutorial.css 
-|   |   |   ├── FormularioProducto.jsx 
+|   |   |   ├── EditarTutorial.jsx 
 |   |   |   ├── FormularioProducto.css 
-|   |   |   ├── RegistroCompras.jsx
-
+|   |   |   ├── FormularioProducto.jsx 
 │   ├── >Carrito/
 │   │   ├── Carrito.css
 │   │   └── Carrito.jsx
 │   ├── >Checkout/
-│   │   ├── Checkout.css
-│   │   └── Checkout.jsx
+│   │   ├── Checkout.jsx
+│   │   └── OrderConfirmation.jsx
 │   ├── >Inicio/
 │   │   ├── Inicio.css
 │   │   └── Inicio.jsx
@@ -132,6 +129,10 @@ recorda que la estructura actual es:
 │   ├── AdminProductos.css 
 │   ├── AdminProductos.jsx
 │   ├── NotFound.jsx 
+|   ├── Registro.css
+│   ├── Registro.jsx 
+|   ├── RegistroPostCompras.css
+|   ├── RegistroPostCompras.jsx
 ├── >routes/
 │   └── ProtectedRoute.jsx
 ├── >services/
@@ -142,13 +143,13 @@ recorda que la estructura actual es:
 .env
 .firebaserc
 .gitignore
-chatgpt.txt
 eslint.config.js
 estructura.txt
 et --hard 42f027266c2c31fbbf49b3ca2f2e6b94c9a6131f
 firebase.json
 firestore.indexes.json
 firestore.rules
+ideas.txt
 index.html
 netlify.toml
 package-lock.json
@@ -179,8 +180,4 @@ Lo que detecte que fue eliminado:
 |   ├── >TutorialCard/
 │   |   ├── TutorialCard.css
 │   |   └── TutorialCard.jsx 
-
-│   ├── / 
-│   │   ├── .jsx 
-│   │   └── .css 
 

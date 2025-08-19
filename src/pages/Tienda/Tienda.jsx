@@ -1,32 +1,44 @@
 // src/pages/Tienda/Tienda.jsx
 
-import React from "react";
+import React, { useState } from "react";
 import useFetchProductos from "@/hooks/useFetchProductos";
-import { useCart } from "@/context/CartContext"; 
+import { useCart } from "@/context/CartContext";
 import Tarjeta from "@/components/Tarjeta/Tarjeta";
 import "./Tienda.css";
 
 const Tienda = () => {
-  const { productos, cargando, error } = useFetchProductos(); // Renombramos variables a español
-
-  const { agregarAlCarrito } = useCart(); // Función para añadir productos al carrito
+  const { productos, cargando, error } = useFetchProductos();
+  const { agregarAlCarrito } = useCart();
+  const [searchTerm, setSearchTerm] = useState("");
 
   if (cargando) return <p>🌀 Cargando productos...</p>;
   if (error) return <p>🚨 Error al cargar productos</p>;
+  if (!productos.length) return <p>No hay productos disponibles.</p>;
 
-  if (productos.length === 0) {
-    return <p>No hay productos disponibles.</p>;
-  }
+  // Filtrar productos según el término de búsqueda
+  const productosFiltrados = productos.filter((producto) =>
+    producto.nombre.toLowerCase().includes(searchTerm.toLowerCase())
+  );
 
   return (
     <div className="tienda">
       <h1>🛍️ Nuestros Productos</h1>
+
+      {/* 🔍 Input de búsqueda */}
+      <input
+        type="text"
+        placeholder="Buscar producto..."
+        className="input-busqueda"
+        value={searchTerm}
+        onChange={(e) => setSearchTerm(e.target.value)}
+      />
+
       <div className="lista-productos">
-        {productos.map((producto) => (
+        {productosFiltrados.map((producto) => (
           <Tarjeta
             key={producto.id}
             producto={producto}
-            agregarAlCarrito={agregarAlCarrito} // Pasamos la función de agregar al carrito
+            agregarAlCarrito={agregarAlCarrito}
           />
         ))}
       </div>
