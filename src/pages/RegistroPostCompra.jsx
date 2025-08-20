@@ -1,5 +1,4 @@
 // src/pages/RegistroPostCompra.jsx
-
 import { useState, useEffect } from "react";
 import { useLocation, useNavigate } from "react-router-dom";
 import {
@@ -58,7 +57,6 @@ const RegistroPostCompra = () => {
             });
           }
           navigate(`/order-confirmation/${pedidoId}`);
-
         }
       } catch (error) {
         console.error("Error en el resultado de redirección:", error);
@@ -82,12 +80,18 @@ const RegistroPostCompra = () => {
       return;
     }
 
+    if (password.length < 6) {
+      setMensajeError("La contraseña debe tener al menos 6 caracteres");
+      return;
+    }
+
     try {
       const emailValido = /^[^\s@]+@[^\s@]+\.[^\s@]+$/.test(email);
       if (!emailValido) {
         setMensajeError("Ingresá un correo válido.");
         return;
       }
+
       setCargando(true);
       const userCredential = await createUserWithEmailAndPassword(
         auth,
@@ -114,7 +118,6 @@ const RegistroPostCompra = () => {
       }
 
       navigate(`/order-confirmation/${pedidoId}`);
-
     } catch (error) {
       console.error("Error al registrar usuario:", error);
       setMensajeError(
@@ -131,7 +134,7 @@ const RegistroPostCompra = () => {
       setCargando(true);
       const provider = new GoogleAuthProvider();
       await signInWithRedirect(auth, provider);
-      // La respuesta se maneja en useEffect
+      // Se maneja en useEffect
     } catch (error) {
       console.error("Error con Google:", error);
       if (error.code === "auth/account-exists-with-different-credential") {
@@ -156,7 +159,7 @@ const RegistroPostCompra = () => {
       <h2>Registrate</h2>
       {pedidoId && (
         <p className="registro-info-text">
-          ¡Estas a un paso de finalizar tu pedido! 🐾 ¡Gracias!
+          ¡Estás a un paso de finalizar tu pedido! 🐾 ¡Gracias!
         </p>
       )}
       {!pedidoId && (
@@ -165,6 +168,7 @@ const RegistroPostCompra = () => {
           guardar tus datos.
         </p>
       )}
+
       <form onSubmit={handleRegistro}>
         <input
           className="campo-entrada"
@@ -190,6 +194,11 @@ const RegistroPostCompra = () => {
           onChange={(e) => setPassword(e.target.value)}
           required
         />
+        {password && password.length < 6 && (
+          <p className="mensaje-error">
+            La contraseña debe tener al menos 6 caracteres
+          </p>
+        )}
         <input
           className="campo-entrada"
           type="password"
@@ -202,7 +211,8 @@ const RegistroPostCompra = () => {
           {cargando ? "Creando cuenta..." : "Crear tu cuenta"}
         </button>
       </form>
-      <div className="separador"></div>
+
+      <div className="separador">o</div>
 
       <button
         className="boton-google"
@@ -211,6 +221,7 @@ const RegistroPostCompra = () => {
       >
         {cargando ? "Procesando..." : "Hacelo con Google"}
       </button>
+
       {mensajeError && <p className="mensaje-error">⚠ {mensajeError}</p>}
     </div>
   );
