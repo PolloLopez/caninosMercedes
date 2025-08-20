@@ -9,21 +9,21 @@ import GoogleLoginButton from "@/components/Auth/GoogleLoginButton";
 import "@/assets/global.css";
 
 const Checkout = () => {
-  const { carrito, totalPrecio, vaciarCarrito } = useContext(CartContext);
+  const { carrito, vaciarCarrito } = useContext(CartContext);
   const [nombreCompleto, setNombreCompleto] = useState("");
   const [email, setEmail] = useState("");
   const [direccion, setDireccion] = useState("");
-  const [ciudad, setCiudad] = useState("");             // ✅ NUEVO (mejor búsqueda/etiquetado)
-  const [telefono, setTelefono] = useState("");         // ✅ NUEVO (contacto/seguimiento)
-  const [metodoPago, setMetodoPago] = useState("efectivo"); // ✅ NUEVO
-  const [refTransferencia, setRefTransferencia] = useState(""); // ✅ NUEVO (opcional)
+  const [ciudad, setCiudad] = useState("");
+  const [telefono, setTelefono] = useState("");
+  const [metodoPago, setMetodoPago] = useState("efectivo");
+  const [refTransferencia, setRefTransferencia] = useState("");
 
   const [cargando, setCargando] = useState(false);
   const [error, setError] = useState("");
   const [usuarioGoogleLogueado, setUsuarioGoogleLogueado] = useState(false);
   const navigate = useNavigate();
 
-  // Autocompleta datos si está logueado
+  // ✅ Autocompleta datos si está logueado
   useEffect(() => {
     const unsubscribe = onAuthStateChanged(auth, (user) => {
       if (user) {
@@ -43,7 +43,6 @@ const Checkout = () => {
     return () => unsubscribe();
   }, []);
 
-  // Mantengo tu helper
   const obtenerNombreParaGuardar = (user, nombreFormulario) => {
     if (user?.displayName && !user.displayName.includes("@")) return user.displayName;
     if (user?.email) return user.email.split("@")[0];
@@ -51,14 +50,13 @@ const Checkout = () => {
     return "Cliente sin nombre";
   };
 
-  // ✅ Normaliza ítems con descuentos (si existen en el carrito)
+  // ✅ Normaliza ítems con descuentos
   const mapearItemsConDescuentos = (items) => {
     return items.map((it) => {
       const precio = Number(it.precio) || 0;
       const cantidad = Number(it.cantidad) || 1;
-
-      const descPct = Number(it.descuentoPct) || 0;       // ej. 10 = 10%
-      const descMonto = Number(it.descuentoMonto) || 0;   // ej. $500
+      const descPct = Number(it.descuentoPct) || 0;
+      const descMonto = Number(it.descuentoMonto) || 0;
 
       const subtotalBruto = precio * cantidad;
       const descuentoPorPct = (subtotalBruto * descPct) / 100;
@@ -68,7 +66,7 @@ const Checkout = () => {
       return {
         id: it.id,
         nombre: it.nombre || "Sin nombre",
-        tipo: it.tipo || "producto", // o "servicio" si lo enviás así en el carrito
+        tipo: it.tipo || "producto",
         precio,
         cantidad,
         descuentoPct: descPct,
@@ -95,12 +93,10 @@ const Checkout = () => {
       const user = auth.currentUser;
       const nombreParaGuardar = obtenerNombreParaGuardar(user, nombreCompleto);
 
-      // ✅ Ítems normalizados con descuentos
       const items = mapearItemsConDescuentos(carrito);
       const total = items.reduce((acc, it) => acc + it.subtotal, 0);
       const descuentosTotales = items.reduce((acc, it) => acc + it.descuentoAplicado, 0);
 
-      // ✅ Orden unificada/escalable
       const nuevaOrden = {
         cliente: {
           nombreCompleto: nombreParaGuardar,
@@ -113,16 +109,16 @@ const Checkout = () => {
         },
         items,
         total,
-        descuentosTotales,   // ✅ útil para reportes
-        metodoPago,          // "efectivo" | "transferencia" | "mercadopago"(futuro)
-        pagoManual: metodoPago === "transferencia" ? { referencia: refTransferencia || "" } : null, // ✅ guardo dato opcional
-        estado: "pendiente", // pendiente | en camino | entregado | finalizado
+        descuentosTotales,
+        metodoPago,
+        pagoManual:
+          metodoPago === "transferencia" ? { referencia: refTransferencia || "" } : null,
+        estado: "pendiente",
         fecha: serverTimestamp(),
       };
 
       const docRef = await addDoc(collection(db, "ordenes"), nuevaOrden);
 
-      // limpio
       vaciarCarrito();
       setNombreCompleto("");
       setEmail("");
@@ -132,9 +128,7 @@ const Checkout = () => {
       setMetodoPago("efectivo");
       setRefTransferencia("");
 
-      // ✅ Navegación
       if (!user) {
-        // Tu flujo original: pedir registro post-compra
         navigate("/registro-post-compra", {
           state: {
             pedidoId: docRef.id,
@@ -142,7 +136,6 @@ const Checkout = () => {
           },
         });
       } else {
-        // Si ya está logueado, muestro la confirmación con el ID
         navigate(`/order-confirmation/${docRef.id}`);
       }
     } catch (err) {
@@ -231,7 +224,6 @@ const Checkout = () => {
           onChange={(e) => setCiudad(e.target.value)}
         />
 
-        {/* ✅ Método de pago */}
         <label style={{ marginTop: ".75rem", display: "block" }}>Método de pago</label>
         <select
           className="campo-entrada"
@@ -243,7 +235,6 @@ const Checkout = () => {
           <option value="mercadopago" disabled>MercadoPago (próximamente)</option>
         </select>
 
-        {/* ✅ Dato adicional si es transferencia */}
         {metodoPago === "transferencia" && (
           <input
             className="campo-entrada"

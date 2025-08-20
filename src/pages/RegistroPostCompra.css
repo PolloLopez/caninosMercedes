@@ -1,17 +1,15 @@
 /* src/pages/RegistroPostCompra.css */
-
 .boton-google {
   width: 100%;
-  padding: 0.5rem;
+  padding: 0.75rem;
   background-color: #db4437;
-  color: white;
-  align-items: center;
+  color: var(--color-blanco);
   font-weight: bold;
   border: none;
   border-radius: var(--border-radius);
   cursor: pointer;
   transition: var(--transicion-suave);
-  margin-bottom: .25rem;
+  margin-top: 0.5rem;
 }
 
 .boton-google:hover {
@@ -19,10 +17,10 @@
 }
 
 .separador {
-  margin: .5rem 0;
+  margin: 1rem 0;
   text-align: center;
   position: relative;
-  font-size: .9rem;
+  font-size: 0.9rem;
   color: #666;
 }
 

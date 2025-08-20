@@ -4,7 +4,7 @@ import { useNavigate, Link } from "react-router-dom";
 import { createUserWithEmailAndPassword, updateProfile } from "firebase/auth";
 import { auth, db } from "@/firebase";
 import { doc, setDoc } from "firebase/firestore";
-import "./Registro.css"; 
+import "./Registro.css";
 
 const Registro = () => {
   const navigate = useNavigate();
@@ -23,6 +23,11 @@ const Registro = () => {
       return;
     }
 
+    if (password.length < 6) {
+      setMensajeError("La contraseña debe tener al menos 6 caracteres.");
+      return;
+    }
+
     try {
       setMensajeError("");
       setCargando(true);
@@ -31,7 +36,6 @@ const Registro = () => {
 
       await updateProfile(user, { displayName: nombre });
 
-      // Crear documento en Firestore en 'usuarios'
       const usersRef = doc(db, "usuarios", user.uid);
       await setDoc(usersRef, {
         nombreCompleto: nombre,
@@ -39,7 +43,7 @@ const Registro = () => {
         role: "users",
       });
 
-      navigate("/login"); // O a donde quieras redirigir después de registrar
+      navigate("/login");
     } catch (error) {
       console.error("Error al registrar usuario:", error);
       setMensajeError("Error al registrar. Probá con otro correo o intentá más tarde.");
@@ -88,7 +92,7 @@ const Registro = () => {
           {cargando ? "Creando cuenta..." : "Crear tu cuenta"}
         </button>
       </form>
-      <p style={{ marginTop: "1rem", textAlign: "center" }}>
+      <p className="login-link">
         ¿Ya tenés cuenta? <Link to="/login">Ingresá aquí</Link>
       </p>
       {mensajeError && <p className="mensaje-error">⚠ {mensajeError}</p>}

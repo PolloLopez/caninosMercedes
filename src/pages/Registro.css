@@ -1,28 +1,28 @@
 /* src/pages/Registro.css */
-
 .boton-google {
   width: 100%;
   padding: 0.5rem;
   background-color: #db4437;
-  color: white;
+  color: var(--color-blanco);
   align-items: center;
   font-weight: bold;
   border: none;
   border-radius: var(--border-radius);
   cursor: pointer;
   transition: var(--transicion-suave);
-  margin-bottom: .25rem;
+  margin-bottom: 0.25rem;
 }
 
 .boton-google:hover {
   background-color: #c33d2f;
 }
 
+/* Separador visual entre opciones */
 .separador {
-  margin: .5rem 0;
+  margin: 0.5rem 0;
   text-align: center;
   position: relative;
-  font-size: .9rem;
+  font-size: 0.9rem;
   color: #666;
 }
 
@@ -42,10 +42,4 @@
 
 .separador::after {
   right: 0;
-}
-
-.registro-info-text {
-  margin-bottom: 1rem;
-  color: var(--color-verde);
-  font-weight: 500;
 }

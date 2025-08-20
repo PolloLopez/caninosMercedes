@@ -3,6 +3,18 @@ no esta iniciando sesion para comprar, despues no puede seguir la compra
 cancelar compra desde admin 
 cargar pedido a nombre de un cliente, nuevo o ya existente
 
+al querer hacer una compra:
+
+Failed to load resource: the server responded with a status of 400 ()Understand this error
+index-DFtuvj5S.js:3661 Error al registrar usuario: FirebaseError: Firebase: Password should be at least 6 characters (auth/weak-password).
+    at np (index-DFtuvj5S.js:441:187)
+    at K_ (index-DFtuvj5S.js:546:1223)
+    at async Cl (index-DFtuvj5S.js:546:1370)
+    at async fw (index-DFtuvj5S.js:1146:186)
+    at async j (index-DFtuvj5S.js:3661:7365)
+j @ index-DFtuvj5S.js:3661Understand this error
+
+
 
 
 

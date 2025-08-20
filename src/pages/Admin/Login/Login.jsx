@@ -3,6 +3,8 @@ import { useState, useEffect } from "react";
 import { useNavigate, Link } from "react-router-dom";
 import { useAuth } from "@/context/AuthContext";
 import "@/assets/global.css";
+import "@/pages/Registro.css";
+import { Eye, EyeOff } from "lucide-react";
 
 const Login = () => {
   const { users, login, loginWithGoogle } = useAuth();
@@ -10,6 +12,7 @@ const Login = () => {
 
   const [email, setEmail] = useState("");
   const [password, setPassword] = useState("");
+  const [mostrarPassword, setMostrarPassword] = useState(false);
   const [mensajeError, setMensajeError] = useState("");
   const [cargando, setCargando] = useState(false);
 
@@ -23,6 +26,12 @@ const Login = () => {
 
   const handleSubmit = async (e) => {
     e.preventDefault();
+
+    if (password.length < 6) {
+      setMensajeError("La contraseña debe tener al menos 6 caracteres.");
+      return;
+    }
+
     try {
       setCargando(true);
       setMensajeError("");
@@ -61,28 +70,42 @@ const Login = () => {
           required
         />
 
-        <input
-          className="campo-entrada"
-          type="password"
-          placeholder="Contraseña"
-          value={password}
-          onChange={(e) => setPassword(e.target.value)}
-          required
-        />
+        <div style={{ position: "relative" }}>
+          <input
+            className="campo-entrada"
+            type={mostrarPassword ? "text" : "password"}
+            placeholder="Contraseña"
+            value={password}
+            onChange={(e) => setPassword(e.target.value)}
+            required
+          />
+          <span
+            onClick={() => setMostrarPassword(!mostrarPassword)}
+            style={{
+              position: "absolute",
+              right: "10px",
+              top: "50%",
+              transform: "translateY(-50%)",
+              cursor: "pointer",
+              color: "#666",
+            }}
+          >
+            {mostrarPassword ? <EyeOff size={20} /> : <Eye size={20} />}
+          </span>
+        </div>
 
         <button className="boton-primario" type="submit" disabled={cargando}>
           {cargando ? "Ingresando..." : "Ingresar"}
         </button>
       </form>
 
-      <div className="separador"></div>
+      <div className="separador">o</div>
 
       <button
-        className="boton-primario"
+        className="boton-google"
         type="button"
         onClick={handleGoogle}
         disabled={cargando}
-        style={{ marginTop: "0.5rem", backgroundColor: "#db4437" }}
       >
         {cargando ? "Cargando..." : "Ingresar con Google"}
       </button>
@@ -91,8 +114,7 @@ const Login = () => {
 
       <div className="login-link">
         <p>
-          ¿No tenés cuenta?{" "}
-          <Link to="/registro">Registrate</Link>
+          ¿No tenés cuenta? <Link to="/registro">Registrate</Link>
         </p>
       </div>
     </div>
